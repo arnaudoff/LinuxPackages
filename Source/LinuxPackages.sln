@@ -17,6 +17,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{94D1CA60-8F3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinuxPackages.Web.Mvc", "Web\LinuxPackages.Web.Mvc\LinuxPackages.Web.Mvc.csproj", "{954A1C58-4075-4B00-8C3F-1ED7E5DC6B75}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D8CF6574-440D-4F93-A331-3C36F57F86FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinuxPackages.Web.Mvc.Tests", "Tests\LinuxPackages.Web.Mvc.Tests\LinuxPackages.Web.Mvc.Tests.csproj", "{DD1C396A-A463-4260-85F7-FDF98E4A7651}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinuxPackages.Services.Data", "Services\LinuxPackages.Services.Data\LinuxPackages.Services.Data.csproj", "{39316A97-4403-408E-A563-C96A104CA264}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +45,14 @@ Global
 		{954A1C58-4075-4B00-8C3F-1ED7E5DC6B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{954A1C58-4075-4B00-8C3F-1ED7E5DC6B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{954A1C58-4075-4B00-8C3F-1ED7E5DC6B75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD1C396A-A463-4260-85F7-FDF98E4A7651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD1C396A-A463-4260-85F7-FDF98E4A7651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD1C396A-A463-4260-85F7-FDF98E4A7651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD1C396A-A463-4260-85F7-FDF98E4A7651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39316A97-4403-408E-A563-C96A104CA264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39316A97-4403-408E-A563-C96A104CA264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39316A97-4403-408E-A563-C96A104CA264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39316A97-4403-408E-A563-C96A104CA264}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +62,6 @@ Global
 		{F801CE53-A7F3-409E-AA15-352C81923850} = {978A1ADE-7BF8-457D-9149-8F5B9846628F}
 		{55071C20-03C9-4ACD-8C5D-749180ECA31A} = {978A1ADE-7BF8-457D-9149-8F5B9846628F}
 		{954A1C58-4075-4B00-8C3F-1ED7E5DC6B75} = {94D1CA60-8F36-4F93-86C7-8806A86ABA53}
+		{DD1C396A-A463-4260-85F7-FDF98E4A7651} = {D8CF6574-440D-4F93-A331-3C36F57F86FF}
 	EndGlobalSection
 EndGlobal

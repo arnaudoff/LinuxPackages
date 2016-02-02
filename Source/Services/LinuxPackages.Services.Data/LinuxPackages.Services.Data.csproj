@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{095D2656-66CB-41E1-A95A-745F41B2B8E3}</ProjectGuid>
+    <ProjectGuid>{39316A97-4403-408E-A563-C96A104CA264}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LinuxPackages.Common</RootNamespace>
-    <AssemblyName>LinuxPackages.Common</AssemblyName>
+    <RootNamespace>LinuxPackages.Services.Data</RootNamespace>
+    <AssemblyName>LinuxPackages.Services.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\Assemblies.cs" />
+    <Compile Include="Contracts\IPackagesService.cs" />
+    <Compile Include="PackagesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
