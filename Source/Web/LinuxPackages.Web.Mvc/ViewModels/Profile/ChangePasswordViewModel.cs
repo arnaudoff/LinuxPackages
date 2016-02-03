@@ -1,4 +1,4 @@
-namespace LinuxPackages.Web.Mvc.Models.Account
+namespace LinuxPackages.Web.Mvc.ViewModels.Profile
 {
     using System.ComponentModel.DataAnnotations;
 

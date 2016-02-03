@@ -4,7 +4,6 @@
 
     using LinuxPackages.Data;
     using LinuxPackages.Data.Models;
-    using LinuxPackages.Web.Mvc.Models;
 
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;

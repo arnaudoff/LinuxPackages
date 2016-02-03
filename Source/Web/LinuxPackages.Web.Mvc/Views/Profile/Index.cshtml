@@ -1,4 +1,4 @@
-﻿@model LinuxPackages.Web.Mvc.Models.Account.ProfileViewModel
+﻿@model LinuxPackages.Web.Mvc.ViewModels.Profile.ProfileViewModel
 @{
     ViewBag.Title = "Profile";
 }
@@ -17,6 +17,14 @@
     <dl class="dl-horizontal">
         <dt>Email</dt>
         <dd>@Model.Email</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Packages maintained</dt>
+        <dd>@Model.PackagesMaintainedCount</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Issues</dt>
+        <dd>@Model.IssuesCreatedCount</dd>
     </dl>
     <h4>Manage</h4>
     <hr />

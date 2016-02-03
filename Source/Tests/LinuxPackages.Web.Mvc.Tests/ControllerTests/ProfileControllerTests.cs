@@ -3,7 +3,7 @@
     using System.Web.Mvc;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using LinuxPackages.Web.Mvc.Controllers;
-    using Models.Account;
+    using ViewModels.Profile;
 
     [TestClass]
     public class ProfileControllerTests

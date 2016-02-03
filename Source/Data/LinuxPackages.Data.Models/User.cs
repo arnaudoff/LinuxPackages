@@ -13,10 +13,12 @@
     public class User : IdentityUser
     {
         private ICollection<Package> packages;
+        private ICollection<Issue> issues;
 
         public User()
         {
             this.packages = new HashSet<Package>();
+            this.issues = new HashSet<Issue>();
         }
 
         public virtual ICollection<Package> Packages
@@ -29,6 +31,19 @@
             set
             {
                 this.packages = value;
+            }
+        }
+
+        public virtual ICollection<Issue> Issues
+        {
+            get
+            {
+                return this.issues;
+            }
+
+            set
+            {
+                this.issues = value;
             }
         }
 

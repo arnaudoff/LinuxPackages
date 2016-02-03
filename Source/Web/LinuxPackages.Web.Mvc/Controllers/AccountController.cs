@@ -8,10 +8,10 @@
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
-    using Models.Account;
+    using ViewModels.Account;
 
     [Authorize]
-    public partial class AccountController : Controller
+    public class AccountController : Controller
     {
         private const string XsrfKey = "XsrfId";
         private ApplicationSignInManager signInManager;
@@ -127,86 +127,6 @@
             }
 
             return this.View(model);
-        }
-
-        [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
-        {
-            if (userId == null || code == null)
-            {
-                return this.View("Error");
-            }
-
-            IdentityResult result = await this.UserManager.ConfirmEmailAsync(userId, code);
-            return this.View(result.Succeeded ? "ConfirmEmail" : "Error");
-        }
-
-        [AllowAnonymous]
-        public ActionResult ForgotPassword()
-        {
-            return this.View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        {
-            if (this.ModelState.IsValid)
-            {
-                User user = await this.UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await this.UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    return this.View("ForgotPasswordConfirmation");
-                }
-            }
-
-            return this.View(model);
-        }
-
-        [AllowAnonymous]
-        public ActionResult ForgotPasswordConfirmation()
-        {
-            return this.View();
-        }
-
-        [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
-        {
-            return code == null ? this.View("Error") : this.View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(model);
-            }
-
-            User user = await this.UserManager.FindByNameAsync(model.Email);
-            if (user == null)
-            {
-                return this.RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-
-            IdentityResult result = await this.UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return this.RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-
-            this.AddErrors(result);
-
-            return this.View();
-        }
-
-        [AllowAnonymous]
-        public ActionResult ResetPasswordConfirmation()
-        {
-            return this.View();
         }
 
         [HttpPost]

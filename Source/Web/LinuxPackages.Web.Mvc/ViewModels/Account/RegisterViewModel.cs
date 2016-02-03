@@ -1,4 +1,4 @@
-namespace LinuxPackages.Web.Mvc.Models.Account
+namespace LinuxPackages.Web.Mvc.ViewModels.Account
 {
     using Common.Constants;
     using System.ComponentModel.DataAnnotations;

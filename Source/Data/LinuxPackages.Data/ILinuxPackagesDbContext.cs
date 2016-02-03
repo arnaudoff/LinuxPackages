@@ -9,6 +9,20 @@
     {
         IDbSet<User> Users { get; set; }
 
+        IDbSet<Package> Packages { get; set; }
+
+        IDbSet<PackageRating> PackageRatings { get; set; }
+
+        IDbSet<PackageComment> PackageComments { get; set; }
+
+        IDbSet<Screenshot> Screenshots { get; set; }
+
+        IDbSet<Issue> Issues { get; set; }
+
+        IDbSet<IssueReply> IssueReplies { get; set; }
+
+        IDbSet<Repository> Repositories { get; set; }
+
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
         DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;

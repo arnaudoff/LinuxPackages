@@ -1,8 +1,5 @@
 ﻿namespace LinuxPackages.Web.Mvc.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
@@ -11,9 +8,11 @@
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
-    using Models.Account;
 
-    public enum ManageMessageId
+    using ViewModels.Profile;
+    using AutoMapper;
+
+    public enum EditProfileResultType
     {
         UpdateProfileSuccess,
         ChangePasswordSuccess,
@@ -23,6 +22,7 @@
     public partial class ProfileController : Controller
     {
         private const string XsrfKey = "XsrfId";
+
         private ApplicationSignInManager signInManager;
         private ApplicationUserManager userManager;
 
@@ -70,29 +70,23 @@
             }
         }
 
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public async Task<ActionResult> Index(EditProfileResultType? message)
         {
             this.ViewBag.StatusMessage = string.Empty;
 
-            if (message == ManageMessageId.ChangePasswordSuccess)
+            if (message == EditProfileResultType.ChangePasswordSuccess)
             {
                 this.ViewBag.StatusMessage = "Your password has been changed.";
             }
-            else if (message == ManageMessageId.UpdateProfileSuccess)
+            else if (message == EditProfileResultType.UpdateProfileSuccess)
             {
                 this.ViewBag.StatusMessage = "Your profile has been updated.";
             }
 
-            User user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
+            var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
+            var userProfile = Mapper.Map<ProfileViewModel>(user);
 
-            var model = new ProfileViewModel
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email
-            };
-
-            return this.View(model);
+            return this.View(userProfile);
         }
 
         public ActionResult ChangePassword()
@@ -118,7 +112,7 @@
                     await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
 
-                return this.RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return this.RedirectToAction("Index", new { Message = EditProfileResultType.ChangePasswordSuccess });
             }
 
             this.AddErrors(result);
