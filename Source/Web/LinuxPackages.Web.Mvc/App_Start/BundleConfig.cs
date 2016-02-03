@@ -26,6 +26,10 @@
                 .Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
+
+            // Custom form validation
+            bundles.Add(new ScriptBundle("~/bundles/validation")
+                .Include("~/Scripts/validation.js"));
         }
 
         private static void RegisterStyles(BundleCollection bundles)

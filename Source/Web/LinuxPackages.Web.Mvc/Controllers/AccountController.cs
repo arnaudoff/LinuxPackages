@@ -107,7 +107,14 @@
         {
             if (this.ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
+
                 IdentityResult result = await this.UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -203,91 +210,11 @@
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
-        {
-            return new ChallengeResult(provider, this.Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-        }
-
-        [AllowAnonymous]
-        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
-        {
-            ExternalLoginInfo loginInfo = await this.AuthenticationManager.GetExternalLoginInfoAsync();
-
-            if (loginInfo == null)
-            {
-                return this.RedirectToAction("Login");
-            }
-
-            SignInStatus result = await this.SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return this.RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return this.View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return this.RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
-                case SignInStatus.Failure:
-                default:
-                    this.ViewBag.ReturnUrl = returnUrl;
-                    this.ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return this.View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-            }
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
-        {
-            if (this.User.Identity.IsAuthenticated)
-            {
-                return this.RedirectToAction("Index", "Manage");
-            }
-
-            if (this.ModelState.IsValid)
-            {
-                ExternalLoginInfo info = await this.AuthenticationManager.GetExternalLoginInfoAsync();
-
-                if (info == null)
-                {
-                    return this.View("ExternalLoginFailure");
-                }
-
-                var user = new User { UserName = model.Email, Email = model.Email };
-                IdentityResult result = await this.UserManager.CreateAsync(user);
-
-                if (result.Succeeded)
-                {
-                    result = await this.UserManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return this.RedirectToLocal(returnUrl);
-                    }
-                }
-
-                this.AddErrors(result);
-            }
-
-            this.ViewBag.ReturnUrl = returnUrl;
-            return this.View(model);
-        }
-
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             this.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return this.RedirectToAction("Index", "Home");
-        }
-
-        [AllowAnonymous]
-        public ActionResult ExternalLoginFailure()
-        {
-            return this.View();
         }
 
         protected override void Dispose(bool disposing)

@@ -1,0 +1,29 @@
+﻿@model LinuxPackages.Web.Mvc.Models.Account.ProfileViewModel
+@{
+    ViewBag.Title = "Profile";
+}
+
+<div>
+    <h4>General</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>First name</dt>
+        <dd>@Model.FirstName</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Last name</dt>
+        <dd>@Model.LastName</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Email</dt>
+        <dd>@Model.Email</dd>
+    </dl>
+    <h4>Manage</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Password:</dt>
+        <dd>
+            [@Html.ActionLink("Change", "ChangePassword")]
+        </dd>
+    </dl>
+</div>

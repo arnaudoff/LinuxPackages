@@ -1,16 +1,27 @@
 namespace LinuxPackages.Web.Mvc.Models.Account
 {
+    using Common.Constants;
     using System.ComponentModel.DataAnnotations;
 
     public class RegisterViewModel
     {
-        [Required]
-        [EmailAddress]
         [Display(Name = "Email")]
+        [Required(ErrorMessage = "The email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(UserConstants.MaxFirstNameLength, ErrorMessage = "The first name must be at least {2} characters long.", MinimumLength = UserConstants.MinFirstNameLength)]
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(UserConstants.MaxLastNameLength, ErrorMessage = "The last name must be at least {2} characters long.", MinimumLength = UserConstants.MinLastNameLength)]
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The password must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
