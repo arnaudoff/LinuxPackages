@@ -20,11 +20,24 @@
             this.packageSaver = packageSaver;
         }
 
+        public IQueryable<Package> GetAll()
+        {
+            return this.packages.All();
+        }
+
+        public IQueryable<Package> GetById(int id)
+        {
+            return this.packages
+                .All()
+                .Where(p => p.Id == id);
+        }
+
         public Package Create(
             string name,
-            string architecture,
             string description,
-            string license,
+            int repositoryId,
+            int architectureId,
+            int licenseId,
             string fileName,
             byte[] contents,
             ICollection<Package> dependencies,
@@ -34,9 +47,10 @@
             var newPackage = new Package
             {
                 Name = name,
-                Architecture = architecture,
                 Description = description,
-                License = license,
+                RepositoryId = repositoryId,
+                ArchitectureId = architectureId,
+                LicenseId = licenseId,
                 FileName = fileName,
                 Size = (uint)contents.Length,
                 UploadedOn = DateTime.UtcNow,
@@ -50,13 +64,6 @@
             this.packageSaver.Save(newPackage.Id, fileName, contents);
 
             return newPackage;
-        }
-
-        public IQueryable<Package> GetById(int id)
-        {
-            return this.packages
-                .All()
-                .Where(p => p.Id == id);
         }
     }
 }

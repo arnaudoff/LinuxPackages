@@ -6,13 +6,16 @@
 
     public interface IPackagesService
     {
+        IQueryable<Package> GetAll();
+
         IQueryable<Package> GetById(int id);
 
         Package Create(
             string name,
-            string architecture,
             string description,
-            string license,
+            int repositoryId,
+            int architectureId,
+            int licenseId,
             string fileName,
             byte[] contents,
             ICollection<Package> dependencies,
