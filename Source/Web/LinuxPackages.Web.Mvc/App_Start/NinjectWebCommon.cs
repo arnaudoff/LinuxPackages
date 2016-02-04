@@ -15,6 +15,10 @@ namespace LinuxPackages.Web.Mvc.App_Start
     using Data;
     using Data.Repositories;
     using Common;
+    using Services.Data.Contracts;
+    using Services.Data;
+    using System.Web.Hosting;
+    using Common.Constants;
 
     public static class NinjectWebCommon 
     {
@@ -54,6 +58,17 @@ namespace LinuxPackages.Web.Mvc.App_Start
         {
             kernel.Bind<ILinuxPackagesDbContext>().To<LinuxPackagesDbContext>();
             kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
+
+            string packagesStorePath = HostingEnvironment.MapPath(PackageConstants.PackagesPath);
+
+            kernel.Bind<IPackageSaver>()
+                .To<HardDrivePackageSaver>()
+                .WithConstructorArgument(packagesStorePath);
+
+            kernel.Bind<IScreenshotSaver>()
+                .To<HardDriveScreenshotSaver>()
+                .WithConstructorArgument(packagesStorePath)
+                .WithConstructorArgument(PackageConstants.ScreenshotsFolderName);
 
             kernel.Bind(b => b
                 .From(Assemblies.Services)

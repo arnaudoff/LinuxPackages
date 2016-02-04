@@ -8,12 +8,16 @@
         public int Id { get; set; }
 
         [Required]
+        public string FileName { get; set; }
+
+        [Required]
         public string FileExtension { get; set; }
 
         [Required]
-        public string FilePath { get; set; }
-
-        [Required]
         public uint Size { get; set; }
+
+        public int PackageId { get; set; }
+
+        public virtual Package Package { get; set; }
     }
 }

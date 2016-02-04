@@ -22,5 +22,9 @@
 
         public const int MinRepositoryNameLength = 4;
         public const int MaxRepositoryNameLength = 20;
+
+        public const string PackagesPath = "~/App_Data/packages";
+        public const string ScreenshotsFolderName = "screenshots";
+        public const int PackagesPerDirectory = 1000;
     }
 }
