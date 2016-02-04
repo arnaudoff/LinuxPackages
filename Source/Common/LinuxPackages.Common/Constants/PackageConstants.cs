@@ -8,12 +8,6 @@
         public const int MinDescriptionLength = 100;
         public const int MaxDescriptionLength = 20000;
 
-        public const int MinArchitectureNameLength = 2;
-        public const int MaxArchitectureNameLength = 200;
-
-        public const int MinLicenseNameLength = 3;
-        public const int MaxLicenseNameLength = 100;
-
         public const int MinCommentContentLength = 20;
         public const int MaxCommentContentLength = 10000;
 

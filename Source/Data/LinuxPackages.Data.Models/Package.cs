@@ -32,21 +32,20 @@
         [Index]
         public string Name { get; set; }
 
-        [Required]
-        [MinLength(PackageConstants.MinArchitectureNameLength)]
-        [MaxLength(PackageConstants.MaxArchitectureNameLength)]
-        public string Architecture { get; set; }
+        public int ArchitectureId { get; set; }
 
-        [Required]
-        [MinLength(PackageConstants.MinArchitectureNameLength)]
-        [MaxLength(PackageConstants.MaxArchitectureNameLength)]
+        public virtual Architecture Architecture { get; set; }
+
         [Index]
         public string Description { get; set; }
 
-        [Required]
-        [MinLength(PackageConstants.MinLicenseNameLength)]
-        [MaxLength(PackageConstants.MaxLicenseNameLength)]
-        public string License { get; set; }
+        public int LicenseId { get; set; }
+
+        public virtual License License { get; set; }
+
+        public int RepositoryId { get; set; }
+
+        public virtual Repository Repository { get; set; }
 
         [Required]
         public string FileName { get; set; }
