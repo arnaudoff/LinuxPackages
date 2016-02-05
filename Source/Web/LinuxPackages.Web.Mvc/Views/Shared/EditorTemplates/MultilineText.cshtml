@@ -1,0 +1,9 @@
+﻿@model string
+
+<div class="form-group">
+    @Html.LabelForModel(new { @class = "col-md-2 control-label" })
+    <div class="col-md-10">
+        @Html.TextArea("", ViewData.TemplateInfo.FormattedModelValue.ToString(), ViewData)
+        @Html.ValidationMessageFor(m => Model, "", htmlAttributes: new { @class = "text-danger" })
+    </div>
+</div>
