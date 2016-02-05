@@ -21,6 +21,10 @@ namespace LinuxPackages.Web.Mvc.App_Start
 
     using Services.Data;
     using Services.Data.Contracts;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity;
+    using Data.Models;
+    using System.Data.Entity;
 
     public static class NinjectWebCommon 
     {
@@ -58,20 +62,22 @@ namespace LinuxPackages.Web.Mvc.App_Start
 
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<ILinuxPackagesDbContext>().To<LinuxPackagesDbContext>();
+            kernel.Bind<DbContext>().To<LinuxPackagesDbContext>().InRequestScope();
             kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
             kernel.Bind<IRandomGenerator>().To<RandomGenerator>();
+            kernel.Bind<IUserStore<User>>().To<UserStore<User>>().WithConstructorArgument("context", kernel.Get<DbContext>());
+            kernel.Bind<UserManager<User>>().ToSelf();
 
             string packagesStorePath = HostingEnvironment.MapPath(PackageConstants.PackagesPath);
 
             kernel.Bind<IPackageSaver>()
                 .To<HardDrivePackageSaver>()
-                .WithConstructorArgument(packagesStorePath);
+                .WithConstructorArgument("rootPath", packagesStorePath);
 
             kernel.Bind<IScreenshotSaver>()
                 .To<HardDriveScreenshotSaver>()
-                .WithConstructorArgument(packagesStorePath)
-                .WithConstructorArgument(PackageConstants.ScreenshotsFolderName);
+                .WithConstructorArgument("rootPath", packagesStorePath)
+                .WithConstructorArgument("screenshotsFolderName", PackageConstants.ScreenshotsFolderName);
 
             kernel.Bind(b => b
                 .From(Assemblies.Services)
