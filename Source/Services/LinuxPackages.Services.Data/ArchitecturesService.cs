@@ -6,7 +6,7 @@
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
 
-    public class ArchitecturesService : IArchitecturesServices
+    public class ArchitecturesService : IArchitecturesService
     {
         private readonly IRepository<Architecture> architectures;
 

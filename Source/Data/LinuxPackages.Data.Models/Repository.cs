@@ -15,12 +15,15 @@
         }
 
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MinLength(PackageConstants.MinRepositoryNameLength)]
         [MaxLength(PackageConstants.MaxRepositoryNameLength)]
         public string Name { get; set; }
+
+        [Required]
+        public string Url { get; set; }
 
         public virtual ICollection<Package> Packages
         {

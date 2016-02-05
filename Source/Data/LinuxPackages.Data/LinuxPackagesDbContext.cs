@@ -15,6 +15,8 @@
 
         public virtual IDbSet<Package> Packages { get; set; }
 
+        public virtual IDbSet<Distribution> Distributions { get; set; }
+
         public virtual IDbSet<PackageRating> PackageRatings { get; set; }
 
         public virtual IDbSet<PackageComment> PackageComments { get; set; }
@@ -26,6 +28,10 @@
         public virtual IDbSet<IssueReply> IssueReplies { get; set; }
 
         public virtual IDbSet<Repository> Repositories { get; set; }
+
+        public virtual IDbSet<Architecture> Architectures { get; set; }
+
+        public virtual IDbSet<License> Licenses { get; set; }
 
         public static LinuxPackagesDbContext Create()
         {

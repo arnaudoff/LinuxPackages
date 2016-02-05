@@ -29,23 +29,32 @@
         [Required]
         [MinLength(PackageConstants.MinNameLength)]
         [MaxLength(PackageConstants.MaxNameLength)]
-        [Index]
         public string Name { get; set; }
 
+        [Required]
+        [MinLength(PackageConstants.MinDescriptionLength)]
+        [MaxLength(PackageConstants.MaxDescriptionLength)]
+        public string Description { get; set; }
+
+        [Required]
+        public int DistributionId { get; set; }
+        
+        public virtual Distribution Distribution { get; set; }
+
+        [Required]
+        public int RepositoryId { get; set; }
+
+        public virtual Repository Repository { get; set; }
+
+        [Required]
         public int ArchitectureId { get; set; }
 
         public virtual Architecture Architecture { get; set; }
 
-        [Index]
-        public string Description { get; set; }
-
+        [Required]
         public int LicenseId { get; set; }
 
         public virtual License License { get; set; }
-
-        public int RepositoryId { get; set; }
-
-        public virtual Repository Repository { get; set; }
 
         [Required]
         public string FileName { get; set; }
