@@ -1,4 +1,4 @@
-﻿@model int
+﻿@model int?
 
 @{ 
     var list = (IEnumerable<SelectListItem>)ViewData["List"];
@@ -7,8 +7,7 @@
 <div class="form-group">
     @Html.LabelForModel(new { @class = "col-md-2 control-label" })
     <div class="col-md-10">
-        @(Html.Kendo().DropDownList()
-                      .Name(ViewData.ModelMetadata.GetDisplayName())
+        @(Html.Kendo().DropDownListFor(m => m)
                       .DataTextField("Text")
                       .DataValueField("Value")
                       .BindTo(list)
