@@ -5,20 +5,22 @@ namespace LinuxPackages.Web.Mvc.App_Start
 {
     using System;
     using System.Web;
+    using System.Web.Hosting;
 
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-    using Ninject;
-    using Ninject.Web.Common;
-    using Ninject.Extensions.Conventions;
-
+    using Common;
+    using Common.Constants;
+    using Common.Contracts;
+    using Common.Utilities;
     using Data;
     using Data.Repositories;
-    using Common;
-    using Services.Data.Contracts;
+
+    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+    using Ninject;
+    using Ninject.Extensions.Conventions;
+    using Ninject.Web.Common;
+
     using Services.Data;
-    using System.Web.Hosting;
-    using Common.Constants;
+    using Services.Data.Contracts;
 
     public static class NinjectWebCommon 
     {
@@ -58,6 +60,7 @@ namespace LinuxPackages.Web.Mvc.App_Start
         {
             kernel.Bind<ILinuxPackagesDbContext>().To<LinuxPackagesDbContext>();
             kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
+            kernel.Bind<IRandomGenerator>().To<RandomGenerator>();
 
             string packagesStorePath = HostingEnvironment.MapPath(PackageConstants.PackagesPath);
 
@@ -73,6 +76,7 @@ namespace LinuxPackages.Web.Mvc.App_Start
             kernel.Bind(b => b
                 .From(Assemblies.Services)
                 .SelectAllClasses()
+                .EndingWith("Service")
                 .BindDefaultInterface());
         }        
     }
