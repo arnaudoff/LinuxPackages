@@ -62,14 +62,6 @@
             }
         }
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return this.HttpContext.GetOwinContext().Authentication;
-            }
-        }
-
         public async Task<ActionResult> Index(EditProfileResultType? message)
         {
             this.ViewBag.StatusMessage = string.Empty;

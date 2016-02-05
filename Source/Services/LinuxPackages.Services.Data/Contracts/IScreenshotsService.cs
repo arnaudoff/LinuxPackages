@@ -4,6 +4,6 @@
 
     public interface IScreenshotsService
     {
-        Screenshot Create(string fileName, byte[] contents, string fileExtension, int packageId, string packageName);
+        Screenshot Create(string fileName, byte[] contents, int packageId, string packageName);
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IPackageSaver
     {
-        void Save(int id, string fileName, byte[] contents);
+        void Save(int id, string packageName, string fileName, byte[] contents);
     }
 }

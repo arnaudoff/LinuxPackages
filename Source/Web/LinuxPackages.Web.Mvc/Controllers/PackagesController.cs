@@ -1,11 +1,16 @@
 ﻿namespace LinuxPackages.Web.Mvc.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
 
+    using Common.Utilities;
+    using Data.Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.Owin;
     using Services.Data.Contracts;
     using ViewModels.Packages;
-    using System.Linq;
-    using Microsoft.AspNet.Identity;
 
     public class PackagesController : Controller
     {
@@ -14,7 +19,8 @@
         private readonly ILicensesService licenses;
         private readonly IRepositoriesService repositories;
         private readonly IDistributionsService distros;
-        private readonly IUsersService users;
+        private readonly IScreenshotsService screenshots;
+        private ApplicationUserManager userManager;
 
         public PackagesController(
             IPackagesService packages,
@@ -22,14 +28,29 @@
             ILicensesService licenses,
             IRepositoriesService repositories,
             IDistributionsService distros,
-            IUsersService users)
+            IScreenshotsService screenshots,
+            ApplicationUserManager userManager)
         {
             this.packages = packages;
             this.architectures = architectures;
             this.licenses = licenses;
             this.repositories = repositories;
             this.distros = distros;
-            this.users = users;
+            this.screenshots = screenshots;
+            this.UserManager = userManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return this.userManager ?? this.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+
+            private set
+            {
+                this.userManager = value;
+            }
         }
 
         public ActionResult All()
@@ -45,6 +66,7 @@
         [Authorize]
         public ActionResult Add()
         {
+            // TODO: Cache
             var repos = this.repositories
                 .GetAll()
                 .Select(r => new SelectListItem
@@ -77,8 +99,7 @@
                     Text = p.Name
                 });
 
-            var maintainers = this.users
-                .GetAll()
+            var maintainers = this.UserManager.Users
                 .Select(u => new SelectListItem
                 {
                     Value = u.Id,
@@ -93,8 +114,6 @@
                     Text = d.Name
                 });
 
-            string currentUserId = this.User.Identity.GetUserId();
-
             var model = new AddPackageViewModel
             {
                 Repositories = repos,
@@ -102,7 +121,6 @@
                 Licenses = licenses,
                 Maintainers = maintainers,
                 Dependencies = dependencies,
-                CurrentUserAsMaintainer = maintainers.Where(u => u.Value == currentUserId).FirstOrDefault(),
                 Distributions = distros
             };
 
@@ -114,7 +132,48 @@
         [ValidateAntiForgeryToken]
         public ActionResult Add(AddPackageViewModel model)
         {
+            if (model != null)
+            {
+                var currentUserId = this.User.Identity.GetUserId();
+                if (!model.MaintainerIds.Contains(currentUserId))
+                {
+                    model.MaintainerIds.Add(currentUserId);
+                }
+
+                // TODO: Optimize queries
+                var newPackage = this.packages.Create(
+                    model.Name,
+                    model.Description,
+                    model.DistributionId,
+                    model.RepositoryId,
+                    model.ArchitectureId,
+                    model.LicenseId,
+                    model.Contents.FileName,
+                    StreamHelper.ReadFully(model.Contents.InputStream, model.Contents.ContentLength),
+                    model.DependencyIds,
+                    null);
+                    //model.MaintainerIds
+                        //.Select(mId => this.UserManager.Users.Where(u => u.Id == mId).FirstOrDefault())
+                        //.ToList());
+
+                foreach (var modelScreenshot in model.Screenshots)
+                {
+                    this.screenshots.Create(modelScreenshot.FileName, StreamHelper.ReadFully(modelScreenshot.InputStream, modelScreenshot.ContentLength), newPackage.Id, newPackage.Name);
+                }
+            }
+
             return this.RedirectToAction("Index", "Home");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && this.userManager != null)
+            {
+                this.userManager.Dispose();
+                this.userManager = null;
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

@@ -7,8 +7,6 @@
 
     public interface ILinuxPackagesDbContext
     {
-        IDbSet<User> Users { get; set; }
-
         IDbSet<Package> Packages { get; set; }
 
         IDbSet<Distribution> Distributions { get; set; }

@@ -4,6 +4,7 @@
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
     using LinuxPackages.Services.Data.Contracts;
+    using System.IO;
 
     public class ScreenshotsService : IScreenshotsService
     {
@@ -16,12 +17,12 @@
             this.screenshotSaver = screenshotSaver;
         }
 
-        public Screenshot Create(string fileName, byte[] contents, string fileExtension, int packageId, string packageName)
+        public Screenshot Create(string fileName, byte[] contents, int packageId, string packageName)
         {
             var newScreenshot = new Screenshot
             {
-                FileName = fileName,
-                FileExtension = fileExtension,
+                FileName = Path.GetFileNameWithoutExtension(fileName),
+                FileExtension = Path.GetExtension(fileName),
                 Size = (uint)contents.Length,
                 PackageId = packageId
             };

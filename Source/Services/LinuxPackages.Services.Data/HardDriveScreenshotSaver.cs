@@ -16,15 +16,27 @@
 
         public void Save(int packageId, string packageName, string screenshotFilename, byte[] contents)
         {
-            var packageDirectory = packageId % PackageConstants.PackagesPerDirectory;
+            var directoryToSave = packageId % PackageConstants.PackagesPerDirectory;
 
-            string finalPath = Path.Combine(
-                                        this.rootPath,
-                                        packageDirectory.ToString(),
-                                        Path.GetFileNameWithoutExtension(packageName),
-                                        this.screenshotsFolderName,
-                                        screenshotFilename);
+            var directoryToSavePath = Path.Combine(this.rootPath, directoryToSave.ToString());
+            if (!Directory.Exists(directoryToSavePath))
+            {
+                Directory.CreateDirectory(directoryToSavePath);
+            }
+       
+            var packageDirectoryPath = Path.Combine(directoryToSavePath, Path.GetFileNameWithoutExtension(packageName));
+            if (!Directory.Exists(packageDirectoryPath))
+            {
+                Directory.CreateDirectory(packageDirectoryPath);
+            }
 
+            var screenshotsDirPath = Path.Combine(packageDirectoryPath, this.screenshotsFolderName);
+            if (!Directory.Exists(screenshotsDirPath))
+            {
+                Directory.CreateDirectory(screenshotsDirPath);
+            }
+
+            string finalPath = Path.Combine(screenshotsDirPath, screenshotFilename);
             File.WriteAllBytes(finalPath, contents);
         }
     }

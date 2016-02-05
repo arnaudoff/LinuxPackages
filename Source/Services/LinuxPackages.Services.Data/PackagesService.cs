@@ -8,6 +8,8 @@
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
     using System.IO;
+    using Common.Utilities;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
     public class PackagesService : IPackagesService
     {
@@ -35,33 +37,41 @@
         public Package Create(
             string name,
             string description,
+            int distributionId,
             int repositoryId,
             int architectureId,
             int licenseId,
             string fileName,
             byte[] contents,
-            ICollection<Package> dependencies,
-            ICollection<User> maintainers,
-            ICollection<Screenshot> screenshots)
+            IList<int> dependencyIds,
+            IList<User> maintainers)
         {
             var newPackage = new Package
             {
                 Name = name,
                 Description = description,
+                DistributionId = distributionId,
                 RepositoryId = repositoryId,
                 ArchitectureId = architectureId,
                 LicenseId = licenseId,
                 FileName = fileName,
-                Size = (uint)contents.Length,
-                UploadedOn = DateTime.UtcNow,
-                Dependencies = dependencies,
                 Maintainers = maintainers,
-                Screenshot = screenshots
+                Size = (uint)contents.Length,
+                UploadedOn = DateTime.UtcNow
             };
+
+            if (dependencyIds != null)
+            {
+                foreach (var dependencyId in dependencyIds)
+                {
+                    var currentDependency = packages.GetById(dependencyId);
+                    newPackage.Dependencies.Add(currentDependency);
+                }
+            }
 
             this.packages.Add(newPackage);
             this.packages.SaveChanges();
-            this.packageSaver.Save(newPackage.Id, fileName, contents);
+            this.packageSaver.Save(newPackage.Id, newPackage.Name, fileName, contents);
 
             return newPackage;
         }

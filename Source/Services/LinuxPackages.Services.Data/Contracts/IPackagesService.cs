@@ -1,8 +1,10 @@
 ﻿namespace LinuxPackages.Services.Data.Contracts
 {
-    using System.Linq;
-    using LinuxPackages.Data.Models;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+
+    using LinuxPackages.Data.Models;
 
     public interface IPackagesService
     {
@@ -13,13 +15,13 @@
         Package Create(
             string name,
             string description,
+            int distributionId,
             int repositoryId,
             int architectureId,
             int licenseId,
             string fileName,
             byte[] contents,
-            ICollection<Package> dependencies,
-            ICollection<User> maintainers,
-            ICollection<Screenshot> screenshots);
+            IList<int> dependencyIds,
+            IList<User> maintainers);
     }
 }

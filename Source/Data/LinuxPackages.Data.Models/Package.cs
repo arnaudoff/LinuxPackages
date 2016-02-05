@@ -91,7 +91,7 @@
             }
         }
 
-        [Required]
+        //[Required]
         public virtual ICollection<User> Maintainers
         {
             get
