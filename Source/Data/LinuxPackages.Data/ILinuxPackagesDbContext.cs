@@ -27,6 +27,8 @@
 
         IDbSet<License> Licenses { get; set; }
 
+        IDbSet<Dependency> Dependencies { get; set; }
+
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
         DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;

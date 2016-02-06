@@ -8,7 +8,6 @@
 
     public class Package
     {
-        private ICollection<Package> dependencies;
         private ICollection<User> maintainers;
         private ICollection<PackageRating> ratings;
         private ICollection<Screenshot> screenshots;
@@ -16,7 +15,6 @@
 
         public Package()
         {
-            this.dependencies = new HashSet<Package>();
             this.maintainers = new HashSet<User>();
             this.ratings = new HashSet<PackageRating>();
             this.screenshots = new HashSet<Screenshot>();
@@ -60,23 +58,10 @@
         public string FileName { get; set; }
 
         [Required]
-        public uint Size { get; set; }
+        public int Size { get; set; }
 
         [Required]
         public DateTime UploadedOn { get; set; }
-
-        public virtual ICollection<Package> Dependencies
-        {
-            get
-            {
-                return this.dependencies;
-            }
-
-            set
-            {
-                this.dependencies = value;
-            }
-        }
 
         public virtual ICollection<PackageRating> Ratings
         {
@@ -91,7 +76,7 @@
             }
         }
 
-        //[Required]
+        [Required]
         public virtual ICollection<User> Maintainers
         {
             get

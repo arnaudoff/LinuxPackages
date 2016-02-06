@@ -33,6 +33,8 @@
 
         public virtual IDbSet<License> Licenses { get; set; }
 
+        public virtual IDbSet<Dependency> Dependencies { get; set; }
+
         public static LinuxPackagesDbContext Create()
         {
             return new LinuxPackagesDbContext();

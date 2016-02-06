@@ -12,6 +12,9 @@
     using Services.Data.Contracts;
     using ViewModels.Packages;
     using Ninject;
+    using Kendo.Mvc.UI;
+    using Kendo.Mvc.Extensions;
+    using AutoMapper.QueryableExtensions;
 
     public class PackagesController : Controller
     {
@@ -72,7 +75,7 @@
                 {
                     Value = r.Id.ToString(),
                     Text = r.Name
-                });
+                }).AsEnumerable();
 
             var archs = this.architectures
                 .GetAll()
@@ -80,7 +83,7 @@
                 {
                     Value = a.Id.ToString(),
                     Text = a.Name
-                });
+                }).AsEnumerable();
 
             var licenses = this.licenses
                 .GetAll()
@@ -88,7 +91,7 @@
                 {
                     Value = l.Id.ToString(),
                     Text = l.Name
-                });
+                }).AsEnumerable();
 
             var dependencies = this.packages
                 .GetAll()
@@ -96,14 +99,14 @@
                 {
                     Value = p.Id.ToString(),
                     Text = p.Name
-                });
+                }).AsEnumerable();
 
             var maintainers = this.UserManager.Users
                 .Select(u => new SelectListItem
                 {
                     Value = u.Id,
                     Text = u.UserName
-                });
+                }).AsEnumerable();
 
             var distros = this.distros
                 .GetAll()
@@ -111,7 +114,7 @@
                 {
                     Value = d.Id.ToString(),
                     Text = d.Name
-                });
+                }).AsEnumerable();
 
             var model = new AddPackageViewModel
             {
@@ -131,33 +134,55 @@
         [ValidateAntiForgeryToken]
         public ActionResult Add(AddPackageViewModel model)
         {
-            if (model != null)
+            // TODO: Fix the validations & rebind
+            if (!ModelState.IsValid)
             {
-                var currentUserId = this.User.Identity.GetUserId();
-                if (!model.MaintainerIds.Contains(currentUserId))
-                {
-                    model.MaintainerIds.Add(currentUserId);
-                }
+                return View(model);
+            }
 
-                var newPackage = this.packages.Create(
-                    model.Name,
-                    model.Description,
-                    model.DistributionId,
-                    model.RepositoryId,
-                    model.ArchitectureId,
-                    model.LicenseId,
-                    model.Contents.FileName,
-                    StreamHelper.ReadFully(model.Contents.InputStream, model.Contents.ContentLength),
-                    model.DependencyIds,
-                    model.MaintainerIds);
+            var currentUserId = this.User.Identity.GetUserId();
+            if (!model.MaintainerIds.Contains(currentUserId))
+            {
+                model.MaintainerIds.Add(currentUserId);
+            }
 
-                foreach (var modelScreenshot in model.Screenshots)
+            var newPackage = this.packages.Create(
+                model.Name,
+                model.Description,
+                model.DistributionId,
+                model.RepositoryId,
+                model.ArchitectureId,
+                model.LicenseId,
+                model.Contents.FileName,
+                StreamHelper.ReadFully(model.Contents.InputStream, model.Contents.ContentLength),
+                model.DependencyIds,
+                model.MaintainerIds);
+
+            if (newPackage == null)
+            {
+                this.ModelState.AddModelError(string.Empty, "Could not create new package.");
+                return View(model);
+            }
+
+            foreach (var modelScreenshot in model.Screenshots)
+            {
+                Screenshot screen = this.screenshots.Create(modelScreenshot.FileName, StreamHelper.ReadFully(modelScreenshot.InputStream, modelScreenshot.ContentLength), newPackage.Id, newPackage.Name);
+                if (screen == null)
                 {
-                    this.screenshots.Create(modelScreenshot.FileName, StreamHelper.ReadFully(modelScreenshot.InputStream, modelScreenshot.ContentLength), newPackage.Id, newPackage.Name);
+                    this.ModelState.AddModelError(string.Empty, "Could not create screenshot.");
+                    return View(model);
                 }
             }
 
             return this.RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult GetPackages([DataSourceRequest]DataSourceRequest request)
+        {
+            var packages = this.packages.GetAll();
+            var packagesViewModel = packages.ProjectTo<ListedPackageViewModel>();
+            var results = packagesViewModel.ToDataSourceResult(request);
+            return Json(results, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

@@ -13,6 +13,6 @@
         @(Html.Kendo().Upload()
                     .Name(ViewData.ModelMetadata.PropertyName)
                     .Multiple(true))
-        @Html.ValidationMessageFor(m => Model, "", htmlAttributes: new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m, "", htmlAttributes: new { @class = "text-danger" })
     </div>
 </div>

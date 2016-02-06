@@ -10,6 +10,7 @@
         @(Html.Kendo().DropDownListFor(m => m)
                       .DataTextField("Text")
                       .DataValueField("Value")
+                      .AutoBind(true)
                       .BindTo(list)
                       .HtmlAttributes(new { style = "width: 20%" }))
     </div>

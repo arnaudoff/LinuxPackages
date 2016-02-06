@@ -7,21 +7,20 @@
     using Contracts;
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
-    using System.IO;
-    using Common.Utilities;
-    using Microsoft.AspNet.Identity.EntityFramework;
 
     public class PackagesService : IPackagesService
     {
         private readonly IRepository<Package> packages;
         private readonly IRepository<User> users;
         private readonly IPackageSaver packageSaver;
+        private readonly IRepository<Dependency> dependencies;
 
-        public PackagesService(IRepository<Package> packages, IRepository<User> users, IPackageSaver packageSaver)
+        public PackagesService(IRepository<Package> packages, IRepository<User> users, IRepository<Dependency> dependencies, IPackageSaver packageSaver)
         {
             this.packages = packages;
             this.users = users;
             this.packageSaver = packageSaver;
+            this.dependencies = dependencies;
         }
 
         public IQueryable<Package> GetAll()
@@ -57,19 +56,9 @@
                 ArchitectureId = architectureId,
                 LicenseId = licenseId,
                 FileName = fileName,
-                Size = (uint)contents.Length,
+                Size = contents.Length,
                 UploadedOn = DateTime.UtcNow
             };
-
-            if (dependencyIds != null && dependencyIds.Count > 0)
-            {
-                foreach (int dependencyId in dependencyIds)
-                {
-                    var dependency = new Package() { Id = dependencyId };
-                    packages.Attach(dependency);
-                    newPackage.Dependencies.Add(dependency);
-                }
-            }
 
             if (maintainerIds != null && maintainerIds.Count > 0)
             {
@@ -84,6 +73,22 @@
             this.packages.Add(newPackage);
             this.packages.SaveChanges();
             this.packageSaver.Save(newPackage.Id, newPackage.Name, fileName, contents);
+
+            if (dependencyIds != null && dependencyIds.Count > 0)
+            {
+                foreach (int dependencyId in dependencyIds)
+                {
+                    var newDependency = new Dependency()
+                    {
+                        PackageId = newPackage.Id,
+                        DependsOnId = dependencyId
+                    };
+
+                    this.dependencies.Add(newDependency);
+                }
+            }
+
+            this.dependencies.SaveChanges();
 
             return newPackage;
         }
