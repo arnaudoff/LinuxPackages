@@ -11,6 +11,7 @@
     using Microsoft.AspNet.Identity.Owin;
     using Services.Data.Contracts;
     using ViewModels.Packages;
+    using Ninject;
 
     public class PackagesController : Controller
     {
@@ -28,8 +29,7 @@
             ILicensesService licenses,
             IRepositoriesService repositories,
             IDistributionsService distros,
-            IScreenshotsService screenshots,
-            ApplicationUserManager userManager)
+            IScreenshotsService screenshots)
         {
             this.packages = packages;
             this.architectures = architectures;
@@ -37,7 +37,6 @@
             this.repositories = repositories;
             this.distros = distros;
             this.screenshots = screenshots;
-            this.UserManager = userManager;
         }
 
         public ApplicationUserManager UserManager
@@ -140,7 +139,6 @@
                     model.MaintainerIds.Add(currentUserId);
                 }
 
-                // TODO: Optimize queries
                 var newPackage = this.packages.Create(
                     model.Name,
                     model.Description,
@@ -151,10 +149,7 @@
                     model.Contents.FileName,
                     StreamHelper.ReadFully(model.Contents.InputStream, model.Contents.ContentLength),
                     model.DependencyIds,
-                    null);
-                    //model.MaintainerIds
-                        //.Select(mId => this.UserManager.Users.Where(u => u.Id == mId).FirstOrDefault())
-                        //.ToList());
+                    model.MaintainerIds);
 
                 foreach (var modelScreenshot in model.Screenshots)
                 {

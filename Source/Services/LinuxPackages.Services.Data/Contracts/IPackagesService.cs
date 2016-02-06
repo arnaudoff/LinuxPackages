@@ -22,6 +22,6 @@
             string fileName,
             byte[] contents,
             IList<int> dependencyIds,
-            IList<User> maintainers);
+            IList<string> maintainerIds);
     }
 }

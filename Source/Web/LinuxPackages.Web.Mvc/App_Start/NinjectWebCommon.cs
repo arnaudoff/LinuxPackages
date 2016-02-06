@@ -65,8 +65,6 @@ namespace LinuxPackages.Web.Mvc.App_Start
             kernel.Bind<DbContext>().To<LinuxPackagesDbContext>().InRequestScope();
             kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
             kernel.Bind<IRandomGenerator>().To<RandomGenerator>();
-            kernel.Bind<IUserStore<User>>().To<UserStore<User>>().WithConstructorArgument("context", kernel.Get<DbContext>());
-            kernel.Bind<UserManager<User>>().ToSelf();
 
             string packagesStorePath = HostingEnvironment.MapPath(PackageConstants.PackagesPath);
 

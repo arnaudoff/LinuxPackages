@@ -14,11 +14,13 @@
     public class PackagesService : IPackagesService
     {
         private readonly IRepository<Package> packages;
+        private readonly IRepository<User> users;
         private readonly IPackageSaver packageSaver;
 
-        public PackagesService(IRepository<Package> packages, IPackageSaver packageSaver)
+        public PackagesService(IRepository<Package> packages, IRepository<User> users, IPackageSaver packageSaver)
         {
             this.packages = packages;
+            this.users = users;
             this.packageSaver = packageSaver;
         }
 
@@ -44,7 +46,7 @@
             string fileName,
             byte[] contents,
             IList<int> dependencyIds,
-            IList<User> maintainers)
+            IList<string> maintainerIds)
         {
             var newPackage = new Package
             {
@@ -55,17 +57,27 @@
                 ArchitectureId = architectureId,
                 LicenseId = licenseId,
                 FileName = fileName,
-                Maintainers = maintainers,
                 Size = (uint)contents.Length,
                 UploadedOn = DateTime.UtcNow
             };
 
-            if (dependencyIds != null)
+            if (dependencyIds != null && dependencyIds.Count > 0)
             {
-                foreach (var dependencyId in dependencyIds)
+                foreach (int dependencyId in dependencyIds)
                 {
-                    var currentDependency = packages.GetById(dependencyId);
-                    newPackage.Dependencies.Add(currentDependency);
+                    var dependency = new Package() { Id = dependencyId };
+                    packages.Attach(dependency);
+                    newPackage.Dependencies.Add(dependency);
+                }
+            }
+
+            if (maintainerIds != null && maintainerIds.Count > 0)
+            {
+                foreach (string maintainerId in maintainerIds)
+                {
+                    var maintainer = new User() { Id = maintainerId };
+                    users.Attach(maintainer);
+                    newPackage.Maintainers.Add(maintainer);
                 }
             }
 
