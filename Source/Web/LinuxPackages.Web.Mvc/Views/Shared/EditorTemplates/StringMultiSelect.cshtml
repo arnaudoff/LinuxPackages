@@ -1,0 +1,20 @@
+﻿@model List<string>
+
+@{
+    var list = (IEnumerable<SelectListItem>)ViewData["List"];
+    var defaultValues = (IEnumerable<SelectListItem>)ViewData["Defaults"];
+}
+
+<div class="form-group">
+    @Html.LabelForModel(new { @class = "col-md-2 control-label" })
+    <div class="col-md-10">
+        @(Html.Kendo().MultiSelectFor(m => m)
+                      .Name(ViewData.ModelMetadata.PropertyName)
+                      .Placeholder(string.Format("Click to select {0}", ViewData.ModelMetadata.GetDisplayName().ToLower()))
+                      .DataTextField("Text")
+                      .DataValueField("Value")
+                      .BindTo(list)
+                      .HtmlAttributes(new { style = "width: 20%" })
+                      .Value(defaultValues))
+    </div>
+</div>

@@ -15,6 +15,7 @@
     using Kendo.Mvc.UI;
     using Kendo.Mvc.Extensions;
     using AutoMapper.QueryableExtensions;
+    using Infrastructure.Extensions;
 
     public class PackagesController : Controller
     {
@@ -68,62 +69,14 @@
         [Authorize]
         public ActionResult Add()
         {
-            // TODO: Cache
-            var repos = this.repositories
-                .GetAll()
-                .Select(r => new SelectListItem
-                {
-                    Value = r.Id.ToString(),
-                    Text = r.Name
-                }).AsEnumerable();
-
-            var archs = this.architectures
-                .GetAll()
-                .Select(a => new SelectListItem
-                {
-                    Value = a.Id.ToString(),
-                    Text = a.Name
-                }).AsEnumerable();
-
-            var licenses = this.licenses
-                .GetAll()
-                .Select(l => new SelectListItem
-                {
-                    Value = l.Id.ToString(),
-                    Text = l.Name
-                }).AsEnumerable();
-
-            var dependencies = this.packages
-                .GetAll()
-                .Select(p => new SelectListItem
-                {
-                    Value = p.Id.ToString(),
-                    Text = p.Name
-                }).AsEnumerable();
-
-            var maintainers = this.UserManager.Users
-                .Select(u => new SelectListItem
-                {
-                    Value = u.Id,
-                    Text = u.UserName
-                }).AsEnumerable();
-
-            var distros = this.distros
-                .GetAll()
-                .Select(d => new SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.Name
-                }).AsEnumerable();
-
             var model = new AddPackageViewModel
             {
-                Repositories = repos,
-                Architectures = archs,
-                Licenses = licenses,
-                Maintainers = maintainers,
-                Dependencies = dependencies,
-                Distributions = distros
+                Repositories = this.GetRepositories(),
+                Architectures = this.GetArchitectures(),
+                Licenses = this.GetLicenses(),
+                Maintainers = this.GetMaintainers(),
+                Dependencies = this.GetDependencies(),
+                Distributions = this.GetDistributions()
             };
 
             return View(model);
@@ -134,7 +87,13 @@
         [ValidateAntiForgeryToken]
         public ActionResult Add(AddPackageViewModel model)
         {
-            // TODO: Fix the validations & rebind
+            model.Repositories = this.GetRepositories();
+            model.Architectures = this.GetArchitectures();
+            model.Licenses = this.GetLicenses();
+            model.Maintainers = this.GetMaintainers();
+            model.Dependencies = this.GetDependencies();
+            model.Distributions = this.GetDistributions();
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -194,6 +153,102 @@
             }
 
             base.Dispose(disposing);
+        }
+
+        private IEnumerable<SelectListItem> GetRepositories()
+        {
+            var repos = HttpRuntime
+                .Cache
+                .GetOrStore<IEnumerable<SelectListItem>>("repositories", () => this.repositories
+                    .GetAll()
+                    .Select(r => new SelectListItem
+                    {
+                        Value = r.Id.ToString(),
+                        Text = r.Name
+                    })
+                    .ToList());
+
+            return repos;
+        }
+
+        private IEnumerable<SelectListItem> GetArchitectures()
+        {
+            var archs = HttpRuntime
+                .Cache
+                .GetOrStore<IEnumerable<SelectListItem>>("architectures", () => this.architectures
+                    .GetAll()
+                    .Select(a => new SelectListItem
+                    {
+                        Value = a.Id.ToString(),
+                        Text = a.Name
+                    })
+                    .ToList());
+
+            return archs;
+        }
+
+        private IEnumerable<SelectListItem> GetLicenses()
+        {
+            var licenses = HttpRuntime
+                .Cache
+                .GetOrStore<IEnumerable<SelectListItem>>("licenses", () => this.licenses
+                    .GetAll()
+                    .Select(l => new SelectListItem
+                    {
+                        Value = l.Id.ToString(),
+                        Text = l.Name
+                    })
+                    .ToList());
+
+            return licenses;
+        }
+
+        private IEnumerable<SelectListItem> GetDependencies()
+        {
+            var dependencies = HttpRuntime
+                .Cache
+                .GetOrStore<IEnumerable<SelectListItem>>("dependencies", () => this.packages
+                    .GetAll()
+                    .Select(p => new SelectListItem
+                    {
+                        Value = p.Id.ToString(),
+                        Text = p.Name
+                    })
+                    .ToList());
+
+            return dependencies;
+        }
+
+        private IEnumerable<SelectListItem> GetMaintainers()
+        {
+            var maintainers = HttpRuntime
+                .Cache
+                .GetOrStore<IEnumerable<SelectListItem>>("maintainers", () => this.UserManager
+                    .Users
+                    .Select(u => new SelectListItem
+                    {
+                        Value = u.Id,
+                        Text = u.UserName
+                    })
+                    .ToList());
+
+            return maintainers;
+        }
+
+        private IEnumerable<SelectListItem> GetDistributions()
+        {
+            var distros = HttpRuntime
+                .Cache
+                .GetOrStore<IEnumerable<SelectListItem>>("distros", () => this.distros
+                    .GetAll()
+                    .Select(d => new SelectListItem
+                    {
+                        Value = d.Id.ToString(),
+                        Text = d.Name + " " + d.Version
+                    })
+                    .ToList());
+
+            return distros;
         }
     }
 }

@@ -1,0 +1,15 @@
+﻿@using LinuxPackages.Web.Mvc.ViewModels.Packages;
+
+@{ 
+    ViewBag.Title = "All packages";
+}
+
+@(Html.Kendo()
+    .Grid<ListedPackageViewModel>()
+    .Name("AllPackagesGrid")
+    .DataSource(data =>
+        data.Ajax().Read(r => r.Action("GetPackages", "Packages")))
+    .Filterable()
+    .Sortable()
+    .Pageable()
+    .Groupable())

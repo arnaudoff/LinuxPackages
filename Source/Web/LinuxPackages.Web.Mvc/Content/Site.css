@@ -16,10 +16,6 @@
     width: 100%;
 }
 
-.k-multiselect {
-    border: none;
-}
-
-.k-upload {
+.k-multiselect, .k-upload, .k-widget, .k-grid {
     border: none;
 }
