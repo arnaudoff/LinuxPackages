@@ -7,6 +7,20 @@
 @(Html.Kendo()
     .Grid<ListedPackageViewModel>()
     .Name("AllPackagesGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Id).ClientTemplate(
+            "<a href='" +
+                Url.Action("Details", "Packages") +
+                "/#= Id #'" +
+            ">#= Name #</a>"
+        ).Title("Name");
+        columns.Bound(c => c.Distribution);
+        columns.Bound(c => c.Repository);
+        columns.Bound(c => c.Architecture);
+        columns.Bound(c => c.Rating);
+        columns.Bound(c => c.UploadedOn).Format("{0:dd/MM/yyyy}");
+    })
     .DataSource(data =>
         data.Ajax().Read(r => r.Action("GetPackages", "Packages")))
     .Filterable()
