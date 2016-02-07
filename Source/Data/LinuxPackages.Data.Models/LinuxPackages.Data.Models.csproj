@@ -57,8 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Architecture.cs" />
+    <Compile Include="Dependency.cs" />
+    <Compile Include="Distribution.cs" />
     <Compile Include="Issue.cs" />
     <Compile Include="IssueReply.cs" />
+    <Compile Include="License.cs" />
     <Compile Include="Package.cs" />
     <Compile Include="PackageComment.cs" />
     <Compile Include="PackageRating.cs" />

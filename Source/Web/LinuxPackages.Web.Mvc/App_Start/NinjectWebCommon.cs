@@ -5,16 +5,26 @@ namespace LinuxPackages.Web.Mvc.App_Start
 {
     using System;
     using System.Web;
+    using System.Web.Hosting;
 
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-    using Ninject;
-    using Ninject.Web.Common;
-    using Ninject.Extensions.Conventions;
-
+    using Common;
+    using Common.Constants;
+    using Common.Contracts;
+    using Common.Utilities;
     using Data;
     using Data.Repositories;
-    using Common;
+
+    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+    using Ninject;
+    using Ninject.Extensions.Conventions;
+    using Ninject.Web.Common;
+
+    using Services.Data;
+    using Services.Data.Contracts;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity;
+    using Data.Models;
+    using System.Data.Entity;
 
     public static class NinjectWebCommon 
     {
@@ -52,12 +62,25 @@ namespace LinuxPackages.Web.Mvc.App_Start
 
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<ILinuxPackagesDbContext>().To<LinuxPackagesDbContext>();
+            kernel.Bind<DbContext>().To<LinuxPackagesDbContext>().InRequestScope();
             kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
+            kernel.Bind<IRandomGenerator>().To<RandomGenerator>();
+
+            string packagesStorePath = HostingEnvironment.MapPath(PackageConstants.PackagesPath);
+
+            kernel.Bind<IPackageSaver>()
+                .To<HardDrivePackageSaver>()
+                .WithConstructorArgument("rootPath", packagesStorePath);
+
+            kernel.Bind<IScreenshotSaver>()
+                .To<HardDriveScreenshotSaver>()
+                .WithConstructorArgument("rootPath", packagesStorePath)
+                .WithConstructorArgument("screenshotsFolderName", PackageConstants.ScreenshotsFolderName);
 
             kernel.Bind(b => b
                 .From(Assemblies.Services)
                 .SelectAllClasses()
+                .EndingWith("Service")
                 .BindDefaultInterface());
         }        
     }

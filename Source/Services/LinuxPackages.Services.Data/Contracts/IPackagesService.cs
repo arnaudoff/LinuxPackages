@@ -1,22 +1,27 @@
 ﻿namespace LinuxPackages.Services.Data.Contracts
 {
-    using System.Linq;
-    using LinuxPackages.Data.Models;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+
+    using LinuxPackages.Data.Models;
 
     public interface IPackagesService
     {
+        IQueryable<Package> GetAll();
+
         IQueryable<Package> GetById(int id);
 
         Package Create(
             string name,
-            string architecture,
             string description,
-            string license,
+            int distributionId,
+            int repositoryId,
+            int architectureId,
+            int licenseId,
             string fileName,
             byte[] contents,
-            ICollection<Package> dependencies,
-            ICollection<User> maintainers,
-            ICollection<Screenshot> screenshots);
+            IList<int> dependencyIds,
+            IList<string> maintainerIds);
     }
 }

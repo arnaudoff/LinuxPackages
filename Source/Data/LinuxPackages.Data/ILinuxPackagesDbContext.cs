@@ -7,9 +7,9 @@
 
     public interface ILinuxPackagesDbContext
     {
-        IDbSet<User> Users { get; set; }
-
         IDbSet<Package> Packages { get; set; }
+
+        IDbSet<Distribution> Distributions { get; set; }
 
         IDbSet<PackageRating> PackageRatings { get; set; }
 
@@ -22,6 +22,12 @@
         IDbSet<IssueReply> IssueReplies { get; set; }
 
         IDbSet<Repository> Repositories { get; set; }
+
+        IDbSet<Architecture> Architectures { get; set; }
+
+        IDbSet<License> Licenses { get; set; }
+
+        IDbSet<Dependency> Dependencies { get; set; }
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
 

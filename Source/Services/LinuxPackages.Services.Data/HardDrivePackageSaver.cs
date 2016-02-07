@@ -14,12 +14,23 @@
             this.rootPath = rootPath;
         }
 
-        public void Save(int packageId, string filename, byte[] contents)
+        public void Save(int packageId, string packageName, string filename, byte[] contents)
         {
             var directoryToSave = packageId % PackageConstants.PackagesPerDirectory;
 
-            string finalPath = Path.Combine(this.rootPath, directoryToSave.ToString(), Path.GetFileNameWithoutExtension(filename), filename);
+            var directoryToSavePath = Path.Combine(this.rootPath, directoryToSave.ToString());
+            if (!Directory.Exists(directoryToSavePath))
+            {
+                Directory.CreateDirectory(directoryToSavePath);
+            }
 
+            var packageDirectoryPath = Path.Combine(directoryToSavePath, packageName);
+            if (!Directory.Exists(packageDirectoryPath))
+            {
+                Directory.CreateDirectory(packageDirectoryPath);
+            }
+
+            string finalPath = Path.Combine(packageDirectoryPath, filename);
             File.WriteAllBytes(finalPath, contents);
         }
     }

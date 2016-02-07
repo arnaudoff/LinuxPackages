@@ -1,0 +1,18 @@
+﻿@model string
+
+<div class="form-group">
+    @if (ViewData.ModelMetadata.IsRequired)
+    {
+        @Html.LabelForModel(new { @class = "col-md-2 control-label" })
+    }
+    else
+    {
+        @Html.LabelForModel(string.Format("{0} (optional)", ViewData.ModelMetadata.GetDisplayName()), new { @class = "col-md-2 control-label" })
+    }
+    <div class="col-md-10">
+        @(Html.Kendo().Upload()
+                    .Name(ViewData.ModelMetadata.PropertyName)
+                    .Multiple(false))
+        @Html.ValidationMessageFor(m => m, "", htmlAttributes: new { @class = "text-danger" })
+    </div>
+</div>

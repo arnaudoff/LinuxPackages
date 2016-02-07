@@ -20,7 +20,7 @@ namespace LinuxPackages.Web.Mvc.ViewModels.Profile
         {
             configuration.CreateMap<User, ProfileViewModel>()
                 .ForMember(u => u.IssuesCreatedCount, opts => opts.MapFrom(u => u.Issues.Count))
-                .ForMember(u => u.PackagesMaintainedCount, opts => opts.MapFrom(u => u.Packages.Count));
+                .ForMember(u => u.PackagesMaintainedCount, opts => opts.MapFrom(u => u.Issues.Count));
         }
     }
 }

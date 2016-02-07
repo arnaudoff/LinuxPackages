@@ -8,8 +8,6 @@
 
     public class Package
     {
-        private ICollection<Package> dependencies;
-        private ICollection<Package> requiredBy;
         private ICollection<User> maintainers;
         private ICollection<PackageRating> ratings;
         private ICollection<Screenshot> screenshots;
@@ -17,10 +15,10 @@
 
         public Package()
         {
-            this.dependencies = new HashSet<Package>();
-            this.requiredBy = new HashSet<Package>();
-            this.ratings = new HashSet<PackageRating>();
             this.maintainers = new HashSet<User>();
+            this.ratings = new HashSet<PackageRating>();
+            this.screenshots = new HashSet<Screenshot>();
+            this.comments = new HashSet<PackageComment>();
         }
 
         [Key]
@@ -29,59 +27,41 @@
         [Required]
         [MinLength(PackageConstants.MinNameLength)]
         [MaxLength(PackageConstants.MaxNameLength)]
-        [Index]
         public string Name { get; set; }
 
         [Required]
-        [MinLength(PackageConstants.MinArchitectureNameLength)]
-        [MaxLength(PackageConstants.MaxArchitectureNameLength)]
-        public string Architecture { get; set; }
-
-        [Required]
-        [MinLength(PackageConstants.MinArchitectureNameLength)]
-        [MaxLength(PackageConstants.MaxArchitectureNameLength)]
-        [Index]
+        [MinLength(PackageConstants.MinDescriptionLength)]
+        [MaxLength(PackageConstants.MaxDescriptionLength)]
         public string Description { get; set; }
 
         [Required]
-        [MinLength(PackageConstants.MinLicenseNameLength)]
-        [MaxLength(PackageConstants.MaxLicenseNameLength)]
-        public string License { get; set; }
+        public int DistributionId { get; set; }
+        
+        public virtual Distribution Distribution { get; set; }
 
         [Required]
-        public string FilePath { get; set; }
+        public int RepositoryId { get; set; }
+
+        public virtual Repository Repository { get; set; }
 
         [Required]
-        public uint Size { get; set; }
+        public int ArchitectureId { get; set; }
+
+        public virtual Architecture Architecture { get; set; }
+
+        [Required]
+        public int LicenseId { get; set; }
+
+        public virtual License License { get; set; }
+
+        [Required]
+        public string FileName { get; set; }
+
+        [Required]
+        public int Size { get; set; }
 
         [Required]
         public DateTime UploadedOn { get; set; }
-
-        public virtual ICollection<Package> Dependencies
-        {
-            get
-            {
-                return this.dependencies;
-            }
-
-            set
-            {
-                this.dependencies = value;
-            }
-        }
-
-        public virtual ICollection<Package> RequiredBy
-        {
-            get
-            {
-                return this.requiredBy;
-            }
-
-            set
-            {
-                this.requiredBy = value;
-            }
-        }
 
         public virtual ICollection<PackageRating> Ratings
         {

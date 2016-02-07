@@ -21,6 +21,16 @@
             this.issues = new HashSet<Issue>();
         }
 
+        [Required]
+        [MinLength(UserConstants.MinFirstNameLength)]
+        [MaxLength(UserConstants.MaxFirstNameLength)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MinLength(UserConstants.MinLastNameLength)]
+        [MaxLength(UserConstants.MaxLastNameLength)]
+        public string LastName { get; set; }
+
         public virtual ICollection<Package> Packages
         {
             get
@@ -46,16 +56,6 @@
                 this.issues = value;
             }
         }
-
-        [Required]
-        [MinLength(UserConstants.MinFirstNameLength)]
-        [MaxLength(UserConstants.MaxFirstNameLength)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [MinLength(UserConstants.MinLastNameLength)]
-        [MaxLength(UserConstants.MaxLastNameLength)]
-        public string LastName { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
