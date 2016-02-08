@@ -43,6 +43,7 @@
     <Compile Include="Constants\ArchitectureConstants.cs" />
     <Compile Include="Constants\Assemblies.cs" />
     <Compile Include="Constants\DistributionConstants.cs" />
+    <Compile Include="Constants\GlobalConstants.cs" />
     <Compile Include="Constants\IssueConstants.cs" />
     <Compile Include="Constants\LicenseConstants.cs" />
     <Compile Include="Constants\PackageConstants.cs" />

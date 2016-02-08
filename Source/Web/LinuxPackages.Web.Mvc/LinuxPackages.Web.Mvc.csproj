@@ -219,11 +219,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Extensions\CacheExtensions.cs" />
+    <Compile Include="Infrastructure\Helpers\QueryStringUrlHelper.cs" />
     <Compile Include="Infrastructure\Mappings\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\Mappings\IMapFrom.cs" />
+    <Compile Include="ViewModels\Account\ListedUserViewModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\Packages\AddPackageViewModel.cs" />
+    <Compile Include="ViewModels\Packages\ArchitectureViewModel.cs" />
+    <Compile Include="ViewModels\Packages\DistributionViewModel.cs" />
+    <Compile Include="ViewModels\Packages\LicenseViewModel.cs" />
     <Compile Include="ViewModels\Packages\ListedPackageViewModel.cs" />
+    <Compile Include="ViewModels\Packages\ListedScreenshotViewModel.cs" />
+    <Compile Include="ViewModels\Packages\PackageDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Packages\PackageCommentViewModel.cs" />
+    <Compile Include="ViewModels\Packages\RepositoryViewModel.cs" />
     <Compile Include="ViewModels\Profile\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\Profile\ProfileViewModel.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
@@ -297,7 +306,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
