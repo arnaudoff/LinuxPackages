@@ -1,0 +1,34 @@
+﻿@model LinuxPackages.Web.Mvc.ViewModels.Packages.AddPackageViewModel
+
+@{
+    ViewBag.Title = "Add a new package";
+}
+
+@using (Html.BeginForm("Add", "Packages", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Add a new package</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.EditorFor(m => m.Name)
+    @Html.EditorFor(m => m.Description, new { rows = "3", @class = "k-textarea full-width" })
+    @Html.EditorFor(m => m.DistributionId, new { List = Model.Distributions })
+    @Html.EditorFor(m => m.RepositoryId, new { List = Model.Repositories })
+    @Html.EditorFor(m => m.ArchitectureId, new { List = Model.Architectures })
+    @Html.EditorFor(m => m.LicenseId, new { List = Model.Licenses })
+    @Html.EditorFor(m => m.Contents)
+    @Html.EditorFor(m => m.Screenshots)
+    @Html.EditorFor(m => m.DependencyIds, new { List = Model.Dependencies })
+    @Html.EditorFor(m => m.MaintainerIds, new { List = Model.Maintainers })
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="k-button" value="Add package" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/validation")
+}
