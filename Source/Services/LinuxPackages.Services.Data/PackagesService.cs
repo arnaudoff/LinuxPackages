@@ -14,13 +14,20 @@
         private readonly IRepository<User> users;
         private readonly IPackageSaver packageSaver;
         private readonly IRepository<Dependency> dependencies;
+        private readonly IRepository<PackageComment> comments;
 
-        public PackagesService(IRepository<Package> packages, IRepository<User> users, IRepository<Dependency> dependencies, IPackageSaver packageSaver)
+        public PackagesService(
+            IRepository<Package> packages,
+            IRepository<User> users,
+            IRepository<Dependency> dependencies,
+            IRepository<PackageComment> comments,
+            IPackageSaver packageSaver)
         {
             this.packages = packages;
             this.users = users;
-            this.packageSaver = packageSaver;
             this.dependencies = dependencies;
+            this.packageSaver = packageSaver;
+            this.comments = comments;
         }
 
         public IQueryable<Package> GetAll()
@@ -91,6 +98,22 @@
             this.dependencies.SaveChanges();
 
             return newPackage;
+        }
+
+        public PackageComment AddComment(string content, int packageId, string authorId)
+        {
+            var newComment = new PackageComment()
+            {
+                Content = content,
+                PackageId = packageId,
+                AuthorId = authorId,
+                CreatedOn = DateTime.UtcNow
+            };
+
+            this.comments.Add(newComment);
+            this.comments.SaveChanges();
+
+            return newComment;
         }
     }
 }

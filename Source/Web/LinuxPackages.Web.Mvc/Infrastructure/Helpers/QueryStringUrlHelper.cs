@@ -5,6 +5,7 @@
     using System.Security.Cryptography;
     using System.Web.Security;
     using Common.Constants;
+    using System.Web;
 
     public static class QueryStringUrlHelper
     {
@@ -21,6 +22,21 @@
             string saltedParam = string.Concat(param, salt);
             string urlHash = FormsAuthentication.HashPasswordForStoringInConfigFile(saltedParam, "sha1");
             return new string(urlHash.Take(GlobalConstants.UrlHashLength).ToArray()); ;
+        }
+
+        public static bool IsHashValid(string urlHash)
+        {
+            string initialHash = urlHash.Substring(Math.Max(0, urlHash.Length - GlobalConstants.UrlHashLength));
+            string parsedEntityId = GetEntityIdFromUrlHash(urlHash);
+
+            string generatedHash = GenerateUrlHash(parsedEntityId, (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName]);
+
+            return generatedHash == initialHash;
+        }
+
+        public static string GetEntityIdFromUrlHash(string urlHash)
+        {
+            return urlHash.Substring(0, Math.Max(0, urlHash.Length - GlobalConstants.UrlHashLength));
         }
     }
 }

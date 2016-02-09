@@ -12,42 +12,33 @@
     public class FilesController : Controller
     {
         private readonly IPackagesService packages;
+        private readonly IPackageSaver packageSaver;
         private readonly IScreenshotSaver screenshotSaver;
 
-        public FilesController(IPackagesService packages, IScreenshotSaver screenshotSaver)
+        public FilesController(IPackagesService packages, IPackageSaver packageSaver, IScreenshotSaver screenshotSaver)
         {
             this.packages = packages;
+            this.packageSaver = packageSaver;
             this.screenshotSaver = screenshotSaver;
         }
 
         public ActionResult Screenshots(string id, string resource)
         {
-            string packageHash = id.Substring(Math.Max(0, id.Length - GlobalConstants.UrlHashLength));
-            string parsedPackageId = id.Substring(0, Math.Max(0, id.Length - GlobalConstants.UrlHashLength));
-
-            string packageIdHashed = 
-                QueryStringUrlHelper.GenerateUrlHash(parsedPackageId, (string)this.ControllerContext.HttpContext.Application[GlobalConstants.UrlSaltKeyName]);
-
-            if (packageIdHashed != packageHash)
+            if (!QueryStringUrlHelper.IsHashValid(id))
             {
                 return new HttpNotFoundResult("The requested package was not found.");
             }
 
-            string screenshotHash = resource.Substring(Math.Max(0, resource.Length - GlobalConstants.UrlHashLength));
-            string parsedScreenshotId = resource.Substring(0, Math.Max(0, resource.Length - GlobalConstants.UrlHashLength));
-
-            string screenshotIdHashed = 
-                QueryStringUrlHelper.GenerateUrlHash(parsedScreenshotId,(string)this.ControllerContext.HttpContext.Application[GlobalConstants.UrlSaltKeyName]);
-
-            if (screenshotIdHashed != screenshotHash)
+            if (!QueryStringUrlHelper.IsHashValid(resource))
             {
                 return new HttpNotFoundResult("The requested screenshot was not found.");
             }
 
-            int requestedScreenshotId = int.Parse(parsedScreenshotId);
+            int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+            int requestedScreenshotId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(resource));
 
             var package = this.packages
-                .GetById(int.Parse(parsedPackageId))
+                .GetById(requestedPackageId)
                 .Select(p => new
                 {
                     Name = p.Name,
@@ -57,8 +48,32 @@
 
             string fullFilename = string.Format("{0}{1}", package.Screenshot.FileName, package.Screenshot.FileExtension);
 
-            byte[] contents = this.screenshotSaver.Read(int.Parse(parsedPackageId), package.Name, fullFilename);
+            byte[] contents = this.screenshotSaver.Read(requestedPackageId, package.Name, fullFilename);
             string mimeType = MimeMapping.GetMimeMapping(fullFilename);
+
+            return new FileContentResult(contents, mimeType);
+        }
+        
+        public ActionResult Packages(string id)
+        {
+            if (!QueryStringUrlHelper.IsHashValid(id))
+            {
+                return new HttpNotFoundResult("The requested package was not found.");
+            }
+
+            int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+
+            var package = this.packages
+                .GetById(requestedPackageId)
+                .Select(p => new
+                {
+                    Name = p.Name,
+                    FileName = p.FileName
+                })
+                .FirstOrDefault();
+
+            byte[] contents = this.packageSaver.Read(requestedPackageId, package.Name, package.FileName);
+            string mimeType = MimeMapping.GetMimeMapping(package.FileName);
 
             return new FileContentResult(contents, mimeType);
         }

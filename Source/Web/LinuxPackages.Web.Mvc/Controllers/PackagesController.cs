@@ -66,20 +66,15 @@
 
         public ActionResult Details(string id)
         {
-            var packageHash = id.Substring(Math.Max(0, id.Length - GlobalConstants.UrlHashLength));
-            var packageId = id.Substring(0, Math.Max(0, id.Length - GlobalConstants.UrlHashLength));
-
-            string packageIdHashed = QueryStringUrlHelper.GenerateUrlHash(
-                packageId,
-                (string)this.ControllerContext.HttpContext.Application[GlobalConstants.UrlSaltKeyName]);
-
-            if (packageIdHashed != packageHash)
+            if (!QueryStringUrlHelper.IsHashValid(id))
             {
                 return new HttpNotFoundResult("The requested package was not found.");
             }
 
+            int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+
             var packageModel = this.packages
-                .GetById(int.Parse(packageId))
+                .GetById(requestedPackageId)
                 .ProjectTo<PackageDetailsViewModel>()
                 .FirstOrDefault();
 

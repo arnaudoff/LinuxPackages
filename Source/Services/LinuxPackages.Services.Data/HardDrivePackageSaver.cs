@@ -33,5 +33,16 @@
             string finalPath = Path.Combine(packageDirectoryPath, filename);
             File.WriteAllBytes(finalPath, contents);
         }
+
+        public byte[] Read(int packageId, string packageName, string fileName)
+        {
+            var filePath = Path.Combine(
+                this.rootPath,
+                (packageId % PackageConstants.PackagesPerDirectory).ToString(),
+                packageName,
+                fileName);
+
+            return File.ReadAllBytes(filePath);
+        }
     }
 }

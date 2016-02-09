@@ -23,5 +23,7 @@
             byte[] contents,
             IList<int> dependencyIds,
             IList<string> maintainerIds);
+
+        PackageComment AddComment(string content, int packageId, string authorId);
     }
 }

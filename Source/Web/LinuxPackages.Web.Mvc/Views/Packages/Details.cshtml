@@ -12,7 +12,9 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>Name</dt>
-        <dd>@Model.Name</dd>
+        <dd>
+            @Model.Name
+        </dd>
     </dl>
     <dl class="dl-horizontal">
         <dt>Description</dt>
@@ -45,6 +47,13 @@
                 @Model.License.Name
             </a><br />
             <small>@Model.License.Description</small>
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>File</dt>
+        <dd>
+            <a href="/Files/Packages/@Model.Id" class="k-button">Download</a><br />
+            <small>@string.Format("{0}, {1} B", @Model.FileName, @Model.Size)</small><br/>
         </dd>
     </dl>
     <h4>Screenshots</h4>
