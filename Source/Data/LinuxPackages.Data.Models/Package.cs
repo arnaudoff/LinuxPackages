@@ -90,7 +90,7 @@
             }
         }
 
-        public virtual ICollection<Screenshot> Screenshot
+        public virtual ICollection<Screenshot> Screenshots
         {
             get
             {

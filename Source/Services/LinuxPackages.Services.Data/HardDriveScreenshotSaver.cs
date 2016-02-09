@@ -2,6 +2,7 @@
 {
     using Common.Constants;
     using System.IO;
+    using System;
 
     public class HardDriveScreenshotSaver : IScreenshotSaver
     {
@@ -12,6 +13,18 @@
         {
             this.rootPath = rootPath;
             this.screenshotsFolderName = screenshotsFolderName;
+        }
+
+        public byte[] Read(int packageId, string packageName, string fileName)
+        {
+            var filePath = Path.Combine(
+                this.rootPath,
+                (packageId % PackageConstants.PackagesPerDirectory).ToString(),
+                packageName,
+                this.screenshotsFolderName,
+                fileName);
+
+            return File.ReadAllBytes(filePath);
         }
 
         public void Save(int packageId, string packageName, string screenshotFilename, byte[] contents)
