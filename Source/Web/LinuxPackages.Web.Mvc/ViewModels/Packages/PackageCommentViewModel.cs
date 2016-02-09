@@ -1,10 +1,11 @@
 ﻿namespace LinuxPackages.Web.Mvc.ViewModels.Packages
 {
-    using LinuxPackages.Data.Models;
-    using Infrastructure.Mappings;
     using System;
-    using AutoMapper;
+
     using Account;
+    using AutoMapper;
+    using Infrastructure.Mappings;
+    using LinuxPackages.Data.Models;
 
     public class PackageCommentViewModel : IMapFrom<PackageComment>
     {

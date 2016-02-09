@@ -1,13 +1,14 @@
 ﻿namespace LinuxPackages.Data.Models
 {
-    using Common.Constants;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using Common.Constants;
+
     public class Issue
     {
-        public ICollection<IssueReply> replies;
+        private ICollection<IssueReply> replies;
 
         public Issue()
         {
@@ -23,7 +24,7 @@
         public string Title { get; set; }
 
         [Required]
-        public IssueSeverityLevel SeverityLevel { get; set; }
+        public IssueSeverityType Severity { get; set; }
 
         [Required]
         [MinLength(IssueConstants.MinContentLength)]

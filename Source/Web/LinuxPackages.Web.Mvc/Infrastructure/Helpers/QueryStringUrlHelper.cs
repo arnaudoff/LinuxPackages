@@ -3,9 +3,10 @@
     using System;
     using System.Linq;
     using System.Security.Cryptography;
-    using System.Web.Security;
-    using Common.Constants;
     using System.Web;
+    using System.Web.Security;
+
+    using Common.Constants;
 
     public static class QueryStringUrlHelper
     {
@@ -21,7 +22,7 @@
         {
             string saltedParam = string.Concat(param, salt);
             string urlHash = FormsAuthentication.HashPasswordForStoringInConfigFile(saltedParam, "sha1");
-            return new string(urlHash.Take(GlobalConstants.UrlHashLength).ToArray()); ;
+            return new string(urlHash.Take(GlobalConstants.UrlHashLength).ToArray());
         }
 
         public static bool IsHashValid(string urlHash)

@@ -1,13 +1,15 @@
 ﻿namespace LinuxPackages.Web.Mvc.Controllers
 {
+    using System;
+    using System.Linq;
+    using System.Net.Mime;
+    using System.Web;
+    using System.Web.Mvc;
+
     using Common.Constants;
     using Infrastructure.Helpers;
     using Services.Data;
     using Services.Data.Contracts;
-    using System;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
 
     public class FilesController : Controller
     {
@@ -75,7 +77,14 @@
             byte[] contents = this.packageSaver.Read(requestedPackageId, package.Name, package.FileName);
             string mimeType = MimeMapping.GetMimeMapping(package.FileName);
 
-            return new FileContentResult(contents, mimeType);
+            var contentDisposition = new ContentDisposition
+            {
+                FileName = package.FileName,
+                Inline = false,
+            };
+            Response.AppendHeader("Content-Disposition", contentDisposition.ToString());
+
+            return File(contents, mimeType);
         }
     }
 }

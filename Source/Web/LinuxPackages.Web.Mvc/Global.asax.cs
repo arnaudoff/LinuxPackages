@@ -5,8 +5,8 @@
     using System.Web.Optimization;
     using System.Web.Routing;
 
-    using Infrastructure.Helpers;
     using Common.Constants;
+    using Infrastructure.Helpers;
 
     public class MvcApplication : HttpApplication
     {

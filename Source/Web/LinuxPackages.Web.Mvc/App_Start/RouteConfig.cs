@@ -12,7 +12,7 @@
             routes.MapRoute(
                 name: "Files",
                 url: "Files/{action}/{id}/{resource}",
-                defaults: new { controller = "Files", action = UrlParameter.Optional, id = "", resource = "" },
+                defaults: new { controller = "Files", action = UrlParameter.Optional, id = string.Empty, resource = string.Empty },
                 namespaces: new[] { "LinuxPackages.Web.Mvc.Controllers" });
 
             routes.MapRoute(

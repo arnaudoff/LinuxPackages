@@ -1,10 +1,9 @@
 ﻿namespace LinuxPackages.Web.Mvc.ViewModels.Account
 {
     using System;
-
     using AutoMapper;
-    using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
     using Data.Models;
+    using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
 
     public class ListedUserViewModel : IMapFrom<User>
     {

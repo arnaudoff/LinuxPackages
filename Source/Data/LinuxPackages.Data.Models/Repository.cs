@@ -1,9 +1,9 @@
 ﻿namespace LinuxPackages.Data.Models
 {
-    using Common.Constants;
-
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
+    using Common.Constants;
 
     public class Repository
     {

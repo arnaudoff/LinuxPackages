@@ -1,8 +1,9 @@
 ﻿namespace LinuxPackages.Web.Mvc.Tests.ControllerTests
 {
     using System.Web.Mvc;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using LinuxPackages.Web.Mvc.Controllers;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     using ViewModels.Profile;
 
     [TestClass]

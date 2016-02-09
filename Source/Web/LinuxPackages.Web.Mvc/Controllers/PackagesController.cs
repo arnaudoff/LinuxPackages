@@ -1,24 +1,24 @@
 ﻿namespace LinuxPackages.Web.Mvc.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
 
+    using AutoMapper.QueryableExtensions;
+    using Common.Constants;
     using Common.Utilities;
     using Data.Models;
+    using Infrastructure.Extensions;
+    using Infrastructure.Helpers;
+    using Kendo.Mvc.Extensions;
+    using Kendo.Mvc.UI;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
+    using Ninject;
     using Services.Data.Contracts;
     using ViewModels.Packages;
-    using Ninject;
-    using Kendo.Mvc.UI;
-    using Kendo.Mvc.Extensions;
-    using AutoMapper.QueryableExtensions;
-    using Infrastructure.Extensions;
-    using System;
-    using Common.Constants;
-    using Infrastructure.Helpers;
 
     public class PackagesController : Controller
     {
@@ -174,14 +174,16 @@
         {
             var repos = HttpRuntime
                 .Cache
-                .GetOrStore<IEnumerable<SelectListItem>>("repositories", () => this.repositories
-                    .GetAll()
-                    .Select(r => new SelectListItem
-                    {
-                        Value = r.Id.ToString(),
-                        Text = r.Name
-                    })
-                    .ToList());
+                .GetOrStore<IEnumerable<SelectListItem>>(
+                    "repositories",
+                    () => this.repositories
+                        .GetAll()
+                        .Select(r => new SelectListItem
+                        {
+                            Value = r.Id.ToString(),
+                            Text = r.Name
+                        })
+                        .ToList());
 
             return repos;
         }
@@ -190,14 +192,16 @@
         {
             var archs = HttpRuntime
                 .Cache
-                .GetOrStore<IEnumerable<SelectListItem>>("architectures", () => this.architectures
-                    .GetAll()
-                    .Select(a => new SelectListItem
-                    {
-                        Value = a.Id.ToString(),
-                        Text = a.Name
-                    })
-                    .ToList());
+                .GetOrStore<IEnumerable<SelectListItem>>(
+                    "architectures",
+                    () => this.architectures
+                        .GetAll()
+                        .Select(a => new SelectListItem
+                        {
+                            Value = a.Id.ToString(),
+                            Text = a.Name
+                        })
+                        .ToList());
 
             return archs;
         }
@@ -206,14 +210,16 @@
         {
             var licenses = HttpRuntime
                 .Cache
-                .GetOrStore<IEnumerable<SelectListItem>>("licenses", () => this.licenses
-                    .GetAll()
-                    .Select(l => new SelectListItem
-                    {
-                        Value = l.Id.ToString(),
-                        Text = l.Name
-                    })
-                    .ToList());
+                .GetOrStore<IEnumerable<SelectListItem>>(
+                    "licenses",
+                    () => this.licenses
+                        .GetAll()
+                        .Select(l => new SelectListItem
+                        {
+                            Value = l.Id.ToString(),
+                            Text = l.Name
+                        })
+                        .ToList());
 
             return licenses;
         }
@@ -222,14 +228,16 @@
         {
             var dependencies = HttpRuntime
                 .Cache
-                .GetOrStore<IEnumerable<SelectListItem>>("dependencies", () => this.packages
-                    .GetAll()
-                    .Select(p => new SelectListItem
-                    {
-                        Value = p.Id.ToString(),
-                        Text = p.Name
-                    })
-                    .ToList());
+                .GetOrStore<IEnumerable<SelectListItem>>(
+                    "dependencies",
+                    () => this.packages
+                        .GetAll()
+                        .Select(p => new SelectListItem
+                        {
+                            Value = p.Id.ToString(),
+                            Text = p.Name
+                        })
+                        .ToList());
 
             return dependencies;
         }
@@ -238,14 +246,16 @@
         {
             var maintainers = HttpRuntime
                 .Cache
-                .GetOrStore<IEnumerable<SelectListItem>>("maintainers", () => this.UserManager
-                    .Users
-                    .Select(u => new SelectListItem
-                    {
-                        Value = u.Id,
-                        Text = u.UserName
-                    })
-                    .ToList());
+                .GetOrStore<IEnumerable<SelectListItem>>(
+                    "maintainers",
+                    () => this.UserManager
+                        .Users
+                        .Select(u => new SelectListItem
+                        {
+                            Value = u.Id,
+                            Text = u.UserName
+                        })
+                        .ToList());
 
             return maintainers;
         }
@@ -254,14 +264,16 @@
         {
             var distros = HttpRuntime
                 .Cache
-                .GetOrStore<IEnumerable<SelectListItem>>("distros", () => this.distros
-                    .GetAll()
-                    .Select(d => new SelectListItem
-                    {
-                        Value = d.Id.ToString(),
-                        Text = d.Name + " " + d.Version
-                    })
-                    .ToList());
+                .GetOrStore<IEnumerable<SelectListItem>>(
+                    "distros",
+                    () => this.distros
+                        .GetAll()
+                        .Select(d => new SelectListItem
+                        {
+                            Value = d.Id.ToString(),
+                            Text = d.Name + " " + d.Version
+                        })
+                        .ToList());
 
             return distros;
         }

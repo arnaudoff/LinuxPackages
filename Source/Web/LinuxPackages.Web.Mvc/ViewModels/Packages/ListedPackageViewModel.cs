@@ -2,13 +2,13 @@
 {
     using System;
     using System.Linq;
-
-    using LinuxPackages.Data.Models;
-    using Infrastructure.Mappings;
-    using AutoMapper;
-    using Infrastructure.Helpers;
     using System.Web;
+
+    using AutoMapper;
     using Common.Constants;
+    using Infrastructure.Helpers;
+    using Infrastructure.Mappings;
+    using LinuxPackages.Data.Models;
 
     public class ListedPackageViewModel : IMapFrom<Package>, IHaveCustomMappings
     {

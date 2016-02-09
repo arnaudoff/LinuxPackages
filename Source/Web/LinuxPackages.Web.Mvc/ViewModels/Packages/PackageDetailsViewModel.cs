@@ -5,12 +5,12 @@
     using System.Linq;
     using System.Web;
 
-    using AutoMapper;
-    using Data.Models;
-    using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
     using Account;
-    using Infrastructure.Helpers;
+    using AutoMapper;
     using Common.Constants;
+    using Data.Models;
+    using Infrastructure.Helpers;
+    using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
 
     public class PackageDetailsViewModel : IMapFrom<Package>, IHaveCustomMappings
     {

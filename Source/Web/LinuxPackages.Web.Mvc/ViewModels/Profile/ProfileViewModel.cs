@@ -1,8 +1,8 @@
 namespace LinuxPackages.Web.Mvc.ViewModels.Profile
 {
-    using LinuxPackages.Data.Models;
-    using Infrastructure.Mappings;
     using AutoMapper;
+    using Infrastructure.Mappings;
+    using LinuxPackages.Data.Models;
 
     public class ProfileViewModel : IMapFrom<User>, IHaveCustomMappings
     {
