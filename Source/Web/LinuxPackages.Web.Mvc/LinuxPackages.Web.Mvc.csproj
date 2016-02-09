@@ -215,7 +215,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\PackagesController.cs" />
-    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -305,6 +304,9 @@
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\StringMultiSelect.cshtml" />
     <Content Include="Views\Packages\Details.cshtml" />
+    <Content Include="Views\Packages\_ScreenshotsPartial.cshtml" />
+    <Content Include="Views\Packages\_MaintainersPartial.cshtml" />
+    <Content Include="Views\Packages\_CommentsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

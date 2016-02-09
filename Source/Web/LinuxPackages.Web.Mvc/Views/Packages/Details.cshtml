@@ -1,9 +1,6 @@
-﻿@using LinuxPackages.Web.Mvc.Infrastructure.Helpers
-@using LinuxPackages.Common.Constants
+﻿@model LinuxPackages.Web.Mvc.ViewModels.Packages.PackageDetailsViewModel
 
-@model LinuxPackages.Web.Mvc.ViewModels.Packages.PackageDetailsViewModel
-
-@{ 
+@{
     ViewBag.Title = "Package details";
 }
 
@@ -53,21 +50,37 @@
         <dt>File</dt>
         <dd>
             <a href="/Files/Packages/@Model.Id" class="k-button">Download</a><br />
-            <small>@string.Format("{0}, {1} B", @Model.FileName, @Model.Size)</small><br/>
+            <small>@string.Format("{0}, {1} B", @Model.FileName, @Model.Size)</small><br />
         </dd>
     </dl>
-    <h4>Screenshots</h4>
-    <hr />
-    @if (Model.Screenshots.Count() > 0) {
-        foreach (var screenshot in Model.Screenshots)
-        {
-            <img src="/Files/Screenshots/@Model.Id/@(screenshot.Id.ToString() + QueryStringUrlHelper.GenerateUrlHash(screenshot.Id.ToString(), (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName]))" />
-        }
-    }
-    else
-    {
-        <p>No screenshots uploaded for this package!</p>
-    }
-    <h4>Misc</h4>
-    <hr/>
+    @(Html.Kendo().TabStrip()
+                  .Name("detailsTabstrip")
+                  .Animation(false)
+                  .Items(items =>
+                  {
+                      items
+                          .Add()
+                          .Selected(true)
+                          .Text("Screenshots")
+                          .Content(Html.Partial("_ScreenshotsPartial", Model.Screenshots, new ViewDataDictionary { { "PackageId", Model.Id } }).ToHtmlString());
+
+                      items
+                          .Add()
+                          .Text("Comments")
+                          .Content(Html.Partial("_CommentsPartial", Model.Comments, new ViewDataDictionary { { "PackageId", Model.Id } }).ToHtmlString());
+
+                      items
+                          .Add()
+                          .Text("Maintainers")
+                          .Content(Html.Partial("_MaintainersPartial", Model.Maintainers, new ViewDataDictionary { { "PackageId", Model.Id } }).ToHtmlString());
+                  }))
 </div>
+
+@section Scripts {
+    <script type="text/x-kendo-tmpl" id="commentTemplate">
+        <div class="comment">
+            <p>#:Content#</p>
+            <span class="pull-right">#:CreatedOn#</span>
+        </div>
+    </script>
+}

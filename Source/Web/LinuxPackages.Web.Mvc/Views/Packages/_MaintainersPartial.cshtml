@@ -1,0 +1,13 @@
+﻿@model IEnumerable<LinuxPackages.Web.Mvc.ViewModels.Account.ListedUserViewModel>
+
+@if (Model.Count() > 0)
+{
+    foreach (var user in Model)
+    {
+        <p>@user.FirstName @user.LastName (@user.Username)</p>
+    }
+}
+else
+{
+    <p>This package has no maintainers!</p>
+}
