@@ -1,0 +1,64 @@
+﻿@using LinuxPackages.Web.Mvc.Infrastructure.Helpers
+@using LinuxPackages.Common.Constants
+
+@model LinuxPackages.Web.Mvc.ViewModels.Packages.PackageDetailsViewModel
+
+@{ 
+    ViewBag.Title = "Package details";
+}
+
+<div>
+    <h4>Details for package <strong>@Model.Name</strong></h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Name</dt>
+        <dd>@Model.Name</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Description</dt>
+        <dd style="word-wrap: break-word;">@Model.Description</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Distribution</dt>
+        <dd>
+            <a href="@Model.Distribution.Url">
+                @string.Format("{0} {1}", @Model.Distribution.Name, @Model.Distribution.Version)
+            </a> (@Model.Distribution.Maintainer)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Repository</dt>
+        <dd>
+            <a href="@Model.Repository.Url">
+                @Model.Repository.Name
+            </a>
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Architecture</dt>
+        <dd>@Model.Architecture.Name</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>License</dt>
+        <dd>
+            <a href="@Model.License.Url">
+                @Model.License.Name
+            </a><br />
+            <small>@Model.License.Description</small>
+        </dd>
+    </dl>
+    <h4>Screenshots</h4>
+    <hr />
+    @if (Model.Screenshots.Count() > 0) {
+        foreach (var screenshot in Model.Screenshots)
+        {
+            <img src="/Files/Screenshots/@Model.Id/@(screenshot.Id.ToString() + QueryStringUrlHelper.GenerateUrlHash(screenshot.Id.ToString(), (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName]))" />
+        }
+    }
+    else
+    {
+        <p>No screenshots uploaded for this package!</p>
+    }
+    <h4>Misc</h4>
+    <hr/>
+</div>

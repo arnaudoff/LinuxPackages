@@ -64,27 +64,18 @@
             return View();
         }
 
-        public ActionResult Details(string urlIdentifier)
+        public ActionResult Details(string id)
         {
-            int dashIndex = urlIdentifier.IndexOf('-');
-            string packageId = null;
-            if (dashIndex < 0)
+            var packageHash = id.Substring(Math.Max(0, id.Length - GlobalConstants.UrlHashLength));
+            var packageId = id.Substring(0, Math.Max(0, id.Length - GlobalConstants.UrlHashLength));
+
+            string packageIdHashed = QueryStringUrlHelper.GenerateUrlHash(
+                packageId,
+                (string)this.ControllerContext.HttpContext.Application[GlobalConstants.UrlSaltKeyName]);
+
+            if (packageIdHashed != packageHash)
             {
                 return new HttpNotFoundResult("The requested package was not found.");
-            }
-            else
-            {
-                packageId = urlIdentifier.Substring(dashIndex, urlIdentifier.Length - GlobalConstants.UrlHashLength);
-                var packageHash = urlIdentifier.Substring(Math.Max(0, urlIdentifier.Length - GlobalConstants.UrlHashLength));
-
-                string packageIdHashed = QueryStringUrlHelper.GenerateUrlHash(
-                    packageId,
-                    (string)this.ControllerContext.HttpContext.Application[GlobalConstants.UrlSaltKeyName]);
-
-                if (packageIdHashed != packageHash)
-                {
-                    return new HttpNotFoundResult("The requested package was not found.");
-                }
             }
 
             var packageModel = this.packages
