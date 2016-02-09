@@ -60,6 +60,7 @@
     <Compile Include="ArchitecturesService.cs" />
     <Compile Include="Contracts\IArchitecturesService.cs" />
     <Compile Include="Contracts\IDistributionsService.cs" />
+    <Compile Include="Contracts\IIssuesService.cs" />
     <Compile Include="Contracts\ILicensesService.cs" />
     <Compile Include="Contracts\IRepositoriesService.cs" />
     <Compile Include="DistributionsService.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Contracts\IScreenshotsService.cs" />
     <Compile Include="HardDrivePackageSaver.cs" />
     <Compile Include="Contracts\IScreenshotSaver.cs" />
+    <Compile Include="IssuesService.cs" />
     <Compile Include="LicensesService.cs" />
     <Compile Include="PackagesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

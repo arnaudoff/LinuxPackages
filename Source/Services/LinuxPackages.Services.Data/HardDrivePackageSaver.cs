@@ -1,9 +1,10 @@
 ﻿namespace LinuxPackages.Services.Data
 {
     using System;
-    using LinuxPackages.Services.Data.Contracts;
     using System.IO;
+
     using Common.Constants;
+    using LinuxPackages.Services.Data.Contracts;
 
     public class HardDrivePackageSaver : IPackageSaver
     {

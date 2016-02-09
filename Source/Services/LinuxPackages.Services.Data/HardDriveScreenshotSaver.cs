@@ -1,8 +1,9 @@
 ﻿namespace LinuxPackages.Services.Data.Contracts
 {
-    using Common.Constants;
-    using System.IO;
     using System;
+    using System.IO;
+
+    using Common.Constants;
 
     public class HardDriveScreenshotSaver : IScreenshotSaver
     {

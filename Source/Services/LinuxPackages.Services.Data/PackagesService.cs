@@ -72,7 +72,7 @@
                 foreach (string maintainerId in maintainerIds)
                 {
                     var maintainer = new User() { Id = maintainerId };
-                    users.Attach(maintainer);
+                    this.users.Attach(maintainer);
                     newPackage.Maintainers.Add(maintainer);
                 }
             }

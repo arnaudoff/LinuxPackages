@@ -1,7 +1,7 @@
 ﻿namespace LinuxPackages.Services.Data.Contracts
 {
-    using LinuxPackages.Data.Models;
     using System.Linq;
+    using LinuxPackages.Data.Models;
 
     public interface ILicensesService
     {

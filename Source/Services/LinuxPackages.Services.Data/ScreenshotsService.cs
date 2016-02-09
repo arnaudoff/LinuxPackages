@@ -1,10 +1,11 @@
 ﻿namespace LinuxPackages.Services.Data
 {
     using System;
+    using System.IO;
+
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
     using LinuxPackages.Services.Data.Contracts;
-    using System.IO;
 
     public class ScreenshotsService : IScreenshotsService
     {
