@@ -4,7 +4,7 @@
 
     using Common.Constants;
 
-    public class PackageRating
+    public class Rating
     {
         [Key]
         public int Id { get; set; }
@@ -16,5 +16,9 @@
         public int PackageId { get; set; }
 
         public virtual Package Package { get; set; }
+
+        public string RatedById { get; set; }
+
+        public virtual User RatedBy { get; set; }
     }
 }

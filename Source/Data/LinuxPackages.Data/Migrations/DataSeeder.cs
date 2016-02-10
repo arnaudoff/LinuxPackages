@@ -1,12 +1,13 @@
 ﻿namespace LinuxPackages.Data.Migrations
 {
     using System;
-    using LinuxPackages.Common.Contracts;
-    using System.Linq;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Microsoft.AspNet.Identity;
-    using Models;
     using System.Collections.Generic;
+    using System.Linq;
+
+    using LinuxPackages.Common.Contracts;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Models;
 
     public class DataSeeder
     {
@@ -55,8 +56,8 @@
                     {
                         UserName = string.Format("user{0}@linuxpackages.net", i),
                         Email = string.Format("user{0}@linuxpackages.net", i),
-                        FirstName = randomGenerator.GenerateRandomString(10),
-                        LastName = randomGenerator.GenerateRandomString(20),
+                        FirstName = this.randomGenerator.GenerateRandomString(10),
+                        LastName = this.randomGenerator.GenerateRandomString(20),
                         PasswordHash = hasher.HashPassword(string.Format("user{0}", i)),
                         EmailConfirmed = true,
                         SecurityStamp = Guid.NewGuid().ToString()
@@ -99,10 +100,10 @@
             {
                 var repos = new List<Repository>()
                 {
-                    new Repository { Name = "development", Url = "http://www.linuxpackages.net/repository/development"},
-                    new Repository { Name = "testing", Url = "http://www.linuxpackages.net/repository/testing"},
-                    new Repository { Name = "stable", Url = "http://www.linuxpackages.net/repository/stable"},
-                    new Repository { Name = "multilib", Url = "http://www.linuxpackages.net/repository/multilib"}
+                    new Repository { Name = "development", Url = "http://www.linuxpackages.net/repository/development" },
+                    new Repository { Name = "testing", Url = "http://www.linuxpackages.net/repository/testing" },
+                    new Repository { Name = "stable", Url = "http://www.linuxpackages.net/repository/stable" },
+                    new Repository { Name = "multilib", Url = "http://www.linuxpackages.net/repository/multilib" }
                 };
 
                 repos.ForEach(r => this.context.Repositories.Add(r));
@@ -117,9 +118,9 @@
             {
                 var archs = new List<Architecture>()
                 {
-                    new Architecture { Name = "x86"},
-                    new Architecture { Name = "amd64"},
-                    new Architecture { Name = "ARM"}
+                    new Architecture { Name = "x86" },
+                    new Architecture { Name = "amd64" },
+                    new Architecture { Name = "ARM" }
                 };
 
                 archs.ForEach(a => this.context.Architectures.Add(a));

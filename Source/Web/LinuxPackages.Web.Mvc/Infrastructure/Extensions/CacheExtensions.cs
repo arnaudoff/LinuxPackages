@@ -5,9 +5,8 @@
 
     public static class CacheExtensions
     {
-
-        private static object sync = new object();
         private const int DefaultCacheExpiration = 30;
+        private static object sync = new object();
 
         /// <summary>
         /// Allows Caching of typed data
@@ -31,7 +30,6 @@
             return cache.GetOrStore(key, (cache[key] == null && generator != null) ? generator() : default(T), DefaultCacheExpiration);
         }
 
-
         /// <summary>
         /// Allows Caching of typed data
         /// </summary>
@@ -53,7 +51,6 @@
         {
             return cache.GetOrStore(key, (cache[key] == null && generator != null) ? generator() : default(T), expireInMinutes);
         }
-
 
         /// <summary>
         /// Allows Caching of typed data
@@ -99,7 +96,6 @@
 
             if (result == null)
             {
-
                 lock (sync)
                 {
                     if (result == null)

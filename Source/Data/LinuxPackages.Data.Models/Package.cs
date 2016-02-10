@@ -1,24 +1,27 @@
 ﻿namespace LinuxPackages.Data.Models
 {
-    using Common.Constants;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    using Common.Constants;
+
     public class Package
     {
         private ICollection<User> maintainers;
-        private ICollection<PackageRating> ratings;
+        private ICollection<Rating> ratings;
         private ICollection<Screenshot> screenshots;
         private ICollection<PackageComment> comments;
+        private ICollection<Issue> issues;
 
         public Package()
         {
             this.maintainers = new HashSet<User>();
-            this.ratings = new HashSet<PackageRating>();
+            this.ratings = new HashSet<Rating>();
             this.screenshots = new HashSet<Screenshot>();
             this.comments = new HashSet<PackageComment>();
+            this.issues = new HashSet<Issue>();
         }
 
         [Key]
@@ -63,7 +66,7 @@
         [Required]
         public DateTime UploadedOn { get; set; }
 
-        public virtual ICollection<PackageRating> Ratings
+        public virtual ICollection<Rating> Ratings
         {
             get
             {
@@ -90,7 +93,7 @@
             }
         }
 
-        public virtual ICollection<Screenshot> Screenshot
+        public virtual ICollection<Screenshot> Screenshots
         {
             get
             {
@@ -113,6 +116,19 @@
             set
             {
                 this.comments = value;
+            }
+        }
+
+        public virtual ICollection<Issue> Issues
+        {
+            get
+            {
+                return this.issues;
+            }
+
+            set
+            {
+                this.issues = value;
             }
         }
     }

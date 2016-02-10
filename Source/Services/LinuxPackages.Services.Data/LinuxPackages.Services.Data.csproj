@@ -49,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,9 +60,12 @@
   <ItemGroup>
     <Compile Include="ArchitecturesService.cs" />
     <Compile Include="Contracts\IArchitecturesService.cs" />
+    <Compile Include="Contracts\IDependenciesService.cs" />
     <Compile Include="Contracts\IDistributionsService.cs" />
+    <Compile Include="Contracts\IIssuesService.cs" />
     <Compile Include="Contracts\ILicensesService.cs" />
     <Compile Include="Contracts\IRepositoriesService.cs" />
+    <Compile Include="DependenciesService.cs" />
     <Compile Include="DistributionsService.cs" />
     <Compile Include="HardDriveScreenshotSaver.cs" />
     <Compile Include="Contracts\IPackageSaver.cs" />
@@ -69,6 +73,7 @@
     <Compile Include="Contracts\IScreenshotsService.cs" />
     <Compile Include="HardDrivePackageSaver.cs" />
     <Compile Include="Contracts\IScreenshotSaver.cs" />
+    <Compile Include="IssuesService.cs" />
     <Compile Include="LicensesService.cs" />
     <Compile Include="PackagesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

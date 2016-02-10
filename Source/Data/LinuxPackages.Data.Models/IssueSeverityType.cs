@@ -1,6 +1,6 @@
 ﻿namespace LinuxPackages.Data.Models
 {
-    public enum IssueSeverityLevel
+    public enum IssueSeverityType
     {
         Low = 0,
         Medium = 1,

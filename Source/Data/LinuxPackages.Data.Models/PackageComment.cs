@@ -17,5 +17,13 @@
 
         [Required]
         public DateTime CreatedOn { get; set; }
+
+        public int PackageId { get; set; }
+
+        public virtual Package Package { get; set;  }
+
+        public string AuthorId { get; set; }
+
+        public virtual User Author { get; set; }
     }
 }

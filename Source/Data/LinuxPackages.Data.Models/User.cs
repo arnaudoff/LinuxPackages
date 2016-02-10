@@ -5,10 +5,10 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using Common.Constants;
+
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
-
-    using Common.Constants;
 
     public class User : IdentityUser
     {

@@ -1,5 +1,6 @@
 ﻿@using LinuxPackages.Web.Mvc.ViewModels.Packages;
-
+@using LinuxPackages.Web.Mvc.Infrastructure.Helpers;
+@using LinuxPackages.Common.Constants;
 @{ 
     ViewBag.Title = "All packages";
 }
@@ -11,14 +12,13 @@
     {
         columns.Bound(p => p.Id).ClientTemplate(
             "<a href='" +
-                Url.Action("Details", "Packages") +
-                "/#= Id #'" +
-            ">#= Name #</a>"
+                Url.Action("Details", "Packages") + "/#= Id #" +
+            "'>#= Name #</a>"
         ).Title("Name");
-        columns.Bound(c => c.Distribution);
+        columns.Bound(c => c.Distribution).Title("Distribution");
         columns.Bound(c => c.Repository);
         columns.Bound(c => c.Architecture);
-        columns.Bound(c => c.Rating);
+        columns.Bound(c => c.AverageRating);
         columns.Bound(c => c.UploadedOn).Format("{0:dd/MM/yyyy}");
     })
     .DataSource(data =>

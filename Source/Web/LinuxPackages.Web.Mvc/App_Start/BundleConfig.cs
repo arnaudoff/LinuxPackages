@@ -15,6 +15,9 @@
 
         private static void RegisterScripts(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/rateit")
+                .Include("~/Scripts/jquery.rateit.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery")
                 .Include("~/Scripts/kendo/jquery.min.js"));
 
@@ -39,6 +42,9 @@
 
         private static void RegisterStyles(BundleCollection bundles)
         {
+            bundles.Add(new StyleBundle("~/Content/rateit")
+                .Include("~/Content/rateit.css"));
+
             bundles.Add(new StyleBundle("~/Content/bootstrap")
                 .Include("~/Content/bootstrap.css"));
 

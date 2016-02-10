@@ -14,13 +14,23 @@
         private readonly IRepository<User> users;
         private readonly IPackageSaver packageSaver;
         private readonly IRepository<Dependency> dependencies;
+        private readonly IRepository<PackageComment> comments;
+        private readonly IRepository<Rating> ratings;
 
-        public PackagesService(IRepository<Package> packages, IRepository<User> users, IRepository<Dependency> dependencies, IPackageSaver packageSaver)
+        public PackagesService(
+            IRepository<Package> packages,
+            IRepository<User> users,
+            IRepository<Dependency> dependencies,
+            IRepository<PackageComment> comments,
+            IRepository<Rating> ratings,
+            IPackageSaver packageSaver)
         {
             this.packages = packages;
             this.users = users;
-            this.packageSaver = packageSaver;
             this.dependencies = dependencies;
+            this.packageSaver = packageSaver;
+            this.comments = comments;
+            this.ratings = ratings;
         }
 
         public IQueryable<Package> GetAll()
@@ -65,7 +75,7 @@
                 foreach (string maintainerId in maintainerIds)
                 {
                     var maintainer = new User() { Id = maintainerId };
-                    users.Attach(maintainer);
+                    this.users.Attach(maintainer);
                     newPackage.Maintainers.Add(maintainer);
                 }
             }
@@ -91,6 +101,52 @@
             this.dependencies.SaveChanges();
 
             return newPackage;
+        }
+
+        public PackageComment AddComment(string content, int packageId, string authorId)
+        {
+            var newComment = new PackageComment()
+            {
+                Content = content,
+                PackageId = packageId,
+                AuthorId = authorId,
+                CreatedOn = DateTime.UtcNow
+            };
+
+            this.comments.Add(newComment);
+            this.comments.SaveChanges();
+
+            return newComment;
+        }
+
+        public Rating AddRating(int value, int packageId, string ratedById)
+        {
+            var currentRating = this.ratings
+                .All()
+                .Where(r => r.PackageId == packageId && r.RatedById == ratedById)
+                .FirstOrDefault();
+
+            if (currentRating != null)
+            {
+                currentRating.Value = value;
+
+                this.ratings.Update(currentRating);
+                this.ratings.SaveChanges();
+
+                return currentRating;
+            }
+
+            var newRating = new Rating()
+            {
+                Value = value,
+                PackageId = packageId,
+                RatedById = ratedById
+            };
+
+            this.ratings.Add(newRating);
+            this.ratings.SaveChanges();
+
+            return newRating;
         }
     }
 }

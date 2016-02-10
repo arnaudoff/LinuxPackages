@@ -17,7 +17,7 @@
 
         public virtual IDbSet<Distribution> Distributions { get; set; }
 
-        public virtual IDbSet<PackageRating> PackageRatings { get; set; }
+        public virtual IDbSet<Rating> PackageRatings { get; set; }
 
         public virtual IDbSet<PackageComment> PackageComments { get; set; }
 

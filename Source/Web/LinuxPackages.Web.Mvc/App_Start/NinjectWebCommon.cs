@@ -4,6 +4,7 @@
 namespace LinuxPackages.Web.Mvc.App_Start
 {
     using System;
+    using System.Data.Entity;
     using System.Web;
     using System.Web.Hosting;
 
@@ -12,34 +13,31 @@ namespace LinuxPackages.Web.Mvc.App_Start
     using Common.Contracts;
     using Common.Utilities;
     using Data;
+    using Data.Models;
     using Data.Repositories;
-
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Extensions.Conventions;
     using Ninject.Web.Common;
-
     using Services.Data;
     using Services.Data.Contracts;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Microsoft.AspNet.Identity;
-    using Data.Models;
-    using System.Data.Entity;
 
     public static class NinjectWebCommon 
     {
-        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+        private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
 
         public static void Start() 
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
-            bootstrapper.Initialize(CreateKernel);
+            Bootstrapper.Initialize(CreateKernel);
         }
         
         public static void Stop()
         {
-            bootstrapper.ShutDown();
+            Bootstrapper.ShutDown();
         }
         
         private static IKernel CreateKernel()

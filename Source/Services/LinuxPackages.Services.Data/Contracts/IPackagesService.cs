@@ -23,5 +23,9 @@
             byte[] contents,
             IList<int> dependencyIds,
             IList<string> maintainerIds);
+
+        PackageComment AddComment(string content, int packageId, string authorId);
+
+        Rating AddRating(int value, int packageId, string ratedById);
     }
 }

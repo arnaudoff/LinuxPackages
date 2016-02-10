@@ -4,13 +4,12 @@
     using System.Web;
     using System.Web.Mvc;
 
+    using AutoMapper;
     using Data.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
-
     using ViewModels.Profile;
-    using AutoMapper;
 
     public enum EditProfileResultType
     {
