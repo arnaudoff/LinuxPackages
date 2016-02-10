@@ -159,6 +159,26 @@
             return Json(results, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize]
+        public ActionResult Rate(RatePackageViewModel model)
+        {
+            if (!QueryStringUrlHelper.IsHashValid(model.PackageId))
+            {
+                return new HttpNotFoundResult("The requested package was not found.");
+            }
+
+            int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(model.PackageId));
+
+            Rating rating = this.packages.AddRating(model.Value, requestedPackageId, this.User.Identity.GetUserId());
+
+            if (rating != null)
+            {
+                return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && this.userManager != null)

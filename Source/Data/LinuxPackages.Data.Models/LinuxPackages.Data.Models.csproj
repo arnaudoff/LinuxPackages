@@ -65,7 +65,7 @@
     <Compile Include="License.cs" />
     <Compile Include="Package.cs" />
     <Compile Include="PackageComment.cs" />
-    <Compile Include="PackageRating.cs" />
+    <Compile Include="Rating.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IssueSeverityType.cs" />
     <Compile Include="IssueStatus.cs" />

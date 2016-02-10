@@ -15,14 +15,14 @@
         private readonly IPackageSaver packageSaver;
         private readonly IRepository<Dependency> dependencies;
         private readonly IRepository<PackageComment> comments;
-        private readonly IRepository<PackageRating> ratings;
+        private readonly IRepository<Rating> ratings;
 
         public PackagesService(
             IRepository<Package> packages,
             IRepository<User> users,
             IRepository<Dependency> dependencies,
             IRepository<PackageComment> comments,
-            IRepository<PackageRating> ratings,
+            IRepository<Rating> ratings,
             IPackageSaver packageSaver)
         {
             this.packages = packages;
@@ -119,9 +119,24 @@
             return newComment;
         }
 
-        public PackageRating AddRating(int value, int packageId)
+        public Rating AddRating(int value, int packageId, string ratedById)
         {
-            var newRating = new PackageRating()
+            var currentRating = this.ratings
+                .All()
+                .Where(r => r.Id == packageId && r.RatedById == ratedById)
+                .FirstOrDefault();
+
+            if (currentRating != null)
+            {
+                currentRating.Value = value;
+
+                this.ratings.Update(currentRating);
+                this.ratings.SaveChanges();
+
+                return currentRating;
+            }
+
+            var newRating = new Rating()
             {
                 Value = value,
                 PackageId = packageId

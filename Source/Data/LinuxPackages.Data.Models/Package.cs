@@ -10,14 +10,14 @@
     public class Package
     {
         private ICollection<User> maintainers;
-        private ICollection<PackageRating> ratings;
+        private ICollection<Rating> ratings;
         private ICollection<Screenshot> screenshots;
         private ICollection<PackageComment> comments;
 
         public Package()
         {
             this.maintainers = new HashSet<User>();
-            this.ratings = new HashSet<PackageRating>();
+            this.ratings = new HashSet<Rating>();
             this.screenshots = new HashSet<Screenshot>();
             this.comments = new HashSet<PackageComment>();
         }
@@ -64,7 +64,7 @@
         [Required]
         public DateTime UploadedOn { get; set; }
 
-        public virtual ICollection<PackageRating> Ratings
+        public virtual ICollection<Rating> Ratings
         {
             get
             {

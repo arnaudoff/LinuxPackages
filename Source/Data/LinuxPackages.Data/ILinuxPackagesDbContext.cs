@@ -11,7 +11,7 @@
 
         IDbSet<Distribution> Distributions { get; set; }
 
-        IDbSet<PackageRating> PackageRatings { get; set; }
+        IDbSet<Rating> PackageRatings { get; set; }
 
         IDbSet<PackageComment> PackageComments { get; set; }
 
