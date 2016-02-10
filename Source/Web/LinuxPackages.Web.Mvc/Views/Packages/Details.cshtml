@@ -53,6 +53,13 @@
             <small>@string.Format("{0}, {1} B", @Model.FileName, @Model.Size)</small><br />
         </dd>
     </dl>
+    <dl class="dl-horizontal">
+        <dt>Rate</dt>
+        <dd>
+            <div data-packageid="@Model.Id" class="rateit" data-rateit-step="1"></div><br />
+            <span id="rating-result"></span>
+        </dd>
+    </dl>
     @(Html.Kendo().TabStrip()
                   .Name("detailsTabstrip")
                   .Animation(false)
@@ -84,4 +91,37 @@
         </div>
     </script>
     @Scripts.Render("~/bundles/rateit")
+    <script type="text/javascript">
+         $('.rateit').bind('rated reset', function (e) {
+             var rateControl = $(this);
+             var value = rateControl.rateit('value');
+             var packageId = rateControl.data('packageid');
+
+             $.ajax({
+                 url: '/Packages/Rate',
+                 data: {
+                     packageId: packageId,
+                     value: value
+                 },
+                 type: 'POST',
+                 success: function (data, status, request) {
+                     $('#rating-result').empty();
+                     var responseHeader = JSON.parse(request.getResponseHeader('X-Responded-JSON'));
+                     if (responseHeader && responseHeader.status == 401) {
+                         $('#rating-result').append('<span style="color:red">You need to be logged in in order to rate a package. <a href="/Account/Login">Login</a>.</span>');
+                     } else {
+                         if (data.Success) {
+                             $('#rating-result').append('<span style="color:green">Rated successfully.</span>');
+                         } else {
+                             $('#rating-result').append('<span style="color:red">Could not rate this package.</span>');
+                         }
+                     }
+                 },
+                 error: function (jxhr, msg, err) {
+                     $('#rating-result').empty();
+                     $('#rating-result').append('<span style="color:red">The package could not be rated. Contact an administrator.</span>');
+                 }
+             });
+         });
+    </script>
 }

@@ -18,7 +18,11 @@
         public const int MaxRepositoryNameLength = 20;
 
         public const string PackagesPath = "~/App_Data/packages";
-        public const string ScreenshotsFolderName = "screenshots";
         public const int PackagesPerDirectory = 1000;
+
+        public const string ScreenshotsFolderName = "screenshots";
+        public const int ScreenshotThumbnailHeight = 500;
+        public const int ScreenshotThumbnailWidth = 500;
+        public const string ScreenshotSizeUrlPattern = @"(\d+)x(\d+)";
     }
 }

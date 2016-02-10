@@ -10,6 +10,8 @@
     using Infrastructure.Helpers;
     using Services.Data;
     using Services.Data.Contracts;
+    using System.Text.RegularExpressions;
+    using System.Net;
 
     public class FilesController : Controller
     {
@@ -24,7 +26,7 @@
             this.screenshotSaver = screenshotSaver;
         }
 
-        public ActionResult Screenshots(string id, string resource)
+        public ActionResult Screenshots(string id, string resource, string size)
         {
             if (!QueryStringUrlHelper.IsHashValid(id))
             {
@@ -39,19 +41,28 @@
             int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
             int requestedScreenshotId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(resource));
 
-            var package = this.packages
-                .GetById(requestedPackageId)
-                .Select(p => new
+            string screenshotPath = null;
+            if (size == null)
+            {
+                screenshotPath = this.screenshotSaver.GetScreenshotPath(requestedPackageId, requestedScreenshotId);
+            }
+            else
+            {
+                Match match = Regex.Match(size, PackageConstants.ScreenshotSizeUrlPattern, RegexOptions.IgnoreCase);
+                if (match.Success)
                 {
-                    Name = p.Name,
-                    Screenshot = p.Screenshots.Where(s => s.Id == requestedScreenshotId).FirstOrDefault()
-                })
-                .FirstOrDefault();
+                    int width = int.Parse(match.Groups[1].Value);
+                    int height = int.Parse(match.Groups[2].Value);
+                    screenshotPath = this.screenshotSaver.GetScreenshotPath(requestedPackageId, requestedScreenshotId, width, height);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid screenshot size parameter");
+                }
+            }
 
-            string fullFilename = string.Format("{0}{1}", package.Screenshot.FileName, package.Screenshot.FileExtension);
-
-            byte[] contents = this.screenshotSaver.Read(requestedPackageId, package.Name, fullFilename);
-            string mimeType = MimeMapping.GetMimeMapping(fullFilename);
+            byte[] contents = screenshotSaver.Read(screenshotPath);
+            string mimeType = MimeMapping.GetMimeMapping(screenshotPath);
 
             return new FileContentResult(contents, mimeType);
         }

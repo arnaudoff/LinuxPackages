@@ -232,6 +232,7 @@
     <Compile Include="ViewModels\Packages\ListedScreenshotViewModel.cs" />
     <Compile Include="ViewModels\Packages\PackageDetailsViewModel.cs" />
     <Compile Include="ViewModels\Packages\PackageCommentViewModel.cs" />
+    <Compile Include="ViewModels\Packages\RatePackageViewModel.cs" />
     <Compile Include="ViewModels\Packages\RepositoryViewModel.cs" />
     <Compile Include="ViewModels\Profile\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\Profile\ProfileViewModel.cs" />

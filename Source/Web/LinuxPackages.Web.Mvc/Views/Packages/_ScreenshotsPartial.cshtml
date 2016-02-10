@@ -7,7 +7,11 @@
 {
     foreach (var screenshot in Model)
     {
-        <img src="/Files/Screenshots/@((string)ViewData["PackageId"])/@(screenshot.Id.ToString() + QueryStringUrlHelper.GenerateUrlHash(screenshot.Id.ToString(), (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName]))" />
+        <img src="/Files/Screenshots/@((string)ViewData["PackageId"])/@(
+            screenshot.Id.ToString() +
+            QueryStringUrlHelper.GenerateUrlHash(
+                screenshot.Id.ToString(),
+                (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName]))/@(PackageConstants.ScreenshotThumbnailWidth)x@(PackageConstants.ScreenshotThumbnailHeight)" />
     }
 }
 else
