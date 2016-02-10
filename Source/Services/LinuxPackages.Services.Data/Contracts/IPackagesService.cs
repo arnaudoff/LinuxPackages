@@ -25,5 +25,7 @@
             IList<string> maintainerIds);
 
         PackageComment AddComment(string content, int packageId, string authorId);
+
+        PackageRating AddRating(int value, int packageId);
     }
 }

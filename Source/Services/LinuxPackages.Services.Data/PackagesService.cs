@@ -15,12 +15,14 @@
         private readonly IPackageSaver packageSaver;
         private readonly IRepository<Dependency> dependencies;
         private readonly IRepository<PackageComment> comments;
+        private readonly IRepository<PackageRating> ratings;
 
         public PackagesService(
             IRepository<Package> packages,
             IRepository<User> users,
             IRepository<Dependency> dependencies,
             IRepository<PackageComment> comments,
+            IRepository<PackageRating> ratings,
             IPackageSaver packageSaver)
         {
             this.packages = packages;
@@ -28,6 +30,7 @@
             this.dependencies = dependencies;
             this.packageSaver = packageSaver;
             this.comments = comments;
+            this.ratings = ratings;
         }
 
         public IQueryable<Package> GetAll()
@@ -114,6 +117,20 @@
             this.comments.SaveChanges();
 
             return newComment;
+        }
+
+        public PackageRating AddRating(int value, int packageId)
+        {
+            var newRating = new PackageRating()
+            {
+                Value = value,
+                PackageId = packageId
+            };
+
+            this.ratings.Add(newRating);
+            this.ratings.SaveChanges();
+
+            return newRating;
         }
     }
 }
