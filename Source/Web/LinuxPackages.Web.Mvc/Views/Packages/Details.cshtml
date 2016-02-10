@@ -60,6 +60,37 @@
             <span id="rating-result"></span>
         </dd>
     </dl>
+    <dl class="dl-horizontal">
+        <dt>Dependencies</dt>
+        <dd>
+            @if (Model.Dependencies.Count() > 0)
+            {
+                foreach (var dependency in Model.Dependencies)
+                {
+                    Html.ActionLink(dependency.Name, "Details", new { id = dependency.Id });
+                }
+            }
+            else
+            {
+                <span>None</span>
+            }
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Issues</dt>
+        <dd>
+            <i>@Model.IssuesCount</i>&nbsp;&nbsp;
+            <a href="/Issues/Create/@Model.Id" class="k-button">New</a>
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Comments</dt>
+        <dd>
+            <i>@Model.Comments.Count()</i>&nbsp;&nbsp;
+            <a href="/Comments/Create/@Model.Id" class="k-button">Add</a>
+        </dd>
+    </dl>
+    <br />
     @(Html.Kendo().TabStrip()
                   .Name("detailsTabstrip")
                   .Animation(false)

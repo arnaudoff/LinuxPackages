@@ -13,6 +13,7 @@
         private ICollection<Rating> ratings;
         private ICollection<Screenshot> screenshots;
         private ICollection<PackageComment> comments;
+        private ICollection<Issue> issues;
 
         public Package()
         {
@@ -20,6 +21,7 @@
             this.ratings = new HashSet<Rating>();
             this.screenshots = new HashSet<Screenshot>();
             this.comments = new HashSet<PackageComment>();
+            this.issues = new HashSet<Issue>();
         }
 
         [Key]
@@ -114,6 +116,19 @@
             set
             {
                 this.comments = value;
+            }
+        }
+
+        public virtual ICollection<Issue> Issues
+        {
+            get
+            {
+                return this.issues;
+            }
+
+            set
+            {
+                this.issues = value;
             }
         }
     }

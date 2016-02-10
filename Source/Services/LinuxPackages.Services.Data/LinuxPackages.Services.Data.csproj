@@ -60,10 +60,12 @@
   <ItemGroup>
     <Compile Include="ArchitecturesService.cs" />
     <Compile Include="Contracts\IArchitecturesService.cs" />
+    <Compile Include="Contracts\IDependenciesService.cs" />
     <Compile Include="Contracts\IDistributionsService.cs" />
     <Compile Include="Contracts\IIssuesService.cs" />
     <Compile Include="Contracts\ILicensesService.cs" />
     <Compile Include="Contracts\IRepositoriesService.cs" />
+    <Compile Include="DependenciesService.cs" />
     <Compile Include="DistributionsService.cs" />
     <Compile Include="HardDriveScreenshotSaver.cs" />
     <Compile Include="Contracts\IPackageSaver.cs" />

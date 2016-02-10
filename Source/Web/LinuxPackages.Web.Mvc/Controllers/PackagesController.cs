@@ -28,6 +28,7 @@
         private readonly IRepositoriesService repositories;
         private readonly IDistributionsService distros;
         private readonly IScreenshotsService screenshots;
+        private readonly IDependenciesService dependencies;
         private ApplicationUserManager userManager;
 
         public PackagesController(
@@ -36,7 +37,8 @@
             ILicensesService licenses,
             IRepositoriesService repositories,
             IDistributionsService distros,
-            IScreenshotsService screenshots)
+            IScreenshotsService screenshots,
+            IDependenciesService dependencies)
         {
             this.packages = packages;
             this.architectures = architectures;
@@ -44,6 +46,7 @@
             this.repositories = repositories;
             this.distros = distros;
             this.screenshots = screenshots;
+            this.dependencies = dependencies;
         }
 
         public ApplicationUserManager UserManager
@@ -77,6 +80,10 @@
                 .GetById(requestedPackageId)
                 .ProjectTo<PackageDetailsViewModel>()
                 .FirstOrDefault();
+
+            packageModel.Dependencies = dependencies.GetAllById(requestedPackageId)
+                .ProjectTo<ListedPackageViewModel>()
+                .ToList();
 
             return View(packageModel);
         }
