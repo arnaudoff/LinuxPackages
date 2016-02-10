@@ -11,7 +11,7 @@
         public const int MinCommentContentLength = 20;
         public const int MaxCommentContentLength = 10000;
 
-        public const int MinRating = 1;
+        public const int MinRating = 0;
         public const int MaxRating = 5;
 
         public const int MinRepositoryNameLength = 4;

@@ -8,17 +8,20 @@
     using Common.Constants;
     using Common.Utilities;
     using System.Linq;
+    using LinuxPackages.Data.Models;
+    using LinuxPackages.Data.Repositories;
 
     public class HardDriveScreenshotSaver : IScreenshotSaver
     {
         private readonly string rootPath;
         private readonly string screenshotsFolderName;
-        private readonly IScreenshotsService screenshots;
+        private readonly IRepository<Screenshot> screenshots;
 
-        public HardDriveScreenshotSaver(string rootPath, string screenshotsFolderName, IScreenshotsService screenshots)
+        public HardDriveScreenshotSaver(string rootPath, string screenshotsFolderName, IRepository<Screenshot> screenshots)
         {
             this.rootPath = rootPath;
             this.screenshotsFolderName = screenshotsFolderName;
+            this.screenshots = screenshots;
         }
 
         public byte[] Read(string filePath)
@@ -53,18 +56,22 @@
             File.WriteAllBytes(finalPath, contents);
 
             // Save the thumbnail
+            var thumbnailsFolderPath = Path.Combine(
+                            screenshotsDirPath,
+                            string.Format("{0}x{1}", PackageConstants.ScreenshotThumbnailWidth, PackageConstants.ScreenshotThumbnailHeight));
+
+            if (!Directory.Exists(thumbnailsFolderPath))
+            {
+                Directory.CreateDirectory(thumbnailsFolderPath);
+            }
+
             using (var memoryStream = new MemoryStream(contents))
             {
                 using (var image = Image.FromStream(memoryStream))
                 {
                     using (var newImage = ImageUtils.ScaleImage(image, 500, 500))
                     {
-                        string thumbnailPath = Path.Combine(
-                            screenshotsDirPath,
-                            string.Format("{0}x{1}", PackageConstants.ScreenshotThumbnailWidth, PackageConstants.ScreenshotThumbnailHeight),
-                            screenshotFilename);
-
-                        newImage.Save(thumbnailPath, ImageFormat.Png);
+                        newImage.Save(Path.Combine(thumbnailsFolderPath, screenshotFilename), ImageFormat.Png);
                     }
                 }
             }
@@ -73,7 +80,8 @@
         public string GetScreenshotPath(int requestedPackageId, int requestedScreenshotId)
         {
             var screenshot = this.screenshots
-                .GetById(requestedScreenshotId)
+                .All()
+                .Where(s => s.Id == requestedScreenshotId)
                 .Select(s => new
                 {
                     FileName = s.FileName,
@@ -95,7 +103,8 @@
         public string GetScreenshotPath(int requestedPackageId, int requestedScreenshotId, int width, int height)
         {
             var screenshot = this.screenshots
-                .GetById(requestedScreenshotId)
+                .All()
+                .Where(s => s.Id == requestedScreenshotId)
                 .Select(s => new
                 {
                     FileName = s.FileName,

@@ -42,7 +42,7 @@
             int requestedScreenshotId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(resource));
 
             string screenshotPath = null;
-            if (size == null)
+            if (size == string.Empty)
             {
                 screenshotPath = this.screenshotSaver.GetScreenshotPath(requestedPackageId, requestedScreenshotId);
             }

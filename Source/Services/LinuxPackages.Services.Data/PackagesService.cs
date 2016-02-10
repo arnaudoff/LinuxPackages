@@ -123,7 +123,7 @@
         {
             var currentRating = this.ratings
                 .All()
-                .Where(r => r.Id == packageId && r.RatedById == ratedById)
+                .Where(r => r.PackageId == packageId && r.RatedById == ratedById)
                 .FirstOrDefault();
 
             if (currentRating != null)
@@ -139,7 +139,8 @@
             var newRating = new Rating()
             {
                 Value = value,
-                PackageId = packageId
+                PackageId = packageId,
+                RatedById = ratedById
             };
 
             this.ratings.Add(newRating);

@@ -7,6 +7,11 @@
     {
         public static Image ScaleImage(Image image, int maxWidth, int maxHeight)
         {
+            if (image.Width < maxWidth && image.Height < maxHeight)
+            {
+                return image;
+            }
+
             var ratioX = (double)maxWidth / image.Width;
             var ratioY = (double)maxHeight / image.Height;
             var ratio = Math.Min(ratioX, ratioY);
