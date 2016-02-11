@@ -1,0 +1,27 @@
+﻿@model LinuxPackages.Web.Mvc.ViewModels.Issues.AddIssueViewModel
+
+@{
+    ViewBag.Title = "New issue";
+}
+
+@using (Html.BeginForm("Add", "Issues", new { id = Model.PackageId }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>New issue</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.DisplayFor(m => m.PackageName)
+    @Html.EditorFor(m => m.Title)
+    @Html.EditorFor(m => m.Severity, new { List = Model.SeverityLevels })
+    @Html.EditorFor(m => m.Content)
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="k-button" value="Add issue" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/validation")
+}

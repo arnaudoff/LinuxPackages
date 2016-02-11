@@ -19,3 +19,7 @@
 .k-multiselect, .k-upload, .k-widget, .k-grid {
     border: none;
 }
+
+table.k-editor {
+    border: 1px solid #ddd;
+}
