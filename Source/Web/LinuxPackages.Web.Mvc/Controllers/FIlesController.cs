@@ -12,6 +12,7 @@
     using Services.Data.Contracts;
     using System.Text.RegularExpressions;
     using System.Net;
+    using Infrastructure.ActionFilters;
 
     public class FilesController : Controller
     {
@@ -26,18 +27,9 @@
             this.screenshotSaver = screenshotSaver;
         }
 
+        [HashCheck("id", "resource")]
         public ActionResult Screenshots(string id, string resource, string size)
         {
-            if (!QueryStringUrlHelper.IsHashValid(id))
-            {
-                return new HttpNotFoundResult("The requested package was not found.");
-            }
-
-            if (!QueryStringUrlHelper.IsHashValid(resource))
-            {
-                return new HttpNotFoundResult("The requested screenshot was not found.");
-            }
-
             int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
             int requestedScreenshotId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(resource));
 
@@ -67,13 +59,9 @@
             return new FileContentResult(contents, mimeType);
         }
         
+        [HashCheck("id")]
         public ActionResult Packages(string id)
         {
-            if (!QueryStringUrlHelper.IsHashValid(id))
-            {
-                return new HttpNotFoundResult("The requested package was not found.");
-            }
-
             int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
 
             var package = this.packages

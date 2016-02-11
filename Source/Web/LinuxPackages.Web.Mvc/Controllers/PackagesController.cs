@@ -19,6 +19,7 @@
     using Ninject;
     using Services.Data.Contracts;
     using ViewModels.Packages;
+    using Infrastructure.ActionFilters;
 
     public class PackagesController : Controller
     {
@@ -67,13 +68,9 @@
             return View();
         }
 
+        [HashCheck("id")]
         public ActionResult Details(string id)
         {
-            if (!QueryStringUrlHelper.IsHashValid(id))
-            {
-                return new HttpNotFoundResult("The requested package was not found.");
-            }
-
             int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
 
             var packageModel = this.packages

@@ -9,6 +9,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
     using Infrastructure.Helpers.Contracts;
     using Services.Data.Contracts;
     using ViewModels.Issues;
+    using Infrastructure.ActionFilters;
 
     public class IssuesController : Controller
     {
@@ -29,13 +30,9 @@ namespace LinuxPackages.Web.Mvc.Controllers
         }
 
         [Authorize]
+        [HashCheck("id")]
         public ActionResult Add(string id)
         {
-            if (!QueryStringUrlHelper.IsHashValid(id))
-            {
-                return new HttpNotFoundResult("The requested package was not found.");
-            }
-
             int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
 
             var model = new AddIssueViewModel
@@ -51,6 +48,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HashCheck("id")]
         public ActionResult Add(AddIssueViewModel model, string id)
         {
             int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));

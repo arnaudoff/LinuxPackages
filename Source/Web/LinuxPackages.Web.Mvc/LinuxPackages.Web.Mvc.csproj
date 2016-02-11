@@ -227,6 +227,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\ActionFilters\HashCheck.cs" />
     <Compile Include="Infrastructure\Extensions\CacheExtensions.cs" />
     <Compile Include="Infrastructure\Helpers\Conversions.cs" />
     <Compile Include="Infrastructure\Helpers\Sanitizer.cs" />
