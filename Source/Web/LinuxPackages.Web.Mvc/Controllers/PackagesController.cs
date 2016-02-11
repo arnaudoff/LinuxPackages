@@ -109,15 +109,15 @@
         [ValidateAntiForgeryToken]
         public ActionResult Add(AddPackageViewModel model)
         {
-            model.Repositories = this.GetRepositories();
-            model.Architectures = this.GetArchitectures();
-            model.Licenses = this.GetLicenses();
-            model.Maintainers = this.GetMaintainers();
-            model.Dependencies = this.GetDependencies();
-            model.Distributions = this.GetDistributions();
-
             if (!ModelState.IsValid)
             {
+                model.Repositories = this.GetRepositories();
+                model.Architectures = this.GetArchitectures();
+                model.Licenses = this.GetLicenses();
+                model.Maintainers = this.GetMaintainers();
+                model.Dependencies = this.GetDependencies();
+                model.Distributions = this.GetDistributions();
+
                 return View(model);
             }
 
@@ -139,20 +139,13 @@
                 model.DependencyIds,
                 model.MaintainerIds);
 
-            if (newPackage == null)
-            {
-                this.ModelState.AddModelError(string.Empty, "Could not create new package.");
-                return View(model);
-            }
-
             foreach (var modelScreenshot in model.Screenshots)
             {
-                Screenshot screen = this.screenshots.Create(modelScreenshot.FileName, StreamHelper.ReadFully(modelScreenshot.InputStream, modelScreenshot.ContentLength), newPackage.Id, newPackage.Name);
-                if (screen == null)
-                {
-                    this.ModelState.AddModelError(string.Empty, "Could not create screenshot.");
-                    return View(model);
-                }
+                this.screenshots.Create(
+                    modelScreenshot.FileName,
+                    StreamHelper.ReadFully(modelScreenshot.InputStream, modelScreenshot.ContentLength),
+                    newPackage.Id,
+                    newPackage.Name);
             }
 
             return this.RedirectToAction("Index", "Home");

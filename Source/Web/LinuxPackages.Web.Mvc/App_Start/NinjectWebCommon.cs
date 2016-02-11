@@ -12,15 +12,18 @@ namespace LinuxPackages.Web.Mvc.App_Start
     using Common.Constants;
     using Common.Contracts;
     using Common.Utilities;
+
     using Data;
-    using Data.Models;
     using Data.Repositories;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
+
+    using Infrastructure.Helpers;
+    using Infrastructure.Helpers.Contracts;
+
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Extensions.Conventions;
     using Ninject.Web.Common;
+
     using Services.Data;
     using Services.Data.Contracts;
 
@@ -62,7 +65,9 @@ namespace LinuxPackages.Web.Mvc.App_Start
         {
             kernel.Bind<DbContext>().To<LinuxPackagesDbContext>().InRequestScope();
             kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
+
             kernel.Bind<IRandomGenerator>().To<RandomGenerator>();
+            kernel.Bind<ISanitizer>().To<Sanitizer>();
 
             string packagesStorePath = HostingEnvironment.MapPath(PackageConstants.PackagesPath);
 
