@@ -238,6 +238,7 @@
     <Compile Include="ViewModels\Account\ListedUserViewModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\Issues\AddIssueViewModel.cs" />
+    <Compile Include="ViewModels\Issues\ListedIssueViewModel.cs" />
     <Compile Include="ViewModels\Packages\AddPackageViewModel.cs" />
     <Compile Include="ViewModels\Packages\ArchitectureViewModel.cs" />
     <Compile Include="ViewModels\Packages\DistributionViewModel.cs" />
@@ -331,6 +332,7 @@
     <Content Include="Views\Issues\Add.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SingleLineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\KendoEditor.cshtml" />
+    <Content Include="Views\Issues\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

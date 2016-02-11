@@ -10,6 +10,9 @@ namespace LinuxPackages.Web.Mvc.Controllers
     using Services.Data.Contracts;
     using ViewModels.Issues;
     using Infrastructure.ActionFilters;
+    using Kendo.Mvc.UI;
+    using AutoMapper.QueryableExtensions;
+    using Kendo.Mvc.Extensions;
 
     public class IssuesController : Controller
     {
@@ -24,7 +27,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
             this.sanitizer = sanitizer;
         }
 
-        public ActionResult Index()
+        public ActionResult All()
         {
             return View();
         }
@@ -69,6 +72,16 @@ namespace LinuxPackages.Web.Mvc.Controllers
                 requestedPackageId);
 
             return this.RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult GetIssues([DataSourceRequest]DataSourceRequest request)
+        {
+            var result = this.issues
+                .GetAll()
+                .ProjectTo<ListedIssueViewModel>()
+                .ToDataSourceResult(request);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

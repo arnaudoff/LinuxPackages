@@ -1,0 +1,31 @@
+﻿@using LinuxPackages.Web.Mvc.ViewModels.Issues;
+
+@{
+    ViewBag.Title = "All issues";
+}
+
+@(Html.Kendo()
+    .Grid<ListedIssueViewModel>()
+    .Name("AllIssuesGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.Id).ClientTemplate(
+            "<a href='" +
+                Url.Action("Details", "Issues") + "/#= Id #" +
+            "'>\\##= Id #</a>"
+        ).Title("ID").Groupable(false);
+        columns.Bound(i => i.Title).Title("Title").Title("Title").Groupable(false);
+        columns.Bound(i => i.Package.Name).ClientTemplate(
+            "<a href='" +
+                Url.Action("Details", "Packages") + "/#= Package.Id #" +
+            "'>#= Package.Name #</a>"
+        ).Title("Package").Title("Package").Groupable(true);
+        columns.Bound(i => i.Severity).Title("Severity").Groupable(true);
+        columns.Bound(i => i.OpenedOn).Title("Opened on").Format("{0:dd/MM/yyyy}").Groupable(true);
+    })
+    .DataSource(data =>
+        data.Ajax().Read(r => r.Action("GetIssues", "Issues")))
+    .Filterable()
+    .Sortable()
+    .Pageable()
+    .Groupable())

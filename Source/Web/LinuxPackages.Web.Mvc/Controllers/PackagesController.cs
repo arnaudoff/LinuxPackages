@@ -150,10 +150,12 @@
 
         public ActionResult GetPackages([DataSourceRequest]DataSourceRequest request)
         {
-            var packages = this.packages.GetAll();
-            var packagesViewModel = packages.ProjectTo<ListedPackageViewModel>();
-            var results = packagesViewModel.ToDataSourceResult(request);
-            return Json(results, JsonRequestBehavior.AllowGet);
+            var result = this.packages
+                .GetAll()
+                .ProjectTo<ListedPackageViewModel>()
+                .ToDataSourceResult(request);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
