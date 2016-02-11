@@ -29,6 +29,7 @@
         [AllowHtml]
         [MinLength(IssueConstants.MinContentLength)]
         [MaxLength(IssueConstants.MaxContentLength)]
+        [UIHint("KendoEditor")]
         public string Content { get; set; }
 
         public string PackageId { get; set; }

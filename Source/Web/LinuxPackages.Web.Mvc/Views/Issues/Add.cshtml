@@ -13,10 +13,7 @@
     @Html.DisplayFor(m => m.PackageName)
     @Html.EditorFor(m => m.Title)
     @Html.EditorFor(m => m.Severity, new { List = Model.SeverityLevels })
-    @(Html.Kendo().Editor()
-      .Name("editor")
-      .HtmlAttributes(new { style = "height:440px" })
-      .Resizable(resizable => resizable.Content(true).Toolbar(true)))
+    @Html.EditorFor(m => m.Content)
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="k-button" value="Add issue" />

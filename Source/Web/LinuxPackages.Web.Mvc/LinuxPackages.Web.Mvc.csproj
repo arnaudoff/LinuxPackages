@@ -329,6 +329,7 @@
     <Content Include="Views\Packages\_CommentsPartial.cshtml" />
     <Content Include="Views\Issues\Add.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SingleLineText.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\KendoEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

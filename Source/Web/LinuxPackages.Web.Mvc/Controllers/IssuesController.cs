@@ -57,8 +57,9 @@ namespace LinuxPackages.Web.Mvc.Controllers
 
             if (!ModelState.IsValid)
             {
-                model.SeverityLevels = Conversions.EnumToSelectList<IssueSeverityType>();
+                model.PackageId = id;
                 model.PackageName = this.packages.GetById(requestedPackageId).Select(p => p.Name).FirstOrDefault();
+                model.SeverityLevels = Conversions.EnumToSelectList<IssueSeverityType>();
 
                 return View(model);
             }
