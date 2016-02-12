@@ -54,6 +54,7 @@
     <Compile Include="UtilitiesTests\ImageUtilsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilitiesTests\RandomGeneratorTests.cs" />
+    <Compile Include="UtilitiesTests\StreamHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\LinuxPackages.Common\LinuxPackages.Common.csproj">

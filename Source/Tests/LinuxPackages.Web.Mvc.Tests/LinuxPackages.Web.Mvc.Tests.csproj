@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="ControllerTests\HomeControllerTests.cs" />
     <Compile Include="ControllerTests\ProfileControllerTests.cs" />
+    <Compile Include="InfrastructureTests\Helpers\QueryStringUrlHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +88,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\LinuxPackages.Common\LinuxPackages.Common.csproj">
+      <Project>{095d2656-66cb-41e1-a95a-745f41b2b8e3}</Project>
+      <Name>LinuxPackages.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Web\LinuxPackages.Web.Mvc\LinuxPackages.Web.Mvc.csproj">
       <Project>{954a1c58-4075-4b00-8c3f-1ed7e5dc6b75}</Project>
       <Name>LinuxPackages.Web.Mvc</Name>
