@@ -18,7 +18,7 @@
 
             foreach (var package in packages)
             {
-                var currentLine = $"{package.Name},{package.Description},{package.CategoryName}";
+                string currentLine = $"\"{package.Name}\",\"{package.Description}\",\"{package.CategoryName}\"";
                 csv.AppendLine(currentLine);
             }
 

@@ -15,7 +15,7 @@
     public class PackagesCrawler : ICrawler
     {
         private const string Url = "https://packages.debian.org/stable/";
-        private const int NewCategoryRequestDelay = 10000;
+        private const int NewCategoryRequestDelay = 15000;
 
         private readonly IConfiguration configuration;
         private readonly IBrowsingContext browsingContext;
@@ -59,6 +59,7 @@
                         CategoryName = category.Name
                     };
 
+                    Console.WriteLine($"Crawled package {currentPackage.Name}. ({currentPackage.CategoryName})");
                     packages.Add(currentPackage);
                 }
 
