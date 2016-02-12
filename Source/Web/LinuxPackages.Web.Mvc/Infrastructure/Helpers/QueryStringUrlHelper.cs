@@ -21,7 +21,7 @@
         public static string GenerateUrlHash(string param, string salt)
         {
             string saltedParam = string.Concat(param, salt);
-            string urlHash = FormsAuthentication.HashPasswordForStoringInConfigFile(saltedParam, "sha1");
+            string urlHash = FormsAuthentication.HashPasswordForStoringInConfigFile(saltedParam, "sha1").ToLower();
             return new string(urlHash.Take(GlobalConstants.UrlHashLength).ToArray());
         }
 
