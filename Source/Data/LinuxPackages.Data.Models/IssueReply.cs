@@ -21,5 +21,9 @@
 
         [Required]
         public DateTime CreatedOn { get; set; }
+
+        public string AuthorId { get; set; }
+
+        public User Author { get; set; }
     }
 }

@@ -10,5 +10,9 @@
         IQueryable<Issue> GetById(int id);
 
         Issue Create(string title, string content, IssueSeverityType severity, int packageId, string authorId);
+
+        IQueryable<IssueReply> GetRepliesByIssueId(int issueId);
+
+        IssueReply CreateReply(string content, int issueId, string authorId);
     }
 }

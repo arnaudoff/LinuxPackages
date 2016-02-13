@@ -51,19 +51,25 @@
             return newIssue;
         }
 
-        public IssueReply CreateReply(string content, int issueId)
+        public IssueReply CreateReply(string content, int issueId, string authorId)
         {
             var newReply = new IssueReply()
             {
                 Content = content,
                 IssueId = issueId,
-                CreatedOn = DateTime.Now
+                CreatedOn = DateTime.Now,
+                AuthorId = authorId
             };
 
             this.replies.Add(newReply);
             this.replies.SaveChanges();
 
             return newReply;
+        }
+
+        public IQueryable<IssueReply> GetRepliesByIssueId(int issueId)
+        {
+            return this.replies.All().Where(r => r.IssueId == issueId);
         }
     }
 }
