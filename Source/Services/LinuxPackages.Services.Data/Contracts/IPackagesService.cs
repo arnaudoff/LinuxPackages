@@ -12,6 +12,8 @@
 
         IQueryable<Package> GetById(int id);
 
+        IQueryable<Package> GetMostDownloaded(int n);
+
         Package Create(
             string name,
             string description,
@@ -27,5 +29,7 @@
         PackageComment AddComment(string content, int packageId, string authorId);
 
         Rating AddRating(int value, int packageId, string ratedById);
+
+        void IncrementDownloads(int packageId);
     }
 }

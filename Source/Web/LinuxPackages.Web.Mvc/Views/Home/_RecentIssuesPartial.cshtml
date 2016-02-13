@@ -1,0 +1,24 @@
+﻿@using LinuxPackages.Web.Mvc.ViewModels.Issues;
+
+@(Html.Kendo()
+    .Grid<ListedRecentIssuesViewModel>()
+    .Name("RecentIssuesGrid")
+    .Columns(columns =>
+    {
+        columns
+            .Bound(i => i.Id)
+            .ClientTemplate("<a href='" + Url.Action("Details", "Issues") + "/#= Id #" + "'>\\##= Id #</a>")
+            .Title("ID")
+            .HeaderHtmlAttributes(new { style = "text-align: center;" }); ;
+        columns
+            .Bound(i => i.Title)
+            .Title("Title")
+            .HeaderHtmlAttributes(new { style = "text-align: center;" }); ;
+        columns
+            .Bound(i => i.Package.Name)
+            .ClientTemplate("<a href='" + Url.Action("Details", "Packages") + "/#= Package.Id #" + "'>#= Package.Name #</a>")
+            .Title("Package")
+            .HeaderHtmlAttributes(new { style = "text-align: center;" }); ;
+    })
+    .DataSource(data =>
+        data.Ajax().Read(r => r.Action("GetRecentIssues", "Home"))))

@@ -15,11 +15,12 @@
                 Url.Action("Details", "Packages") + "/#= Id #" +
             "'>#= Name #</a>"
         ).Title("Name");
-        columns.Bound(c => c.Distribution).Title("Distribution");
-        columns.Bound(c => c.Repository);
-        columns.Bound(c => c.Architecture);
-        columns.Bound(c => c.AverageRating);
-        columns.Bound(c => c.UploadedOn).Format("{0:dd/MM/yyyy}");
+        columns.Bound(p => p.Distribution).Title("Distribution");
+        columns.Bound(p => p.Repository);
+        columns.Bound(p => p.Architecture);
+        columns.Bound(p => p.AverageRating);
+        columns.Bound(p => p.Downloads);
+        columns.Bound(p => p.UploadedOn).Format("{0:dd/MM/yyyy}");
     })
     .DataSource(data =>
         data.Ajax().Read(r => r.Action("GetPackages", "Packages")))

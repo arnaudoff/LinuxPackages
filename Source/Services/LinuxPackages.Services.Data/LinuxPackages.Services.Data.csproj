@@ -64,6 +64,7 @@
     <Compile Include="Contracts\IDistributionsService.cs" />
     <Compile Include="Contracts\IIssuesService.cs" />
     <Compile Include="Contracts\ILicensesService.cs" />
+    <Compile Include="Contracts\IUsersService.cs" />
     <Compile Include="Contracts\IRepositoriesService.cs" />
     <Compile Include="DependenciesService.cs" />
     <Compile Include="DistributionsService.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoriesService.cs" />
     <Compile Include="ScreenshotsService.cs" />
+    <Compile Include="UsersService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\LinuxPackages.Common\LinuxPackages.Common.csproj">

@@ -66,6 +66,8 @@
         [Required]
         public DateTime UploadedOn { get; set; }
 
+        public int Downloads { get; set; }
+
         public virtual ICollection<Rating> Ratings
         {
             get

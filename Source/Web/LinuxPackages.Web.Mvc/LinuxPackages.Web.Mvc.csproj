@@ -238,17 +238,21 @@
     <Compile Include="Infrastructure\Mappings\IMapFrom.cs" />
     <Compile Include="Infrastructure\Mappings\IMapTo.cs" />
     <Compile Include="Infrastructure\Mappings\QueryableExtensions.cs" />
+    <Compile Include="ViewModels\Account\ListedTopMaintainersViewModel.cs" />
     <Compile Include="ViewModels\Account\ListedUserViewModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Home\IndexViewModel.cs" />
     <Compile Include="ViewModels\IssueReplies\AddIssueReplyViewModel.cs" />
     <Compile Include="ViewModels\IssueReplies\ListedIssueRepliesViewModel.cs" />
     <Compile Include="ViewModels\Issues\AddIssueViewModel.cs" />
     <Compile Include="ViewModels\Issues\IssueDetailsViewModel.cs" />
     <Compile Include="ViewModels\Issues\ListedIssueViewModel.cs" />
+    <Compile Include="ViewModels\Issues\ListedRecentIssuesViewModel.cs" />
     <Compile Include="ViewModels\Packages\AddPackageViewModel.cs" />
     <Compile Include="ViewModels\Packages\ArchitectureViewModel.cs" />
     <Compile Include="ViewModels\Packages\DistributionViewModel.cs" />
     <Compile Include="ViewModels\Packages\LicenseViewModel.cs" />
+    <Compile Include="ViewModels\Packages\ListedMostDownloadedPackagesViewModel.cs" />
     <Compile Include="ViewModels\Packages\ListedPackageViewModel.cs" />
     <Compile Include="ViewModels\Packages\ListedScreenshotViewModel.cs" />
     <Compile Include="ViewModels\Packages\PackageDetailsViewModel.cs" />
@@ -265,6 +269,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\delete.gif" />
+    <Content Include="Content\images\tux-brand.png" />
+    <Content Include="Content\images\tux.png" />
     <Content Include="Content\rateit.css" />
     <Content Include="Content\star.gif" />
     <Content Include="favicon.ico" />
@@ -344,6 +350,9 @@
     <Content Include="Views\Shared\DisplayTemplates\IssueStateType.cshtml" />
     <Content Include="Views\IssueReplies\Add.cshtml" />
     <Content Include="Views\IssueReplies\_AllRepliesPartial.cshtml" />
+    <Content Include="Views\Home\_MostDownloadedPartial.cshtml" />
+    <Content Include="Views\Home\_TopMaintainersPartial.cshtml" />
+    <Content Include="Views\Home\_RecentIssuesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
