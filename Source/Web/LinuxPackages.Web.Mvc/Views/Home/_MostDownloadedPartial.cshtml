@@ -1,18 +1,19 @@
 ﻿@using LinuxPackages.Web.Mvc.ViewModels.Packages;
-@using LinuxPackages.Web.Mvc.Infrastructure.Helpers;
-@using LinuxPackages.Common.Constants;
 
 @(Html.Kendo()
-    .Grid<ListedPackageViewModel>()
+    .Grid<ListedMostDownloadedPackagesViewModel>()
     .Name("MostDownloadedPackagesGrid")
     .Columns(columns =>
     {
-        columns.Bound(p => p.Id).ClientTemplate(
-            "<a href='" +
-                Url.Action("Details", "Packages") + "/#= Id #" +
-            "'>#= Name #</a>"
-        ).Title("Package");
-        columns.Bound(p => p.Downloads).Title("Downloads");
+        columns
+            .Bound(p => p.Id)
+            .ClientTemplate("<a href='" + Url.Action("Details", "Packages") + "/#= Id #" + "'>#= Name #</a>")
+            .Title("Package")
+            .HeaderHtmlAttributes(new { style = "text-align: center;" });
+        columns
+            .Bound(p => p.Downloads)
+            .Title("Downloads")
+            .HeaderHtmlAttributes(new { style = "text-align: center;" });
     })
     .DataSource(data =>
         data.Ajax().Read(r => r.Action("GetMostDownloadedPackages", "Home"))))

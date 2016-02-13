@@ -197,3 +197,9 @@ span.glyphicon-thumbs-down {
     font-family: Optima, Segoe, 'Segoe UI', Candara, Calibri, Arial, sans-serif;
     padding: 0px;
 }
+
+.home-stats-title {
+    font-family: Calibri;
+    text-decoration: underline;
+    color: #888;
+}

@@ -41,13 +41,16 @@
     <hr />
     <div class="row">
         <div class="col-md-4 text-center">
-            <h4>Most downloaded</h4>
+            <h4 class="home-stats-title">Most downloaded</h4>
+            @{Html.RenderPartial("_MostDownloadedPartial");}
         </div>
         <div class="col-md-4 text-center">
-            <h4>Top maintainers</h4>
+            <h4 class="home-stats-title">Top maintainers</h4>
+            @{Html.RenderPartial("_TopMaintainersPartial");}
         </div>
         <div class="col-md-4 text-center">
-            <h4>Recently added</h4>
+            <h4 class="home-stats-title">Recently added</h4>
+            @{Html.RenderPartial("_RecentIssuesPartial");}
         </div>
     </div>
 </div> 

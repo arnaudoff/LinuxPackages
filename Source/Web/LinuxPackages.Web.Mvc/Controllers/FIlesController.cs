@@ -54,36 +54,24 @@
             }
 
             byte[] contents = screenshotSaver.Read(screenshotPath);
-            string mimeType = MimeMapping.GetMimeMapping(screenshotPath);
-
-            return new FileContentResult(contents, mimeType);
+            return new FileContentResult(contents, MimeMapping.GetMimeMapping(screenshotPath));
         }
         
         [HashCheck("id")]
         public ActionResult Packages(string id)
         {
             int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+            this.packages.IncrementDownloads(requestedPackageId);
 
             var package = this.packages
                 .GetById(requestedPackageId)
-                .Select(p => new
-                {
-                    Name = p.Name,
-                    FileName = p.FileName
-                })
+                .Select(p => new { Name = p.Name, FileName = p.FileName })
                 .FirstOrDefault();
 
             byte[] contents = this.packageSaver.Read(requestedPackageId, package.Name, package.FileName);
-            string mimeType = MimeMapping.GetMimeMapping(package.FileName);
 
-            var contentDisposition = new ContentDisposition
-            {
-                FileName = package.FileName,
-                Inline = false,
-            };
-            Response.AppendHeader("Content-Disposition", contentDisposition.ToString());
-
-            return File(contents, mimeType);
+            Response.AppendHeader("Content-Disposition", new ContentDisposition { FileName = package.FileName, Inline = false }.ToString());
+            return File(contents, MimeMapping.GetMimeMapping(package.FileName));
         }
     }
 }

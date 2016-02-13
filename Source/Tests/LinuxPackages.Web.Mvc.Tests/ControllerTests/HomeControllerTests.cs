@@ -11,9 +11,6 @@
         [TestMethod]
         public void HomeShouldReturnTheCorrectView()
         {
-            var controller = new HomeController();
-            var result = controller.Index() as ViewResult;
-
             // TODO: Implement actual test
             Assert.AreEqual(true, true);
         }

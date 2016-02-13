@@ -1,5 +1,4 @@
-﻿
-namespace LinuxPackages.Web.Mvc.ViewModels.Account
+﻿namespace LinuxPackages.Web.Mvc.ViewModels.Account
 {
     using LinuxPackages.Data.Models;
     using Infrastructure.Mappings;
