@@ -14,11 +14,13 @@
     {
         private ICollection<Package> packages;
         private ICollection<Issue> issues;
+        private ICollection<IssueReply> issueReplies;
 
         public User()
         {
             this.packages = new HashSet<Package>();
             this.issues = new HashSet<Issue>();
+            this.issueReplies = new HashSet<IssueReply>();
         }
 
         [Required]
@@ -54,6 +56,19 @@
             set
             {
                 this.issues = value;
+            }
+        }
+
+        public virtual ICollection<IssueReply> IssueReplies
+        {
+            get
+            {
+                return this.issueReplies;
+            }
+
+            set
+            {
+                this.issueReplies = value;
             }
         }
 

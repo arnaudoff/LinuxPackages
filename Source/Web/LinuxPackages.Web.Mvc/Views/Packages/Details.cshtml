@@ -79,15 +79,14 @@
     <dl class="dl-horizontal">
         <dt>Issues</dt>
         <dd>
-            <i>@Model.IssuesCount</i>&nbsp;&nbsp;
-            @Html.ActionLink("New", "Add", "Issues", new { @Model.Id }, new { @class = "k-button"})
+            @Model.IssuesCount&nbsp;&nbsp;
+            @Html.ActionLink("New issue", "Add", "Issues", new { @Model.Id }, new { @class = "k-button"})
         </dd>
     </dl>
     <dl class="dl-horizontal">
         <dt>Comments</dt>
         <dd>
-            <i>@Model.Comments.Count()</i>&nbsp;&nbsp;
-            @Html.ActionLink("New", "Add", "Comments", new { @Model.Id }, new { @class = "k-button" })
+            @Model.Comments.Count()&nbsp;&nbsp;
         </dd>
     </dl>
     <br />

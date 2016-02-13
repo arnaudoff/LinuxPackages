@@ -1,0 +1,11 @@
+﻿@using LinuxPackages.Data.Models
+@model IssueStateType
+
+@if (Model == IssueStateType.Opened)
+{
+    <span class="label label-success">@Model</span>
+}
+else if (Model == IssueStateType.Closed)
+{
+    <span class="label label-danger">@Model</span>
+}

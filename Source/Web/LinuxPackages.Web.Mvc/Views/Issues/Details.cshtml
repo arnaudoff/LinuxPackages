@@ -1,0 +1,67 @@
+﻿@model LinuxPackages.Web.Mvc.ViewModels.Issues.IssueDetailsViewModel
+@using LinuxPackages.Data.Models
+
+@{
+    ViewBag.Title = "Issue details";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-3 text-center">
+        <small><b>Package</b></small>
+    </div>
+    <div class="col-md-2 text-center">
+        <small>@Html.LabelFor(m => m.Severity)</small>
+    </div>
+    <div class="col-md-3 text-center">
+        <small>@Html.LabelFor(m => m.OpenedOn)</small>
+    </div>
+    <div class="col-md-2 text-center">
+        <small>@Html.LabelFor(m => m.State)</small>
+    </div>
+    <div class="col-md-2 text-center">
+        <small><b>Votes</b></small>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 text-center">
+        <h4>@Html.ActionLink(Model.Package.Name, "Details", "Packages", new { id = Model.Package.Id })</h4>
+    </div>
+    <div class="col-md-2 text-center">
+        <h5>@Html.DisplayFor(m => m.Severity)</h5>
+    </div>
+    <div class="col-md-3 text-center">
+        <h4>@Html.DisplayFor(m => m.OpenedOn)</h4>
+    </div>
+    <div class="col-md-2 text-center">
+        <h5>@Html.DisplayFor(m => m.State)</h5>
+    </div>
+    <div class="col-md-2 text-center">
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <span class="issue-rating">@Model.PositiveVotes</span>
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> <span class="issue-rating">@Model.NegativeVotes</span>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-sm-1">
+        <div class="thumbnail">
+            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+        </div>
+    </div>
+    <div class="col-sm-11">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>@Model.Author.FirstName @Model.Author.LastName (@Model.Author.UserName)</strong>
+            </div>
+            <div class="panel-body">
+                @Html.Raw(Model.Content)
+            </div>
+        </div>
+    </div>
+</div>
+@if (this.User.Identity.IsAuthenticated)
+{
+    <a href="/IssueReplies/Add/@Model.Id" class="k-button pull-right">New reply</a><br />
+}
+<br />
+@{Html.RenderAction("ByIssueId", "IssueReplies", new { id = Model.Id });}

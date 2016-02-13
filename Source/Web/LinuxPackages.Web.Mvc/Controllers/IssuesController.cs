@@ -4,15 +4,17 @@ namespace LinuxPackages.Web.Mvc.Controllers
     using System.Linq;
     using System.Web.Mvc;
 
+    using AutoMapper.QueryableExtensions;
     using Data.Models;
+    using Infrastructure.ActionFilters;
     using Infrastructure.Helpers;
     using Infrastructure.Helpers.Contracts;
+    using Infrastructure.Mappings;
+    using Kendo.Mvc.Extensions;
+    using Kendo.Mvc.UI;
+    using Microsoft.AspNet.Identity;
     using Services.Data.Contracts;
     using ViewModels.Issues;
-    using Infrastructure.ActionFilters;
-    using Kendo.Mvc.UI;
-    using AutoMapper.QueryableExtensions;
-    using Kendo.Mvc.Extensions;
 
     public class IssuesController : Controller
     {
@@ -33,6 +35,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         [HashCheck("id")]
         public ActionResult Add(string id)
         {
@@ -67,18 +70,32 @@ namespace LinuxPackages.Web.Mvc.Controllers
 
             var newIssue = this.issues.Create(
                 model.Title,
-                (IssueSeverityType)model.Severity,
                 this.sanitizer.Sanitize(model.Content),
-                requestedPackageId);
+                (IssueSeverityType)model.Severity,
+                requestedPackageId,
+                this.User.Identity.GetUserId());
 
             return this.RedirectToAction("Index", "Home");
+        }
+
+        [HashCheck("id")]
+        public ActionResult Details(string id)
+        {
+            int requestedIssueId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+
+            var issueModel = this.issues
+                .GetById(requestedIssueId)
+                .To<IssueDetailsViewModel>()
+                .FirstOrDefault();
+
+            return View(issueModel);
         }
 
         public ActionResult GetIssues([DataSourceRequest]DataSourceRequest request)
         {
             var result = this.issues
                 .GetAll()
-                .ProjectTo<ListedIssueViewModel>()
+                .To<ListedIssueViewModel>()
                 .ToDataSourceResult(request);
 
             return Json(result, JsonRequestBehavior.AllowGet);
