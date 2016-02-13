@@ -10,8 +10,10 @@
     using Common.Constants;
     using Common.Utilities;
     using Data.Models;
+    using Infrastructure.ActionFilters;
     using Infrastructure.Extensions;
     using Infrastructure.Helpers;
+    using Infrastructure.Mappings;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
     using Microsoft.AspNet.Identity;
@@ -19,7 +21,6 @@
     using Ninject;
     using Services.Data.Contracts;
     using ViewModels.Packages;
-    using Infrastructure.ActionFilters;
 
     public class PackagesController : Controller
     {
@@ -75,11 +76,11 @@
 
             var packageModel = this.packages
                 .GetById(requestedPackageId)
-                .ProjectTo<PackageDetailsViewModel>()
+                .To<PackageDetailsViewModel>()
                 .FirstOrDefault();
 
             packageModel.Dependencies = dependencies.GetAllById(requestedPackageId)
-                .ProjectTo<ListedPackageViewModel>()
+                .To<ListedPackageViewModel>()
                 .ToList();
 
             return View(packageModel);
@@ -152,7 +153,7 @@
         {
             var result = this.packages
                 .GetAll()
-                .ProjectTo<ListedPackageViewModel>()
+                .To<ListedPackageViewModel>()
                 .ToDataSourceResult(request);
 
             return Json(result, JsonRequestBehavior.AllowGet);

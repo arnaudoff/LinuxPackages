@@ -4,16 +4,17 @@ namespace LinuxPackages.Web.Mvc.Controllers
     using System.Linq;
     using System.Web.Mvc;
 
+    using AutoMapper.QueryableExtensions;
     using Data.Models;
+    using Infrastructure.ActionFilters;
     using Infrastructure.Helpers;
     using Infrastructure.Helpers.Contracts;
+    using Infrastructure.Mappings;
+    using Kendo.Mvc.Extensions;
+    using Kendo.Mvc.UI;
+    using Microsoft.AspNet.Identity;
     using Services.Data.Contracts;
     using ViewModels.Issues;
-    using Infrastructure.ActionFilters;
-    using Kendo.Mvc.UI;
-    using AutoMapper.QueryableExtensions;
-    using Kendo.Mvc.Extensions;
-    using Microsoft.AspNet.Identity;
 
     public class IssuesController : Controller
     {
@@ -84,7 +85,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
 
             var issueModel = this.issues
                 .GetById(requestedIssueId)
-                .ProjectTo<IssueDetailsViewModel>()
+                .To<IssueDetailsViewModel>()
                 .FirstOrDefault();
 
             return View(issueModel);
@@ -94,7 +95,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
         {
             var result = this.issues
                 .GetAll()
-                .ProjectTo<ListedIssueViewModel>()
+                .To<ListedIssueViewModel>()
                 .ToDataSourceResult(request);
 
             return Json(result, JsonRequestBehavior.AllowGet);

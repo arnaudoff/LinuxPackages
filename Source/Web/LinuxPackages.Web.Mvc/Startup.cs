@@ -12,7 +12,6 @@ namespace LinuxPackages.Web.Mvc
     {
         public void Configuration(IAppBuilder app)
         {
-            AutoMapperConfig.RegisterMappings(Assemblies.Mvc);
             this.ConfigureAuth(app);
         }
     }

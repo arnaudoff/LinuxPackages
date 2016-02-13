@@ -27,3 +27,15 @@ font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
 table.k-editor {
     border: 1px solid #ddd;
 }
+
+.issue-rating {
+    font-size: 18px;
+}
+
+span.glyphicon-thumbs-up {
+    font-size: 1.2em;
+}
+
+span.glyphicon-thumbs-down {
+    font-size: 1.2em;
+}

@@ -8,37 +8,37 @@
 <hr />
 <div class="row">
     <div class="col-md-3 text-center">
-        <b>Package</b>
+        <small><b>Package</b></small>
     </div>
     <div class="col-md-2 text-center">
-        @Html.LabelFor(m => m.Severity)
+        <small>@Html.LabelFor(m => m.Severity)</small>
     </div>
     <div class="col-md-3 text-center">
-        @Html.LabelFor(m => m.OpenedOn)
+        <small>@Html.LabelFor(m => m.OpenedOn)</small>
     </div>
     <div class="col-md-2 text-center">
-        @Html.LabelFor(m => m.State)
+        <small>@Html.LabelFor(m => m.State)</small>
     </div>
     <div class="col-md-2 text-center">
-        Rating
+        <small><b>Votes</b></small>
     </div>
 </div>
 <div class="row">
     <div class="col-md-3 text-center">
-        @Html.ActionLink(Model.Package.Name, "Details", "Packages", new { id = Model.Package.Id })
+        <h4>@Html.ActionLink(Model.Package.Name, "Details", "Packages", new { id = Model.Package.Id })</h4>
     </div>
     <div class="col-md-2 text-center">
-        @Html.DisplayFor(m => m.Severity)
+        <h5>@Html.DisplayFor(m => m.Severity)</h5>
     </div>
     <div class="col-md-3 text-center">
-        @Html.DisplayFor(m => m.OpenedOn)
+        <h4>@Html.DisplayFor(m => m.OpenedOn)</h4>
     </div>
     <div class="col-md-2 text-center">
-        @Html.DisplayFor(m => m.State)
+        <h5>@Html.DisplayFor(m => m.State)</h5>
     </div>
     <div class="col-md-2 text-center">
-        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <b>@Model.PositiveVotes</b>
-        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> <b>@Model.NegativeVotes</b>
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <span class="issue-rating">@Model.PositiveVotes</span>
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> <span class="issue-rating">@Model.NegativeVotes</span>
     </div>
 </div>
 <hr />

@@ -235,6 +235,8 @@
     <Compile Include="Infrastructure\Helpers\QueryStringUrlHelper.cs" />
     <Compile Include="Infrastructure\Mappings\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\Mappings\IMapFrom.cs" />
+    <Compile Include="Infrastructure\Mappings\IMapTo.cs" />
+    <Compile Include="Infrastructure\Mappings\QueryableExtensions.cs" />
     <Compile Include="ViewModels\Account\ListedUserViewModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\Issues\AddIssueViewModel.cs" />
