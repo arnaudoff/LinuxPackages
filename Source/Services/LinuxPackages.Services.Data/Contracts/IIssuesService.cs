@@ -9,6 +9,6 @@
 
         IQueryable<Issue> GetById(int id);
 
-        Issue Create(string title, IssueSeverityType severity, string content, int packageId);
+        Issue Create(string title, string content, IssueSeverityType severity, int packageId, string authorId);
     }
 }

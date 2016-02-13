@@ -1,0 +1,15 @@
+﻿@using LinuxPackages.Data.Models
+@model IssueSeverityType
+
+@switch (Model)
+{
+    case IssueSeverityType.Critical:
+        <span class="label label-danger">@Model</span>
+        break;
+    case IssueSeverityType.Medium:
+        <span class="label label-warning">@Model</span>
+        break;
+    default:
+        <span class="label label-default">@Model</span>
+        break;
+}

@@ -1,0 +1,47 @@
+﻿@model LinuxPackages.Web.Mvc.ViewModels.Issues.IssueDetailsViewModel
+@using LinuxPackages.Data.Models
+
+@{
+    ViewBag.Title = "Issue details";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-3 text-center">
+        <b>Package</b>
+    </div>
+    <div class="col-md-2 text-center">
+        @Html.LabelFor(m => m.Severity)
+    </div>
+    <div class="col-md-3 text-center">
+        @Html.LabelFor(m => m.OpenedOn)
+    </div>
+    <div class="col-md-2 text-center">
+        @Html.LabelFor(m => m.State)
+    </div>
+    <div class="col-md-2 text-center">
+        Rating
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 text-center">
+        @Html.ActionLink(Model.Package.Name, "Details", "Packages", new { id = Model.Package.Id })
+    </div>
+    <div class="col-md-2 text-center">
+        @Html.DisplayFor(m => m.Severity)
+    </div>
+    <div class="col-md-3 text-center">
+        @Html.DisplayFor(m => m.OpenedOn)
+    </div>
+    <div class="col-md-2 text-center">
+        @Html.DisplayFor(m => m.State)
+    </div>
+    <div class="col-md-2 text-center">
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <b>@Model.PositiveVotes</b>
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> <b>@Model.NegativeVotes</b>
+    </div>
+</div>
+<hr />
+<h2>@Model.Title</h2> by <small>@Model.Author.UserName</small>
+@Html.Raw(Model.Content)
+<hr />

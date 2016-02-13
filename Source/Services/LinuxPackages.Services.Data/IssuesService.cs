@@ -30,16 +30,18 @@
                 .Where(i => i.Id == id);
         }
 
-        public Issue Create(string title, IssueSeverityType severity, string content, int packageId)
+        public Issue Create(string title, string content, IssueSeverityType severity, int packageId, string authorId)
         {
             var newIssue = new Issue()
             {
                 Title = title,
-                Severity = severity,
                 Content = content,
+                Severity = severity,
+                State = IssueStateType.Opened,
                 OpenedOn = DateTime.UtcNow,
                 PositiveVotes = 0,
                 NegativeVotes = 0,
+                AuthorId = authorId,
                 PackageId = packageId
             };
 

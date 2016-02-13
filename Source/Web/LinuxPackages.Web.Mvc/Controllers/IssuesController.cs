@@ -13,6 +13,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
     using Kendo.Mvc.UI;
     using AutoMapper.QueryableExtensions;
     using Kendo.Mvc.Extensions;
+    using Microsoft.AspNet.Identity;
 
     public class IssuesController : Controller
     {
@@ -33,6 +34,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         [HashCheck("id")]
         public ActionResult Add(string id)
         {
@@ -67,11 +69,25 @@ namespace LinuxPackages.Web.Mvc.Controllers
 
             var newIssue = this.issues.Create(
                 model.Title,
-                (IssueSeverityType)model.Severity,
                 this.sanitizer.Sanitize(model.Content),
-                requestedPackageId);
+                (IssueSeverityType)model.Severity,
+                requestedPackageId,
+                this.User.Identity.GetUserId());
 
             return this.RedirectToAction("Index", "Home");
+        }
+
+        [HashCheck("id")]
+        public ActionResult Details(string id)
+        {
+            int requestedIssueId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+
+            var issueModel = this.issues
+                .GetById(requestedIssueId)
+                .ProjectTo<IssueDetailsViewModel>()
+                .FirstOrDefault();
+
+            return View(issueModel);
         }
 
         public ActionResult GetIssues([DataSourceRequest]DataSourceRequest request)
