@@ -265,6 +265,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\delete.gif" />
+    <Content Include="Content\images\tux.png" />
     <Content Include="Content\rateit.css" />
     <Content Include="Content\star.gif" />
     <Content Include="favicon.ico" />
@@ -344,6 +345,7 @@
     <Content Include="Views\Shared\DisplayTemplates\IssueStateType.cshtml" />
     <Content Include="Views\IssueReplies\Add.cshtml" />
     <Content Include="Views\IssueReplies\_AllRepliesPartial.cshtml" />
+    <Content Include="Views\Home\_MostDownloadedPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

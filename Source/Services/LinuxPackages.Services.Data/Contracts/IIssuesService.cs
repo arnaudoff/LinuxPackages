@@ -9,6 +9,8 @@
 
         IQueryable<Issue> GetById(int id);
 
+        IQueryable<Issue> GetRecent(int n);
+
         Issue Create(string title, string content, IssueSeverityType severity, int packageId, string authorId);
 
         IQueryable<IssueReply> GetRepliesByIssueId(int issueId);

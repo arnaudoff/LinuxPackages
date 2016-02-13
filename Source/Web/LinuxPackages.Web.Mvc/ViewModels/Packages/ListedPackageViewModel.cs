@@ -39,6 +39,8 @@
 
         public DateTime UploadedOn { get; set; }
 
+        public int Downloads { get; set; }
+
         public void CreateMappings(IMapperConfiguration configuration)
         {
             configuration.CreateMap<Package, ListedPackageViewModel>()

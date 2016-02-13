@@ -30,6 +30,14 @@
                 .Where(i => i.Id == id);
         }
 
+        public IQueryable<Issue> GetRecent(int n)
+        {
+            return this.issues
+                .All()
+                .OrderByDescending(i => i.OpenedOn)
+                .Take(n);
+        }
+
         public Issue Create(string title, string content, IssueSeverityType severity, int packageId, string authorId)
         {
             var newIssue = new Issue()

@@ -37,6 +37,13 @@
         {
             return this.packages.All();
         }
+        public IQueryable<Package> GetMostDownloaded(int n)
+        {
+            return this.packages
+                .All()
+                .OrderByDescending(p => p.Downloads)
+                .Take(n);
+        }
 
         public IQueryable<Package> GetById(int id)
         {
@@ -147,6 +154,16 @@
             this.ratings.SaveChanges();
 
             return newRating;
+        }
+
+        public void IncrementDownloads(int packageId)
+        {
+            var package = this.packages.GetById(packageId);
+
+            package.Downloads += 1;
+
+            this.packages.Update(package);
+            this.packages.SaveChanges();
         }
     }
 }
