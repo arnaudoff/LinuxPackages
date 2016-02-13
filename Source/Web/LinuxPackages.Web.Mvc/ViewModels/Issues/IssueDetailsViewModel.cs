@@ -15,6 +15,21 @@
 
     public class IssueDetailsViewModel : IMapFrom<Issue>
     {
+        private string hashedId;
+
+        public string Id
+        {
+            get
+            {
+                return this.hashedId;
+            }
+
+            set
+            {
+                this.hashedId = value.ToString() + QueryStringUrlHelper.GenerateUrlHash(value.ToString(), (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName]);
+            }
+        }
+
         public string Title { get; set; }
 
         public string Content { get; set; }

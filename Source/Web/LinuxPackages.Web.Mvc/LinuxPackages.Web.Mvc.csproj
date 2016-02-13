@@ -221,6 +221,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IssueRepliesController.cs" />
     <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\PackagesController.cs" />
@@ -239,6 +240,8 @@
     <Compile Include="Infrastructure\Mappings\QueryableExtensions.cs" />
     <Compile Include="ViewModels\Account\ListedUserViewModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
+    <Compile Include="ViewModels\IssueReplies\AddIssueReplyViewModel.cs" />
+    <Compile Include="ViewModels\IssueReplies\ListedIssueRepliesViewModel.cs" />
     <Compile Include="ViewModels\Issues\AddIssueViewModel.cs" />
     <Compile Include="ViewModels\Issues\IssueDetailsViewModel.cs" />
     <Compile Include="ViewModels\Issues\ListedIssueViewModel.cs" />
@@ -339,6 +342,8 @@
     <Content Include="Views\Issues\Details.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\IssueSeverityType.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\IssueStateType.cshtml" />
+    <Content Include="Views\IssueReplies\Add.cshtml" />
+    <Content Include="Views\IssueReplies\_AllRepliesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

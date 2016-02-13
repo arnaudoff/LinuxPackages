@@ -1,0 +1,24 @@
+﻿@model LinuxPackages.Web.Mvc.ViewModels.IssueReplies.AddIssueReplyViewModel
+
+@{
+    ViewBag.Title = "New reply";
+}
+
+@using (Html.BeginForm("Add", "IssueReplies", new { id = Model.IssueId }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>New reply</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.EditorFor(m => m.Content)
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="k-button" value="Add reply" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/validation")
+}

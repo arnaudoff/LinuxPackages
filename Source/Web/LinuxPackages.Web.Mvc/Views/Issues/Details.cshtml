@@ -42,6 +42,26 @@
     </div>
 </div>
 <hr />
-<h2>@Model.Title</h2> by <small>@Model.Author.UserName</small>
-@Html.Raw(Model.Content)
-<hr />
+<div class="row">
+    <div class="col-sm-1">
+        <div class="thumbnail">
+            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+        </div>
+    </div>
+    <div class="col-sm-11">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>@Model.Author.FirstName @Model.Author.LastName (@Model.Author.UserName)</strong>
+            </div>
+            <div class="panel-body">
+                @Html.Raw(Model.Content)
+            </div>
+        </div>
+    </div>
+</div>
+@if (this.User.Identity.IsAuthenticated)
+{
+    <a href="/IssueReplies/Add/@Model.Id" class="k-button pull-right">New reply</a><br />
+}
+<br />
+@{Html.RenderAction("ByIssueId", "IssueReplies", new { id = Model.Id });}
