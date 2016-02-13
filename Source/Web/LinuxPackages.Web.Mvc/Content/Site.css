@@ -203,3 +203,7 @@ span.glyphicon-thumbs-down {
     text-decoration: underline;
     color: #888;
 }
+
+.stats-info {
+    color: #333333;
+}

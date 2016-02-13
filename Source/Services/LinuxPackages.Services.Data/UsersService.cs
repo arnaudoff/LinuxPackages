@@ -15,6 +15,11 @@
             this.users = users;
         }
 
+        public IQueryable<User> GetAll()
+        {
+            return this.users.All();
+        }
+
         public IQueryable<User> GetTopMaintainers(int n)
         {
             return this.users

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model LinuxPackages.Web.Mvc.ViewModels.Home.IndexViewModel
+
+@{
     ViewBag.Title = "Home";
 }
 
@@ -11,8 +13,8 @@
             <a href="#"><div class="circle-tile-heading dark-blue"><i class="fa fa-archive fa-fw fa-3x"></i></div></a>
             <div class="circle-tile-content dark-blue">
                 <div class="circle-tile-description text-faded"> Packages</div>
-                <div class="circle-tile-number text-faded ">265</div>
-                <a class="circle-tile-footer" href="#">All<i class="fa fa-chevron-circle-right"></i></a>
+                <div class="circle-tile-number text-faded ">@Model.PackagesCount</div>
+                <a class="circle-tile-footer" href="/Packages/All">All <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -22,8 +24,8 @@
             <a href="#"><div class="circle-tile-heading dark-gray"><i class="fa fa-male fa-fw fa-3x"></i></div></a>
             <div class="circle-tile-content gray">
                 <div class="circle-tile-description text-faded">Maintainers</div>
-                <div class="circle-tile-number text-faded ">15</div>
-                <a class="circle-tile-footer" href="#">All<i class="fa fa-chevron-circle-right"></i></a>
+                <div class="circle-tile-number text-faded ">@Model.MaintainersCount</div>
+                <a class="circle-tile-footer" href="/Packages/Add">Not a maintainer yet? <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -33,8 +35,8 @@
             <a href="#"><div class="circle-tile-heading yellow"><i class="fa fa-exclamation-triangle fa-fw fa-3x"></i></div></a>
             <div class="circle-tile-content yellow">
                 <div class="circle-tile-description text-faded"> Issues </div>
-                <div class="circle-tile-number text-faded ">10</div>
-                <a class="circle-tile-footer" href="#">All<i class="fa fa-chevron-circle-right"></i></a>
+                <div class="circle-tile-number text-faded ">@Model.IssuesCount</div>
+                <a class="circle-tile-footer" href="/Issues/All">All <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -43,14 +45,20 @@
         <div class="col-md-4 text-center">
             <h4 class="home-stats-title">Most downloaded</h4>
             @{Html.RenderPartial("_MostDownloadedPartial");}
+            <br />
+            <small class="stats-info"><i>Most downloaded packages are updated every 30 minutes.</i></small>
         </div>
         <div class="col-md-4 text-center">
             <h4 class="home-stats-title">Top maintainers</h4>
             @{Html.RenderPartial("_TopMaintainersPartial");}
+            <br />
+            <small class="stats-info"><i>Top maintainers are updated every 30 minutes.</i></small>
         </div>
         <div class="col-md-4 text-center">
             <h4 class="home-stats-title">Recently added</h4>
             @{Html.RenderPartial("_RecentIssuesPartial");}
+            <br />
+            <small class="stats-info"><i>Recently added issues are updated every 5 minutes.</i></small>
         </div>
     </div>
 </div> 

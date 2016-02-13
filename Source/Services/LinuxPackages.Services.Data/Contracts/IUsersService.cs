@@ -7,6 +7,8 @@ namespace LinuxPackages.Services.Data.Contracts
 
     public interface IUsersService
     {
+        IQueryable<User> GetAll();
+
         IQueryable<User> GetTopMaintainers(int n);
     }
 }
