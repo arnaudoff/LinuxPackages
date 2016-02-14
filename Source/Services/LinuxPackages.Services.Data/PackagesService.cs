@@ -128,7 +128,9 @@
 
         public IQueryable<PackageComment> GetCommentsByPackageId(int packageId)
         {
-            return this.comments.All().Where(c => c.PackageId == packageId);
+            return this.comments
+                .All()
+                .Where(c => c.PackageId == packageId);
         }
 
         public Rating AddRating(int value, int packageId, string ratedById)

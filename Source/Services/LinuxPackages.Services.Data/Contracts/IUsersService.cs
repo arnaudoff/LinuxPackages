@@ -9,6 +9,8 @@ namespace LinuxPackages.Services.Data.Contracts
     {
         IQueryable<User> GetAll();
 
+        IQueryable<User> GetById(string userId);
+
         IQueryable<User> GetTopMaintainers(int n);
     }
 }

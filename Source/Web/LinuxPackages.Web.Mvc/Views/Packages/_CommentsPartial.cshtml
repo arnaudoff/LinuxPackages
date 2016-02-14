@@ -2,21 +2,26 @@
 @model IEnumerable<PackageCommentViewModel>
 
 <br />
-<div class="row">
-    <a class="k-button k-button-icontext k-add-button" href="#"><span class="k-icon k-add"></span>Add a new comment</a>
-</div>
+@if (this.User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        <a class="k-button k-button-icontext k-add-button" href="#"><span class="k-icon k-add"></span>Add a new comment</a>
+    </div>
+}
 <br />
 @{ var packageId = (string)ViewData["PackageId"]; }
 
 @(Html.Kendo().ListView<PackageCommentViewModel>(Model)
         .Name("CommentsListView")
         .TagName("div")
+        .HtmlAttributes(new { style = "overflow: hidden;" })
         .ClientTemplateId("commentsTemplate")
         .DataSource(dataSource => dataSource
             .Model(model => model.Id("Id"))
             .PageSize(20)
             .Create(create => create.Action("Add", "Comments", new { packageId = packageId}))
             .Read(read => read.Action("All", "Comments", new { packageId = packageId }))
+            .Sort(c => c.Add("CreatedOn").Descending())
         )
         .Pageable()
         .Editable())

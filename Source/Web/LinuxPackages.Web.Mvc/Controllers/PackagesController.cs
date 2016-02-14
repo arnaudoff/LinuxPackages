@@ -22,7 +22,7 @@
     using Services.Data.Contracts;
     using ViewModels.Packages;
 
-    public class PackagesController : Controller
+    public class PackagesController : BaseController
     {
         private readonly IPackagesService packages;
         private readonly IArchitecturesService architectures;

@@ -10,6 +10,7 @@
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using ViewModels.Profile;
+    using App_Start;
 
     public enum EditProfileResultType
     {
@@ -18,7 +19,7 @@
     }
 
     [Authorize]
-    public partial class ProfileController : Controller
+    public partial class ProfileController : BaseController
     {
         private const string XsrfKey = "XsrfId";
 
@@ -75,8 +76,7 @@
             }
 
             var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
-            var userProfile = Mapper.Map<ProfileViewModel>(user);
-
+            var userProfile = this.Mapper.Map<ProfileViewModel>(user);
             return this.View(userProfile);
         }
 

@@ -1,20 +1,22 @@
 ﻿namespace LinuxPackages.Web.Mvc.Controllers
 {
-    using Kendo.Mvc.UI;
-    using ViewModels.Packages;
+    using System.Linq;
     using System.Web.Mvc;
-    using Services.Data.Contracts;
-    using System.Collections.Generic;
-    using Microsoft.AspNet.Identity;
-    using Kendo.Mvc.Extensions;
-    using Infrastructure.ActionFilters;
-    using Infrastructure.Helpers;
-    using System.Web;
-    using Infrastructure.Extensions;
-    using Infrastructure.Mappings;
-    using ViewModels.Account;
 
-    public class CommentsController : Controller
+    using Infrastructure.ActionFilters;
+    using Infrastructure.Extensions;
+    using Infrastructure.Helpers;
+    using Infrastructure.Mappings;
+
+    using Kendo.Mvc.Extensions;
+    using Kendo.Mvc.UI;
+    using Microsoft.AspNet.Identity;
+
+    using Services.Data.Contracts;
+    using ViewModels.Account;
+    using ViewModels.Packages;
+
+    public class CommentsController : BaseController
     {
         private readonly IPackagesService packages;
 
@@ -48,8 +50,7 @@
                 this.packages.AddComment(comment.Content, requestedPackageId, this.User.Identity.GetUserId());
             }
 
-            // TODO: Extract BaseController and fetch user details to fix the UI bug with unknown comment author
-            comment.Author = new ListedUserViewModel() { };
+            comment.Author = this.Mapper.Map<ListedUserViewModel>(this.UserProfile);
             return Json(new[] { comment }.ToDataSourceResult(request, ModelState));
         }
     }

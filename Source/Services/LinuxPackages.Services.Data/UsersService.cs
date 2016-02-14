@@ -20,6 +20,11 @@
             return this.users.All();
         }
 
+        public IQueryable<User> GetById(string userId)
+        {
+            return this.users.All().Where(u => u.Id == userId);
+        }
+
         public IQueryable<User> GetTopMaintainers(int n)
         {
             return this.users
