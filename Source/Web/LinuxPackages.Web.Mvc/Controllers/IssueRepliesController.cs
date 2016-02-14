@@ -13,7 +13,7 @@
     using Infrastructure.Mappings;
     using System.Linq;
 
-    public class IssueRepliesController : Controller
+    public class IssueRepliesController : BaseController
     {
         private readonly IIssuesService issues;
         private readonly ISanitizer sanitizer;

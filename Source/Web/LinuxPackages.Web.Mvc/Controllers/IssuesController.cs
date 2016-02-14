@@ -16,7 +16,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
     using Services.Data.Contracts;
     using ViewModels.Issues;
 
-    public class IssuesController : Controller
+    public class IssuesController : BaseController
     {
         private readonly IPackagesService packages;
         private readonly IIssuesService issues;

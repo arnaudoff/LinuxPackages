@@ -1,0 +1,15 @@
+﻿@model LinuxPackages.Web.Mvc.ViewModels.Packages.PackageCommentViewModel
+
+<div class="row">
+    @(Html.EditorFor(p => p.Content))
+    <br />
+    <span data-for="Content" class="k-invalid-msg"></span>
+</div>
+<br />
+<div class="row">
+    <div class="edit-buttons">
+        <a class="k-button k-button-icontext k-update-button" href="\\#"><span class="k-icon k-update"></span>Save</a>
+        <a class="k-button k-button-icontext k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span>Cancel</a>
+    </div>
+</div>
+<br />

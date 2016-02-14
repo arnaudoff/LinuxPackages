@@ -12,7 +12,7 @@
     using System.Web;
     using Infrastructure.Extensions;
 
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IPackagesService packages;
         private readonly IIssuesService issues;

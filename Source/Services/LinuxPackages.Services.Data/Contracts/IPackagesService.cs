@@ -26,6 +26,8 @@
             IList<int> dependencyIds,
             IList<string> maintainerIds);
 
+        IQueryable<PackageComment> GetCommentsByPackageId(int packageId);
+
         PackageComment AddComment(string content, int packageId, string authorId);
 
         Rating AddRating(int value, int packageId, string ratedById);

@@ -14,7 +14,7 @@
     using System.Net;
     using Infrastructure.ActionFilters;
 
-    public class FilesController : Controller
+    public class FilesController : BaseController
     {
         private readonly IPackagesService packages;
         private readonly IPackageSaver packageSaver;
