@@ -126,6 +126,11 @@
             return newComment;
         }
 
+        public IQueryable<PackageComment> GetCommentsByPackageId(int packageId)
+        {
+            return this.comments.All().Where(c => c.PackageId == packageId);
+        }
+
         public Rating AddRating(int value, int packageId, string ratedById)
         {
             var currentRating = this.ratings

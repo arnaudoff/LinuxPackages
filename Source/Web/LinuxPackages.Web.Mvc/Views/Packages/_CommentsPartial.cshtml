@@ -1,18 +1,53 @@
 ﻿@using LinuxPackages.Web.Mvc.ViewModels.Packages;
 @model IEnumerable<PackageCommentViewModel>
 
-@if (Model.Count() > 0)
-{
-    @(Html.Kendo().ListView<PackageCommentViewModel>(Model)
-        .Name("commentsListView")
+<br />
+<div class="row">
+    <a class="k-button k-button-icontext k-add-button" href="#"><span class="k-icon k-add"></span>Add a new comment</a>
+</div>
+<br />
+@{ var packageId = (string)ViewData["PackageId"]; }
+
+@(Html.Kendo().ListView<PackageCommentViewModel>(Model)
+        .Name("CommentsListView")
         .TagName("div")
         .ClientTemplateId("commentsTemplate")
-        .BindTo(Model)
+        .DataSource(dataSource => dataSource
+            .Model(model => model.Id("Id"))
+            .PageSize(20)
+            .Create(create => create.Action("Add", "Comments", new { packageId = packageId}))
+            .Read(read => read.Action("All", "Comments", new { packageId = packageId }))
+        )
         .Pageable()
-    )
-}
-else
-{
-    <p>This package has no comments yet!</p>
-}
+        .Editable())
 
+<script type="text/x-kendo-tmpl" id="commentsTemplate">
+    <div class="row">
+        <div class="col-sm-1">
+            <div class="thumbnail">
+                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong># if (typeof Author != "undefined" && Author != null) { # #: Author.FirstName # #: Author.LastName # (#: Author.Username #) # } #</strong> commented on (#= kendo.toString(kendo.parseDate(CreatedOn, "g"), "g") #)
+                </div>
+                <div class="panel-body" style="word-break: break-word;">
+                    #= Content #
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script>
+    $(function() {
+        var listView = $("#CommentsListView").data("kendoListView");
+
+        $(".k-add-button").click(function(e) {
+            listView.add();
+            e.preventDefault();
+        });
+    });
+</script>
