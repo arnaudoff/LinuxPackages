@@ -49,14 +49,14 @@
     <dl class="dl-horizontal">
         <dt>File</dt>
         <dd>
-            <a href="/Files/Packages/@Model.Id" class="k-button">Download</a><br />
+            <a href="/Files/Packages/@Model.Url" class="k-button">Download</a><br />
             <small>@string.Format("{0}, {1} B", @Model.FileName, @Model.Size)</small><br />
         </dd>
     </dl>
     <dl class="dl-horizontal">
         <dt>Rate</dt>
         <dd>
-            <div data-packageid="@Model.Id" class="rateit" data-rateit-step="1"></div><br />
+            <div data-packageid="@Model.Url" class="rateit" data-rateit-step="1"></div><br />
             <span id="rating-result"></span>
         </dd>
     </dl>
@@ -67,7 +67,7 @@
             {
                 foreach (var dependency in Model.Dependencies)
                 {
-                    Html.ActionLink(dependency.Name, "Details", new { id = dependency.Id });
+                    Html.ActionLink(dependency.Name, "Details", new { id = dependency.Url });
                 }
             }
             else
@@ -80,7 +80,7 @@
         <dt>Issues</dt>
         <dd>
             @Model.IssuesCount&nbsp;&nbsp;
-            @Html.ActionLink("New issue", "Add", "Issues", new { @Model.Id }, new { @class = "k-button"})
+            @Html.ActionLink("New issue", "Add", "Issues", new { id = @Model.Url }, new { @class = "k-button"})
         </dd>
     </dl>
     <dl class="dl-horizontal">
@@ -99,17 +99,17 @@
                           .Add()
                           .Selected(true)
                           .Text("Screenshots")
-                          .Content(Html.Partial("_ScreenshotsPartial", Model.Screenshots, new ViewDataDictionary { { "PackageId", Model.Id } }).ToHtmlString());
+                          .Content(Html.Partial("_ScreenshotsPartial", Model.Screenshots, new ViewDataDictionary { { "PackageUrl", Model.Url } }).ToHtmlString());
 
                       items
                           .Add()
                           .Text("Comments")
-                          .Content(Html.Partial("_CommentsPartial", Model.Comments, new ViewDataDictionary { { "PackageId", Model.Id } }).ToHtmlString());
+                          .Content(Html.Partial("_CommentsPartial", Model.Comments, new ViewDataDictionary { { "PackageUrl", Model.Url } }).ToHtmlString());
 
                       items
                           .Add()
                           .Text("Maintainers")
-                          .Content(Html.Partial("_MaintainersPartial", Model.Maintainers, new ViewDataDictionary { { "PackageId", Model.Id } }).ToHtmlString());
+                          .Content(Html.Partial("_MaintainersPartial", Model.Maintainers, new ViewDataDictionary { { "PackageUrl", Model.Url } }).ToHtmlString());
                   }))
 </div>
 

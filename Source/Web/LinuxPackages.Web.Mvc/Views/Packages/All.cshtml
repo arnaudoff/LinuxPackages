@@ -12,7 +12,7 @@
     {
         columns.Bound(p => p.Id).ClientTemplate(
             "<a href='" +
-                Url.Action("Details", "Packages") + "/#= Id #" +
+                Url.Action("Details", "Packages") + "/#= Url #" +
             "'>#= Name #</a>"
         ).Title("Name");
         columns.Bound(p => p.Distribution).Title("Distribution");

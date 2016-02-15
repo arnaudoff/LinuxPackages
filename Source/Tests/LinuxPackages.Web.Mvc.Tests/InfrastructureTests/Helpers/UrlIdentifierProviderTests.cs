@@ -1,23 +1,23 @@
-﻿
-namespace LinuxPackages.Web.Mvc.Tests.InfrastructureTests.Helpers
+﻿namespace LinuxPackages.Web.Mvc.Tests.InfrastructureTests.Helpers
 {
-    using Infrastructure.Helpers;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using LinuxPackages.Common.Constants;
+    using System;
+    using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
-    using System.Linq;
-    using System;
+
+    using Infrastructure.Helpers;
+    using LinuxPackages.Common.Constants;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class QueryStringUrlHelperTests
+    public class UrlIdentifierProviderTests
     {
         [TestMethod]
         public void GenerateSaltShouldGenerateSaltCorrectly()
         {
             int saltSize = 10;
 
-            string result = QueryStringUrlHelper.GenerateUrlSalt(saltSize);
+            string result = (new UrlIdentifierProvider()).GenerateIdentifierProviderSalt(saltSize);
             byte[] source = Convert.FromBase64String(result);
 
             Assert.AreEqual(saltSize, source.Length);
@@ -26,11 +26,11 @@ namespace LinuxPackages.Web.Mvc.Tests.InfrastructureTests.Helpers
         [TestMethod]
         public void GenerateUrlHashShouldGenerateCorrectHash()
         {
-            string entityId = "1337";
-            string salt = "hello";
-            string expectedHash = HashEntity(entityId, salt);
+            // TODO: Mock application context
+            int entityId = 1337;
+            string expectedHash = HashEntity(entityId, "");
 
-            string result = QueryStringUrlHelper.GenerateUrlHash(entityId, salt);
+            string result = (new UrlIdentifierProvider()).EncodeEntityId(entityId);
 
             Assert.AreEqual(GlobalConstants.UrlHashLength, result.Length);
             Assert.AreEqual(expectedHash, result);
@@ -39,20 +39,20 @@ namespace LinuxPackages.Web.Mvc.Tests.InfrastructureTests.Helpers
         [TestMethod]
         public void GetEntityIdFromHashShouldGetTheIdCorrectly()
         {
-            string entityId = "1337";
-            string salt = "hello";
-            string urlHash = HashEntity(entityId, salt);
+            // TODO: Mock application context
+            int entityId = 1337;
+            string urlHash = HashEntity(entityId, "");
 
-            string result = QueryStringUrlHelper.GetEntityIdFromUrlHash(string.Concat(entityId, urlHash));
+            int decodedId = (new UrlIdentifierProvider()).DecodeEntityId(urlHash);
 
-            Assert.AreEqual("1337", result);
+            Assert.AreEqual(1337, decodedId);
         }
 
-        private string HashEntity(string entityId, string salt)
+        private string HashEntity(int entityId, string salt)
         {
             using (SHA1Managed sha1 = new SHA1Managed())
             {
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(entityId, salt)));
+                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(entityId.ToString(), salt)));
                 var sb = new StringBuilder(hash.Length * 2);
 
                 foreach (byte b in hash)

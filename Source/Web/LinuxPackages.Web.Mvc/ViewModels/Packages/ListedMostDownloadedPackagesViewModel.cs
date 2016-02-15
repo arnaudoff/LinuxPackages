@@ -1,26 +1,18 @@
 ﻿namespace LinuxPackages.Web.Mvc.ViewModels.Packages
 {
-    using System.Web;
-
-    using LinuxPackages.Data.Models;
-    using Infrastructure.Mappings;
     using Infrastructure.Helpers;
-    using Common.Constants;
+    using Infrastructure.Mappings;
+    using LinuxPackages.Data.Models;
 
     public class ListedMostDownloadedPackagesViewModel : IMapFrom<Package>
     {
-        private string id;
+        public int Id { get; set; }
 
-        public string Id
+        public string Url
         {
             get
             {
-                return this.id;
-            }
-
-            set
-            {
-                this.id = value.ToString() + QueryStringUrlHelper.GenerateUrlHash(value.ToString(), (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName]);
+                return (new UrlIdentifierProvider()).EncodeEntityId(this.Id);
             }
         }
 

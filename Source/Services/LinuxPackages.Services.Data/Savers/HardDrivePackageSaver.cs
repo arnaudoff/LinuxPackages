@@ -4,7 +4,7 @@
     using System.IO;
 
     using Common.Constants;
-    using LinuxPackages.Services.Data.Contracts;
+    using Contracts.Savers;
 
     public class HardDrivePackageSaver : IPackageSaver
     {

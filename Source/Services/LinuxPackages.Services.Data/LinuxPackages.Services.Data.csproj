@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="ArchitecturesService.cs" />
     <Compile Include="Contracts\IArchitecturesService.cs" />
+    <Compile Include="Contracts\Savers\IAvatarSaver.cs" />
     <Compile Include="Contracts\IDependenciesService.cs" />
     <Compile Include="Contracts\IDistributionsService.cs" />
     <Compile Include="Contracts\IIssuesService.cs" />
@@ -68,12 +69,13 @@
     <Compile Include="Contracts\IRepositoriesService.cs" />
     <Compile Include="DependenciesService.cs" />
     <Compile Include="DistributionsService.cs" />
-    <Compile Include="HardDriveScreenshotSaver.cs" />
-    <Compile Include="Contracts\IPackageSaver.cs" />
+    <Compile Include="Savers\HardDriveAvatarSaver.cs" />
+    <Compile Include="Savers\HardDriveScreenshotSaver.cs" />
+    <Compile Include="Contracts\Savers\IPackageSaver.cs" />
     <Compile Include="Contracts\IPackagesService.cs" />
     <Compile Include="Contracts\IScreenshotsService.cs" />
-    <Compile Include="HardDrivePackageSaver.cs" />
-    <Compile Include="Contracts\IScreenshotSaver.cs" />
+    <Compile Include="Savers\HardDrivePackageSaver.cs" />
+    <Compile Include="Contracts\Savers\IScreenshotSaver.cs" />
     <Compile Include="IssuesService.cs" />
     <Compile Include="LicensesService.cs" />
     <Compile Include="PackagesService.cs" />

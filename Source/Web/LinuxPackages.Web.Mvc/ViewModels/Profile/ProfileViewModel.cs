@@ -3,8 +3,12 @@ namespace LinuxPackages.Web.Mvc.ViewModels.Profile
     using AutoMapper;
     using Infrastructure.Mappings;
     using LinuxPackages.Data.Models;
+    using Issues;
+    using Packages;
+    using System.Collections.Generic;
+    using Infrastructure.Helpers;
 
-    public class ProfileViewModel : IMapFrom<User>, IHaveCustomMappings
+    public class ProfileViewModel : IMapFrom<User>
     {
         public string FirstName { get; set; }
 
@@ -12,15 +16,18 @@ namespace LinuxPackages.Web.Mvc.ViewModels.Profile
 
         public string Email { get; set; }
 
-        public int PackagesMaintainedCount { get; set; }
+        public List<ListedPackageViewModel> PackagesMaintained { get; set; }
 
-        public int IssuesCreatedCount { get; set; }
+        public List<ListedIssueViewModel> IssuesCreated { get; set; }
 
-        public void CreateMappings(IMapperConfiguration configuration)
+        public int AvatarId { get; set; }
+
+        public string AvatarUrl
         {
-            configuration.CreateMap<User, ProfileViewModel>()
-                .ForMember(u => u.PackagesMaintainedCount, opts => opts.MapFrom(u => u.Packages.Count))
-                .ForMember(u => u.IssuesCreatedCount, opts => opts.MapFrom(u => u.Issues.Count));
+            get
+            {
+                return (new UrlIdentifierProvider()).EncodeEntityId(this.AvatarId);
+            }
         }
     }
 }

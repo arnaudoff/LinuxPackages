@@ -1,13 +1,14 @@
-﻿namespace LinuxPackages.Services.Data.Contracts
+﻿namespace LinuxPackages.Services.Data
 {
     using System;
-    using System.IO;
     using System.Drawing;
     using System.Drawing.Imaging;
+    using System.IO;
+    using System.Linq;
 
     using Common.Constants;
     using Common.Utilities;
-    using System.Linq;
+    using Contracts.Savers;
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
 
@@ -69,7 +70,7 @@
             {
                 using (var image = Image.FromStream(memoryStream))
                 {
-                    using (var newImage = ImageUtils.ScaleImage(image, 500, 500))
+                    using (var newImage = ImageUtils.ScaleImage(image, PackageConstants.ScreenshotThumbnailWidth, PackageConstants.ScreenshotThumbnailHeight))
                     {
                         newImage.Save(Path.Combine(thumbnailsFolderPath, screenshotFilename), ImageFormat.Png);
                     }

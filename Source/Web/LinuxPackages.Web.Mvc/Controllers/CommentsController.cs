@@ -28,7 +28,7 @@
         [HashCheck("packageId")]
         public ActionResult All([DataSourceRequest]DataSourceRequest request, string packageId)
         {
-            int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(packageId));
+            int requestedPackageId = this.UrlIdentifierProvider.DecodeEntityId(packageId);
 
             var comments = this.packages
                 .GetCommentsByPackageId(requestedPackageId)
@@ -43,7 +43,7 @@
         [HashCheck("packageId")]
         public ActionResult Add([DataSourceRequest]DataSourceRequest request, PackageCommentViewModel comment, string packageId)
         {
-            int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(packageId));
+            int requestedPackageId = this.UrlIdentifierProvider.DecodeEntityId(packageId);
 
             if (comment != null && ModelState.IsValid)
             {

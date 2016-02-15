@@ -5,18 +5,25 @@
     using System.Web.Mvc;
     using System.Web.Routing;
 
-    using Data.Models;
-    using Microsoft.AspNet.Identity;
-    using Services.Data.Contracts;
     using App_Start;
     using AutoMapper;
-    using Services.Data;
+
+    using Data.Models;
+    using Infrastructure.Helpers.Contracts;
+
+    using Microsoft.AspNet.Identity;
     using Ninject;
+
+    using Services.Data;
+    using Services.Data.Contracts;
 
     public abstract class BaseController : Controller
     {
         [Inject]
         public IUsersService Users { private get; set; }
+
+        [Inject]
+        public IUrlIdentifierProvider UrlIdentifierProvider { get; set; }
 
         protected IMapper Mapper
         {

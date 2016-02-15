@@ -2,28 +2,22 @@
 {
     using System;
     using System.Linq;
-    using System.Web;
 
     using AutoMapper;
-    using Common.Constants;
     using Infrastructure.Helpers;
     using Infrastructure.Mappings;
     using LinuxPackages.Data.Models;
 
     public class ListedPackageViewModel : IMapFrom<Package>, IHaveCustomMappings
     {
-        private string id;
 
-        public string Id
+        public int Id { get; set; }
+
+        public string Url
         {
             get
             {
-                return this.id;
-            }
-
-            set
-            {
-                this.id = value.ToString() + QueryStringUrlHelper.GenerateUrlHash(value.ToString(), (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName]);
+                return (new UrlIdentifierProvider()).EncodeEntityId(this.Id);
             }
         }
 

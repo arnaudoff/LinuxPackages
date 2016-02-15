@@ -7,6 +7,7 @@
     using Contracts;
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
+    using Contracts.Savers;
 
     public class PackagesService : IPackagesService
     {
@@ -77,13 +78,17 @@
                 UploadedOn = DateTime.UtcNow
             };
 
+
+            var maintainers = this.users
+                .All()
+                .Where(x => maintainerIds.Contains(x.Id))
+                .ToList();
+
             if (maintainerIds != null && maintainerIds.Count > 0)
             {
-                foreach (string maintainerId in maintainerIds)
+                for (int i = 0; i < maintainers.Count; i++)
                 {
-                    var maintainer = new User() { Id = maintainerId };
-                    this.users.Attach(maintainer);
-                    newPackage.Maintainers.Add(maintainer);
+                    newPackage.Maintainers.Add(maintainers[i]);
                 }
             }
 

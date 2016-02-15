@@ -23,6 +23,5 @@
         public const string ScreenshotsFolderName = "screenshots";
         public const int ScreenshotThumbnailHeight = 500;
         public const int ScreenshotThumbnailWidth = 500;
-        public const string ScreenshotSizeUrlPattern = @"(\d+)x(\d+)";
     }
 }

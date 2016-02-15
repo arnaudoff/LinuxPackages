@@ -7,5 +7,9 @@
 
         public const int MinLastNameLength = 2;
         public const int MaxLastNameLength = 100;
+
+        public const string AvatarsPath = "~/App_Data/avatars";
+        public const int AvatarThumbnailHeight = 100;
+        public const int AvatarThumbnailWidth = 100;
     }
 }

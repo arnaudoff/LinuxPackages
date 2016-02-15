@@ -61,7 +61,7 @@
 </div>
 @if (this.User.Identity.IsAuthenticated)
 {
-    <a href="/IssueReplies/Add/@Model.Id" class="k-button pull-right">New reply</a><br />
+    <a href="/IssueReplies/Add/@Model.Url" class="k-button pull-right">New reply</a><br />
 }
 <br />
-@{Html.RenderAction("ByIssueId", "IssueReplies", new { id = Model.Id });}
+@{Html.RenderAction("ByIssueId", "IssueReplies", new { id = Model.Url });}

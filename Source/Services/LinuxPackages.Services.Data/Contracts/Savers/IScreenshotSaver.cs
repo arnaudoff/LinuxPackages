@@ -1,4 +1,4 @@
-﻿namespace LinuxPackages.Services.Data
+﻿namespace LinuxPackages.Services.Data.Contracts.Savers
 {
     public interface IScreenshotSaver
     {

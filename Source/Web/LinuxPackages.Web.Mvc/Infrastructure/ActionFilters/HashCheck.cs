@@ -3,11 +3,15 @@
     using System.Linq;
     using System.Web.Mvc;
 
-    using Helpers;
+    using Helpers.Contracts;
+    using Ninject;
 
     public class HashCheck : ActionFilterAttribute
     {
         public string[] ParametersToCheck { get; set; }
+
+        [Inject]
+        public IUrlIdentifierProvider UrlIdentifierProvider { private get; set; }
 
         public HashCheck(params string[] paramsToCheck)
         {
@@ -21,7 +25,7 @@
             {
                 if (this.ParametersToCheck.Contains(param.Key))
                 {
-                    if (!QueryStringUrlHelper.IsHashValid((string)param.Value))
+                    if (!this.UrlIdentifierProvider.IsHashValid((string)param.Value))
                     {
                         filterContext.Result = new HttpNotFoundResult(string.Format("Invalid URL parameter {0}", param.Key));
                     }

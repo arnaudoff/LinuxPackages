@@ -1,9 +1,10 @@
 ﻿namespace LinuxPackages.Web.Mvc.ViewModels.Account
 {
-    using LinuxPackages.Data.Models;
-    using Infrastructure.Mappings;
-    using AutoMapper;
     using System;
+
+    using AutoMapper;
+    using Infrastructure.Mappings;
+    using LinuxPackages.Data.Models;
 
     public class ListedTopMaintainersViewModel : IMapFrom<User>, IHaveCustomMappings
     {

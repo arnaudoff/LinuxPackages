@@ -6,6 +6,7 @@
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
     using LinuxPackages.Services.Data.Contracts;
+    using Contracts.Savers;
 
     public class ScreenshotsService : IScreenshotsService
     {

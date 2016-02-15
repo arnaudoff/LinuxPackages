@@ -1,32 +1,22 @@
 ﻿namespace LinuxPackages.Web.Mvc.ViewModels.Issues
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
+    using System.ComponentModel.DataAnnotations;
 
-    using AutoMapper;
-    using LinuxPackages.Common.Constants;
     using LinuxPackages.Data.Models;
     using LinuxPackages.Web.Mvc.Infrastructure.Helpers;
     using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
     using Packages;
-    using System.ComponentModel.DataAnnotations;
 
     public class IssueDetailsViewModel : IMapFrom<Issue>
     {
-        private string hashedId;
+        public int Id { get; set; }
 
-        public string Id
+        public string Url
         {
             get
             {
-                return this.hashedId;
-            }
-
-            set
-            {
-                this.hashedId = value.ToString() + QueryStringUrlHelper.GenerateUrlHash(value.ToString(), (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName]);
+                return (new UrlIdentifierProvider()).EncodeEntityId(this.Id);
             }
         }
 

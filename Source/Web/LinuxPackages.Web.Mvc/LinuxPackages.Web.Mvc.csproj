@@ -232,10 +232,11 @@
     </Compile>
     <Compile Include="Infrastructure\ActionFilters\HashCheck.cs" />
     <Compile Include="Infrastructure\Extensions\CacheExtensions.cs" />
+    <Compile Include="Infrastructure\Helpers\Contracts\IUrlIdentifierProvider.cs" />
     <Compile Include="Infrastructure\Helpers\Conversions.cs" />
     <Compile Include="Infrastructure\Helpers\Sanitizer.cs" />
     <Compile Include="Infrastructure\Helpers\Contracts\ISanitizer.cs" />
-    <Compile Include="Infrastructure\Helpers\QueryStringUrlHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\UrlIdentifierProvider.cs" />
     <Compile Include="Infrastructure\Mappings\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\Mappings\IMapFrom.cs" />
     <Compile Include="Infrastructure\Mappings\IMapTo.cs" />
@@ -359,7 +360,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Base\" />
     <Folder Include="Views\Comments\" />
     <Folder Include="Views\FIles\" />
   </ItemGroup>

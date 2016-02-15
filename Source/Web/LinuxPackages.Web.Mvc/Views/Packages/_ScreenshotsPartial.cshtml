@@ -5,18 +5,13 @@
 
 @if (Model.Count() > 0)
 {
-    var packageId = (string)ViewData["PackageId"];
+    var packageUrl = (string)ViewData["PackageUrl"];
 
     <p>Click to view full size.</p>
     foreach (var screenshot in Model)
     {
-        var screenshotHash = screenshot.Id.ToString() +
-            QueryStringUrlHelper.GenerateUrlHash(
-            screenshot.Id.ToString(),
-            (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName]);
-
-        <a href="/Files/Screenshots/@packageId/@screenshotHash">
-            <img src="/Files/Screenshots/@packageId/@screenshotHash/@(PackageConstants.ScreenshotThumbnailWidth)x@(PackageConstants.ScreenshotThumbnailHeight)" class="img-responsive" />
+        <a href="/Files/Screenshots/@packageUrl/@screenshot.Url">
+            <img src="/Files/Screenshots/@packageUrl/@screenshot.Url/@(PackageConstants.ScreenshotThumbnailWidth)x@(PackageConstants.ScreenshotThumbnailHeight)" class="img-responsive" />
         </a>
         <br />
     }

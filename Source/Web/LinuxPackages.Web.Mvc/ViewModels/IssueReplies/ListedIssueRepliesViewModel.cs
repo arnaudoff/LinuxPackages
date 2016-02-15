@@ -1,9 +1,10 @@
 ﻿namespace LinuxPackages.Web.Mvc.ViewModels.IssueReplies
 {
     using System;
-    using LinuxPackages.Web.Mvc.ViewModels.Account;
+
     using Data.Models;
     using Infrastructure.Mappings;
+    using LinuxPackages.Web.Mvc.ViewModels.Account;
 
     public class ListedIssueRepliesViewModel : IMapFrom<IssueReply>
     {

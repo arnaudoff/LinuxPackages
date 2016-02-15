@@ -1,4 +1,4 @@
-﻿namespace LinuxPackages.Services.Data.Contracts
+﻿namespace LinuxPackages.Services.Data.Contracts.Savers
 {
     public interface IPackageSaver
     {

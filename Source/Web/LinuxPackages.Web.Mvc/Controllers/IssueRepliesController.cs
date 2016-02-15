@@ -28,7 +28,7 @@
         [HashCheck("id")]
         public ActionResult ByIssueId(string id)
         {
-            int requestedIssueId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+            int requestedIssueId = this.UrlIdentifierProvider.DecodeEntityId(id);
 
             var replies = this.issues
                 .GetRepliesByIssueId(requestedIssueId)
@@ -57,7 +57,7 @@
         [HashCheck("id")]
         public ActionResult Add(AddIssueReplyViewModel model, string id)
         {
-            int requestedIssueId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+            int requestedIssueId = this.UrlIdentifierProvider.DecodeEntityId(id);
 
             if (!ModelState.IsValid)
             {

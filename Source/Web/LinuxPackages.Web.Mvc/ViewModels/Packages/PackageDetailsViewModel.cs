@@ -3,29 +3,22 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
 
     using Account;
     using AutoMapper;
-    using Common.Constants;
     using Data.Models;
     using Infrastructure.Helpers;
     using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
 
     public class PackageDetailsViewModel : IMapFrom<Package>, IHaveCustomMappings
     {
-        private string id;
+        public int Id { get; set; }
 
-        public string Id
+        public string Url
         {
             get
             {
-                return this.id;
-            }
-
-            set
-            {
-                this.id = value.ToString() + QueryStringUrlHelper.GenerateUrlHash(value.ToString(), (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName]);
+                return (new UrlIdentifierProvider()).EncodeEntityId(this.Id);
             }
         }
 

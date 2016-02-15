@@ -33,6 +33,10 @@
         [MaxLength(UserConstants.MaxLastNameLength)]
         public string LastName { get; set; }
 
+        public int? AvatarId { get; set; }
+
+        public virtual Avatar Avatar { get; set; }
+
         public virtual ICollection<Package> Packages
         {
             get

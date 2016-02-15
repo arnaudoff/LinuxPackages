@@ -1,6 +1,7 @@
 namespace LinuxPackages.Web.Mvc.ViewModels.Account
 {
     using System.ComponentModel.DataAnnotations;
+
     using Common.Constants;
 
     public class RegisterViewModel

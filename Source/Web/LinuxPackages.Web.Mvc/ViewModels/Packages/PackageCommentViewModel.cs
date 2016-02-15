@@ -5,10 +5,9 @@
     using System.Web.Mvc;
 
     using Account;
-    using AutoMapper;
+    using Common.Constants;
     using Infrastructure.Mappings;
     using LinuxPackages.Data.Models;
-    using Common.Constants;
 
     public class PackageCommentViewModel : IMapFrom<PackageComment>
     {

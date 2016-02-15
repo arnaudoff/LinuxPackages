@@ -20,11 +20,40 @@
     </dl>
     <dl class="dl-horizontal">
         <dt>Packages maintained</dt>
-        <dd>@Model.PackagesMaintainedCount</dd>
+        <dd>
+            @if (Model.PackagesMaintained != null && Model.PackagesMaintained.Count > 0)
+            {
+                <ul class="list-group">
+                    @foreach (var package in Model.PackagesMaintained)
+                    {
+                        <li class="list-group-item"><a href="/Packages/Details/@package.Url">@package.Name</a></li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <span>0</span>
+            }
+
+        </dd>
     </dl>
     <dl class="dl-horizontal">
-        <dt>Issues</dt>
-        <dd>@Model.IssuesCreatedCount</dd>
+        <dt>Issues posted</dt>
+        <dd>
+            @if (Model.IssuesCreated != null && Model.IssuesCreated.Count > 0)
+            {
+                <ul class="list-group">
+                    @foreach (var issue in Model.IssuesCreated)
+                    {
+                        <li class="list-group-item"><a href="/Packages/Details/@issue.Url">@issue.Id</a> @issue.Title @issue.Package.Name</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <span>0</span>
+            }
+        </dd>
     </dl>
     <h4>Manage</h4>
     <hr />

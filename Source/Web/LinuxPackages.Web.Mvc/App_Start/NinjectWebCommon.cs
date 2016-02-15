@@ -26,6 +26,7 @@ namespace LinuxPackages.Web.Mvc.App_Start
 
     using Services.Data;
     using Services.Data.Contracts;
+    using Services.Data.Contracts.Savers;
 
     public static class NinjectWebCommon 
     {
@@ -68,8 +69,10 @@ namespace LinuxPackages.Web.Mvc.App_Start
 
             kernel.Bind<IRandomGenerator>().To<RandomGenerator>();
             kernel.Bind<ISanitizer>().To<Sanitizer>();
+            kernel.Bind<IUrlIdentifierProvider>().To<UrlIdentifierProvider>();
 
             string packagesStorePath = HostingEnvironment.MapPath(PackageConstants.PackagesPath);
+            string avatarsStorePath = HostingEnvironment.MapPath(UserConstants.AvatarsPath);
 
             kernel.Bind<IPackageSaver>()
                 .To<HardDrivePackageSaver>()
@@ -79,6 +82,10 @@ namespace LinuxPackages.Web.Mvc.App_Start
                 .To<HardDriveScreenshotSaver>()
                 .WithConstructorArgument("rootPath", packagesStorePath)
                 .WithConstructorArgument("screenshotsFolderName", PackageConstants.ScreenshotsFolderName);
+
+            kernel.Bind<IAvatarSaver>()
+                .To<HardDriveAvatarSaver>()
+                .WithConstructorArgument("rootPath", avatarsStorePath);
 
             kernel.Bind(b => b
                 .From(Assemblies.Services)

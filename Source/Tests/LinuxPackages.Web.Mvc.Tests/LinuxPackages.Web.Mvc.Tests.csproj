@@ -80,7 +80,7 @@
   <ItemGroup>
     <Compile Include="ControllerTests\HomeControllerTests.cs" />
     <Compile Include="ControllerTests\ProfileControllerTests.cs" />
-    <Compile Include="InfrastructureTests\Helpers\QueryStringUrlHelperTests.cs" />
+    <Compile Include="InfrastructureTests\Helpers\UrlIdentifierProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

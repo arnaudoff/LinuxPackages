@@ -35,6 +35,8 @@
 
         public virtual IDbSet<Dependency> Dependencies { get; set; }
 
+        public virtual IDbSet<Avatar> Avatars { get; set; }
+
         public static LinuxPackagesDbContext Create()
         {
             return new LinuxPackagesDbContext();

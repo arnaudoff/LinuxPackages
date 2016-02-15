@@ -39,7 +39,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
         [HashCheck("id")]
         public ActionResult Add(string id)
         {
-            int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+            int requestedPackageId = this.UrlIdentifierProvider.DecodeEntityId(id);
 
             var model = new AddIssueViewModel
             {
@@ -57,7 +57,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
         [HashCheck("id")]
         public ActionResult Add(AddIssueViewModel model, string id)
         {
-            int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+            int requestedPackageId = this.UrlIdentifierProvider.DecodeEntityId(id);
 
             if (!ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
         [HashCheck("id")]
         public ActionResult Details(string id)
         {
-            int requestedIssueId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+            int requestedIssueId = this.UrlIdentifierProvider.DecodeEntityId(id);
 
             var issueModel = this.issues
                 .GetById(requestedIssueId)

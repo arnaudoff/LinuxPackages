@@ -72,7 +72,7 @@
         [HashCheck("id")]
         public ActionResult Details(string id)
         {
-            int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(id));
+            int requestedPackageId = this.UrlIdentifierProvider.DecodeEntityId(id);
 
             var packageModel = this.packages
                 .GetById(requestedPackageId)
@@ -137,13 +137,16 @@
                 model.DependencyIds,
                 model.MaintainerIds);
 
-            foreach (var modelScreenshot in model.Screenshots)
+            if (model.Screenshots != null)
             {
-                this.screenshots.Create(
-                    modelScreenshot.FileName,
-                    StreamHelper.ReadFully(modelScreenshot.InputStream, modelScreenshot.ContentLength),
-                    newPackage.Id,
-                    newPackage.Name);
+                foreach (var modelScreenshot in model.Screenshots)
+                {
+                    this.screenshots.Create(
+                        modelScreenshot.FileName,
+                        StreamHelper.ReadFully(modelScreenshot.InputStream, modelScreenshot.ContentLength),
+                        newPackage.Id,
+                        newPackage.Name);
+                }
             }
 
             return this.RedirectToAction("Index", "Home");
@@ -162,12 +165,12 @@
         [Authorize]
         public ActionResult Rate(RatePackageViewModel model)
         {
-            if (!QueryStringUrlHelper.IsHashValid(model.PackageId))
+            if (!UrlIdentifierProvider.IsHashValid(model.PackageId))
             {
                 return new HttpNotFoundResult("The requested package was not found.");
             }
 
-            int requestedPackageId = int.Parse(QueryStringUrlHelper.GetEntityIdFromUrlHash(model.PackageId));
+            int requestedPackageId = this.UrlIdentifierProvider.DecodeEntityId(model.PackageId);
 
             Rating rating = this.packages.AddRating(model.Value, requestedPackageId, this.User.Identity.GetUserId());
 

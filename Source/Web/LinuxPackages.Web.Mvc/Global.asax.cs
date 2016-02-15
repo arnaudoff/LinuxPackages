@@ -17,7 +17,7 @@
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
 
-            HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName] = QueryStringUrlHelper.GenerateUrlSalt(10);
+            HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName] = (new UrlIdentifierProvider()).GenerateIdentifierProviderSalt(10);
 
             AreaRegistration.RegisterAllAreas();
             DatabaseConfig.Initialize();

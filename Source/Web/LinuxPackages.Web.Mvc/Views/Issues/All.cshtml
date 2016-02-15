@@ -11,7 +11,7 @@
     {
         columns.Bound(i => i.Id).ClientTemplate(
             "<a href='" +
-                Url.Action("Details", "Issues") + "/#= Id #" +
+                Url.Action("Details", "Issues") + "/#= Url #" +
             "'>\\##= Id #</a>"
         ).Title("ID").Groupable(false);
         columns.Bound(i => i.Title).Title("Title").Title("Title").Groupable(false);

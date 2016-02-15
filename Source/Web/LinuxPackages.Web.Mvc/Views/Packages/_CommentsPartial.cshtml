@@ -9,18 +9,17 @@
     </div>
 }
 <br />
-@{ var packageId = (string)ViewData["PackageId"]; }
+@{ var packageUrl = (string)ViewData["PackageUrl"]; }
 
 @(Html.Kendo().ListView<PackageCommentViewModel>(Model)
         .Name("CommentsListView")
         .TagName("div")
-        .HtmlAttributes(new { style = "overflow: hidden;" })
         .ClientTemplateId("commentsTemplate")
         .DataSource(dataSource => dataSource
             .Model(model => model.Id("Id"))
             .PageSize(20)
-            .Create(create => create.Action("Add", "Comments", new { packageId = packageId}))
-            .Read(read => read.Action("All", "Comments", new { packageId = packageId }))
+            .Create(create => create.Action("Add", "Comments", new { packageId = packageUrl }))
+            .Read(read => read.Action("All", "Comments", new { packageId = packageUrl }))
             .Sort(c => c.Add("CreatedOn").Descending())
         )
         .Pageable()

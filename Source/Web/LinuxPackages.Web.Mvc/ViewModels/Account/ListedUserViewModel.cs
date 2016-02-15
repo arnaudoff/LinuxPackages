@@ -1,7 +1,5 @@
 ﻿namespace LinuxPackages.Web.Mvc.ViewModels.Account
 {
-    using System;
-    using AutoMapper;
     using Data.Models;
     using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
 
