@@ -18,6 +18,7 @@
     public class FilesController : BaseController
     {
         private readonly IPackagesService packages;
+        private readonly IScreenshotsService screenshots;
         private readonly IUsersService users;
         private readonly IPackageSaver packageSaver;
         private readonly IScreenshotSaver screenshotSaver;
@@ -25,12 +26,14 @@
 
         public FilesController(
             IPackagesService packages,
+            IScreenshotsService screenshots,
             IUsersService users,
             IPackageSaver packageSaver,
             IScreenshotSaver screenshotSaver,
             IAvatarSaver avatarSaver)
         {
             this.packages = packages;
+            this.screenshots = screenshots;
             this.users = users;
             this.packageSaver = packageSaver;
             this.screenshotSaver = screenshotSaver;
@@ -43,17 +46,17 @@
             int requestedPackageId = this.UrlIdentifierProvider.DecodeEntityId(id);
             int requestedScreenshotId = this.UrlIdentifierProvider.DecodeEntityId(resource);
 
-            string screenshotPath = null;
+            byte[] contents = null;
             if (size == string.Empty)
             {
-                screenshotPath = this.screenshotSaver.GetScreenshotPath(requestedPackageId, requestedScreenshotId);
+                contents = this.screenshotSaver.Read(requestedPackageId, requestedScreenshotId);
             }
             else
             {
                 if (this.IsMatchingSizeConstaint(size))
                 {
                     int[] screenshotDimensions = this.ParseImageDimensions(size);
-                    screenshotPath = this.screenshotSaver.GetScreenshotPath(requestedPackageId, requestedScreenshotId, screenshotDimensions[0], screenshotDimensions[1]);
+                    contents = this.screenshotSaver.Read(requestedPackageId, requestedScreenshotId, screenshotDimensions[0], screenshotDimensions[1]);
                 }
                 else
                 {
@@ -61,8 +64,7 @@
                 }
             }
 
-            byte[] contents = screenshotSaver.Read(screenshotPath);
-            return new FileContentResult(contents, MimeMapping.GetMimeMapping(screenshotPath));
+            return new FileContentResult(contents, MimeMapping.GetMimeMapping(this.screenshots.GetFileNameById(requestedScreenshotId)));
         }
 
         [HashCheck("resource")]

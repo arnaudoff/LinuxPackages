@@ -1,4 +1,4 @@
-﻿namespace LinuxPackages.Services.Data
+﻿namespace LinuxPackages.Services.Data.Savers
 {
     using System.Drawing;
     using System.Drawing.Imaging;

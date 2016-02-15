@@ -24,9 +24,8 @@ namespace LinuxPackages.Web.Mvc.App_Start
     using Ninject.Extensions.Conventions;
     using Ninject.Web.Common;
 
-    using Services.Data;
-    using Services.Data.Contracts;
     using Services.Data.Contracts.Savers;
+    using Services.Data.Savers;
 
     public static class NinjectWebCommon 
     {

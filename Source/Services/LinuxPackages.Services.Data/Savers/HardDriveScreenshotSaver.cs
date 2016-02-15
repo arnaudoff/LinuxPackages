@@ -1,4 +1,4 @@
-﻿namespace LinuxPackages.Services.Data
+﻿namespace LinuxPackages.Services.Data.Savers
 {
     using System;
     using System.Drawing;
@@ -25,29 +25,30 @@
             this.screenshots = screenshots;
         }
 
-        public byte[] Read(string filePath)
+        public byte[] Read(int requestedPackageId, int requestedScreenshotId, int? width = null, int? height = null)
         {
+            string filePath = this.GetScreenshotPath(requestedPackageId, requestedScreenshotId, width, height);
             return File.ReadAllBytes(filePath);
         }
 
         public void Save(int packageId, string packageName, string screenshotFilename, byte[] contents)
         {
             // Save original screenshot
-            var directoryToSave = packageId % PackageConstants.PackagesPerDirectory;
+            int directoryToSave = packageId % PackageConstants.PackagesPerDirectory;
 
-            var directoryToSavePath = Path.Combine(this.rootPath, directoryToSave.ToString());
+            string directoryToSavePath = Path.Combine(this.rootPath, directoryToSave.ToString());
             if (!Directory.Exists(directoryToSavePath))
             {
                 Directory.CreateDirectory(directoryToSavePath);
             }
        
-            var packageDirectoryPath = Path.Combine(directoryToSavePath, Path.GetFileNameWithoutExtension(packageName));
+            string packageDirectoryPath = Path.Combine(directoryToSavePath, Path.GetFileNameWithoutExtension(packageName));
             if (!Directory.Exists(packageDirectoryPath))
             {
                 Directory.CreateDirectory(packageDirectoryPath);
             }
 
-            var screenshotsDirPath = Path.Combine(packageDirectoryPath, this.screenshotsFolderName);
+            string screenshotsDirPath = Path.Combine(packageDirectoryPath, this.screenshotsFolderName);
             if (!Directory.Exists(screenshotsDirPath))
             {
                 Directory.CreateDirectory(screenshotsDirPath);
@@ -57,7 +58,7 @@
             File.WriteAllBytes(finalPath, contents);
 
             // Save the thumbnail
-            var thumbnailsFolderPath = Path.Combine(
+            string thumbnailsFolderPath = Path.Combine(
                             screenshotsDirPath,
                             string.Format("{0}x{1}", PackageConstants.ScreenshotThumbnailWidth, PackageConstants.ScreenshotThumbnailHeight));
 
@@ -78,7 +79,7 @@
             }
         }
 
-        public string GetScreenshotPath(int requestedPackageId, int requestedScreenshotId)
+        public string GetScreenshotPath(int requestedPackageId, int requestedScreenshotId, int? width, int? height)
         {
             var screenshot = this.screenshots
                 .All()
@@ -91,36 +92,26 @@
                 })
                 .FirstOrDefault();
 
-            var filePath = Path.Combine(
-                this.rootPath,
-                (requestedPackageId % PackageConstants.PackagesPerDirectory).ToString(),
-                screenshot.PackageName,
-                this.screenshotsFolderName,
-                string.Format("{0}{1}", screenshot.FileName, screenshot.FileExtension));
-
-            return filePath;
-        }
-
-        public string GetScreenshotPath(int requestedPackageId, int requestedScreenshotId, int width, int height)
-        {
-            var screenshot = this.screenshots
-                .All()
-                .Where(s => s.Id == requestedScreenshotId)
-                .Select(s => new
-                {
-                    FileName = s.FileName,
-                    FileExtension = s.FileExtension,
-                    PackageName = s.Package.Name
-                })
-                .FirstOrDefault();
-
-            var filePath = Path.Combine(
-                this.rootPath,
-                (requestedPackageId % PackageConstants.PackagesPerDirectory).ToString(),
-                screenshot.PackageName,
-                this.screenshotsFolderName,
-                string.Format("{0}x{1}", width, height),
-                string.Format("{0}{1}", screenshot.FileName, screenshot.FileExtension));
+            string filePath = null;
+            if (width == null || height == null)
+            {
+                filePath = Path.Combine(
+                    this.rootPath,
+                    (requestedPackageId % PackageConstants.PackagesPerDirectory).ToString(),
+                    screenshot.PackageName,
+                    this.screenshotsFolderName,
+                    string.Format("{0}{1}", screenshot.FileName, screenshot.FileExtension));
+            }
+            else
+            {
+                filePath = Path.Combine(
+                    this.rootPath,
+                    (requestedPackageId % PackageConstants.PackagesPerDirectory).ToString(),
+                    screenshot.PackageName,
+                    this.screenshotsFolderName,
+                    string.Format("{0}x{1}", width, height),
+                    string.Format("{0}{1}", screenshot.FileName, screenshot.FileExtension));
+            }
 
             return filePath;
         }

@@ -8,5 +8,7 @@
         IQueryable<Screenshot> GetById(int id);
 
         Screenshot Create(string fileName, byte[] contents, int packageId, string packageName);
+
+        string GetFileNameById(int id);
     }
 }

@@ -40,5 +40,14 @@
 
             return newScreenshot;
         }
+
+        public string GetFileNameById(int id)
+        {
+            return this.screenshots
+                .All()
+                .Where(s => s.Id == id)
+                .Select(s => string.Concat(s.FileName, s.FileExtension))
+                .FirstOrDefault();
+        }
     }
 }
