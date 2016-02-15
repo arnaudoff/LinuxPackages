@@ -11,6 +11,8 @@
     using Microsoft.Owin.Security;
     using ViewModels.Profile;
     using App_Start;
+    using Common.Utilities;
+    using Services.Data.Contracts;
 
     public enum EditProfileResultType
     {
@@ -25,15 +27,17 @@
 
         private ApplicationSignInManager signInManager;
         private ApplicationUserManager userManager;
+        private readonly IUsersService users;
 
         public ProfileController()
         {
         }
 
-        public ProfileController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ProfileController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUsersService users)
         {
             this.UserManager = userManager;
             this.SignInManager = signInManager;
+            this.users = users;
         }
 
         public ApplicationSignInManager SignInManager
@@ -83,6 +87,29 @@
         public ActionResult ChangePassword()
         {
             return this.View();
+        }
+
+        [HttpGet]
+        public ActionResult ChangeAvatar()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeAvatar(ChangeAvatarViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var newAvatar = this.users.CreateAvatar(
+                model.Contents.FileName,
+                StreamHelper.ReadFully(model.Contents.InputStream, model.Contents.ContentLength));
+
+            return this.RedirectToAction("Index", "Profile");
         }
 
         [HttpPost]

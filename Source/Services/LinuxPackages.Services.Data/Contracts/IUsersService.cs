@@ -13,6 +13,8 @@ namespace LinuxPackages.Services.Data.Contracts
 
         IQueryable<User> GetTopMaintainers(int n);
 
+        Avatar CreateAvatar(string fileName, byte[] contents);
+
         string GetAvatarFileNameById(int avatarId);
     }
 }

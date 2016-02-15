@@ -5,6 +5,7 @@
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
     using LinuxPackages.Services.Data.Contracts;
+    using System.IO;
 
     public class UsersService : IUsersService
     {
@@ -33,6 +34,21 @@
                 .All()
                 .OrderByDescending(u => u.Packages.Count)
                 .Take(n);
+        }
+
+        Avatar CreateAvatar(string fileName, byte[] contents)
+        {
+            var newAvatar = new Avatar()
+            {
+                FileName = Path.GetFileNameWithoutExtension(fileName),
+                FileExtension = Path.GetExtension(fileName),
+                Size = contents.Length,
+            };
+
+            this.avatars.Add(newAvatar);
+            this.avatars.SaveChanges();
+
+            return newAvatar;
         }
 
         public string GetAvatarFileNameById(int avatarId)
