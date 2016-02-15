@@ -17,6 +17,7 @@
         [AllowHtml]
         [MinLength(PackageConstants.MinCommentContentLength)]
         [MaxLength(PackageConstants.MaxCommentContentLength)]
+        [StringLength(PackageConstants.MaxCommentContentLength, MinimumLength = PackageConstants.MinCommentContentLength)]
         [UIHint("KendoEditor")]
         public string Content { get; set; }
 

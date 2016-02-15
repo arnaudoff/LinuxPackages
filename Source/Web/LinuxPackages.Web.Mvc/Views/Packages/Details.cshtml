@@ -54,6 +54,12 @@
         </dd>
     </dl>
     <dl class="dl-horizontal">
+        <dt>Rating</dt>
+        <dd>
+            <div class="rateit" data-rateit-value="@Model.AverageRating" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
         <dt>Rate</dt>
         <dd>
             <div data-packageid="@Model.Url" class="rateit" data-rateit-step="1"></div><br />
@@ -63,11 +69,11 @@
     <dl class="dl-horizontal">
         <dt>Dependencies</dt>
         <dd>
-            @if (Model.Dependencies.Count() > 0)
+            @if (Model.Dependencies.Count > 0)
             {
                 foreach (var dependency in Model.Dependencies)
                 {
-                    Html.ActionLink(dependency.Name, "Details", new { id = dependency.Url });
+                    <a href="/Packages/Details/@dependency.Url">@dependency.Name</a><br />
                 }
             }
             else

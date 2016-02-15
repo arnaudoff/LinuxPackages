@@ -15,14 +15,17 @@
     using Services.Data.Contracts;
     using ViewModels.Account;
     using ViewModels.Packages;
+    using Infrastructure.Helpers.Contracts;
 
     public class CommentsController : BaseController
     {
         private readonly IPackagesService packages;
+        private readonly ISanitizer sanitizer;
 
-        public CommentsController(IPackagesService packages)
+        public CommentsController(IPackagesService packages, ISanitizer sanitizer)
         {
             this.packages = packages;
+            this.sanitizer = sanitizer;
         }
 
         [HashCheck("packageId")]
@@ -47,7 +50,7 @@
 
             if (comment != null && ModelState.IsValid)
             {
-                this.packages.AddComment(comment.Content, requestedPackageId, this.User.Identity.GetUserId());
+                this.packages.AddComment(this.sanitizer.Sanitize(comment.Content), requestedPackageId, this.User.Identity.GetUserId());
             }
 
             comment.Author = this.Mapper.Map<ListedUserViewModel>(this.UserProfile);

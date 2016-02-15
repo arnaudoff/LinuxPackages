@@ -11,9 +11,9 @@
     public class DependenciesService : IDependenciesService
     {
         private readonly IRepository<Dependency> dependencies;
-        private readonly IRepository<Package> packages;
+        private readonly IPackagesService packages;
 
-        public DependenciesService(IRepository<Dependency> dependencies, IRepository<Package> packages)
+        public DependenciesService(IRepository<Dependency> dependencies, IPackagesService packages)
         {
             this.dependencies = dependencies;
             this.packages = packages;
@@ -25,14 +25,10 @@
             var depIds = this.dependencies
                 .All()
                 .Where(d => d.PackageId == packageId)
-                .Select(d => d.Id)
+                .Select(d => d.DependsOnId)
                 .ToList();
 
-            var dependencies = new List<Package>();
-
-            depIds.ForEach(dId => dependencies.Add(packages.GetById(dId)));
-
-            return dependencies.AsQueryable();
+            return packages.GetAll().Where(p => depIds.Contains(p.Id));
         }
     }
 }

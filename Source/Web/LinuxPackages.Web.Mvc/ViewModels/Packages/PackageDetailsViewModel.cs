@@ -48,14 +48,14 @@
 
         public IEnumerable<PackageCommentViewModel> Comments { get; set; }
 
-        public IEnumerable<ListedPackageViewModel> Dependencies { get; set; }
+        public IList<ListedPackageViewModel> Dependencies { get; set; }
 
         public int IssuesCount { get; set; }
 
         public void CreateMappings(IMapperConfiguration configuration)
         {
             configuration.CreateMap<Package, PackageDetailsViewModel>()
-                .ForMember(p => p.AverageRating, opts => opts.MapFrom(p => p.Ratings.Average(r => r.Value) == null ? "Not rated" : p.Ratings.Average(r => r.Value).ToString()))
+                .ForMember(p => p.AverageRating, opts => opts.MapFrom(p => p.Ratings.Average(r => r.Value) == null ? "Not rated" : ((int)p.Ratings.Average(r => r.Value)).ToString()))
                 .ForMember(p => p.IssuesCount, opts => opts.MapFrom(p => p.Issues.Count()));
         }
     }
