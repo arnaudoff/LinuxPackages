@@ -1,0 +1,25 @@
+﻿@model LinuxPackages.Web.Mvc.ViewModels.Profile.ChangeAvatarViewModel
+
+@{
+    ViewBag.Title = "Change avatar";
+}
+
+@using (Html.BeginForm("ChangeAvatar", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Change your avatar</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.EditorFor(m => m.Contents)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="k-button" value="Update" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/validation")
+}

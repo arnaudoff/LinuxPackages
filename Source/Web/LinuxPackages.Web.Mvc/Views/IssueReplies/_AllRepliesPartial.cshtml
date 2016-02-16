@@ -1,11 +1,13 @@
 ﻿@model IEnumerable<LinuxPackages.Web.Mvc.ViewModels.IssueReplies.ListedIssueRepliesViewModel>
 
+@using LinuxPackages.Common.Constants;
+
 @foreach (var reply in Model)
 {
     <div class="row">
         <div class="col-sm-1">
             <div class="thumbnail">
-                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                <img class="img-responsive user-photo" src="/Files/Avatars/@reply.Author.Id/@reply.Author.AvatarUrl/@(UserConstants.AvatarThumbnailWidth)x@(UserConstants.AvatarThumbnailHeight)">
             </div>
         </div>
         <div class="col-sm-11">

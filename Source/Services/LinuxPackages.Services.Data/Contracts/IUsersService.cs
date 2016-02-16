@@ -13,7 +13,9 @@ namespace LinuxPackages.Services.Data.Contracts
 
         IQueryable<User> GetTopMaintainers(int n);
 
-        Avatar CreateAvatar(string fileName, byte[] contents);
+        IQueryable<Avatar> GetAvatarById(int avatarId);
+       
+        Avatar CreateAvatar(string fileName, byte[] contents, string userId);
 
         string GetAvatarFileNameById(int avatarId);
     }

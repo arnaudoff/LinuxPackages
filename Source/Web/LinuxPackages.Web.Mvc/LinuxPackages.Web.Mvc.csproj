@@ -262,6 +262,7 @@
     <Compile Include="ViewModels\Packages\PackageCommentViewModel.cs" />
     <Compile Include="ViewModels\Packages\RatePackageViewModel.cs" />
     <Compile Include="ViewModels\Packages\RepositoryViewModel.cs" />
+    <Compile Include="ViewModels\Profile\ChangeAvatarViewModel.cs" />
     <Compile Include="ViewModels\Profile\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\Profile\ProfileViewModel.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
@@ -357,6 +358,7 @@
     <Content Include="Views\Home\_TopMaintainersPartial.cshtml" />
     <Content Include="Views\Home\_RecentIssuesPartial.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\PackageCommentViewModel.cshtml" />
+    <Content Include="Views\Profile\ChangeAvatar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

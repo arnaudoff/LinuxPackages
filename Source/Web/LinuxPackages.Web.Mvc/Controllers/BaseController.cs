@@ -20,7 +20,7 @@
     public abstract class BaseController : Controller
     {
         [Inject]
-        public IUsersService Users { private get; set; }
+        public IUsersService Users { protected get; set; }
 
         [Inject]
         public IUrlIdentifierProvider UrlIdentifierProvider { get; set; }

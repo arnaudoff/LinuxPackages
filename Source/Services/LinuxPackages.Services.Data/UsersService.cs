@@ -6,16 +6,19 @@
     using LinuxPackages.Data.Repositories;
     using LinuxPackages.Services.Data.Contracts;
     using System.IO;
+    using Contracts.Savers;
 
     public class UsersService : IUsersService
     {
         private readonly IRepository<User> users;
         private readonly IRepository<Avatar> avatars;
+        private readonly IAvatarSaver avatarSaver;
 
-        public UsersService(IRepository<User> users, IRepository<Avatar> avatars)
+        public UsersService(IRepository<User> users, IRepository<Avatar> avatars, IAvatarSaver avatarSaver)
         {
             this.users = users;
             this.avatars = avatars;
+            this.avatarSaver = avatarSaver;
         }
 
         public IQueryable<User> GetAll()
@@ -28,6 +31,22 @@
             return this.users.All().Where(u => u.Id == userId);
         }
 
+        public Avatar CreateAvatar(string fileName, byte[] contents, string userId)
+        {
+            var newAvatar = new Avatar()
+            {
+                FileName = Path.GetFileNameWithoutExtension(fileName),
+                FileExtension = Path.GetExtension(fileName),
+                Size = contents.Length
+            };
+
+            this.avatars.Add(newAvatar);
+            this.avatars.SaveChanges();
+            this.avatarSaver.Save(userId, fileName, contents);
+
+            return newAvatar;
+        }
+
         public IQueryable<User> GetTopMaintainers(int n)
         {
             return this.users
@@ -36,19 +55,9 @@
                 .Take(n);
         }
 
-        Avatar CreateAvatar(string fileName, byte[] contents)
+        public IQueryable<Avatar> GetAvatarById(int avatarId)
         {
-            var newAvatar = new Avatar()
-            {
-                FileName = Path.GetFileNameWithoutExtension(fileName),
-                FileExtension = Path.GetExtension(fileName),
-                Size = contents.Length,
-            };
-
-            this.avatars.Add(newAvatar);
-            this.avatars.SaveChanges();
-
-            return newAvatar;
+            return this.avatars.All().Where(a => a.Id == avatarId);
         }
 
         public string GetAvatarFileNameById(int avatarId)

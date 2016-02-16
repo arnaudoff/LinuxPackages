@@ -13,6 +13,7 @@
     using App_Start;
     using Common.Utilities;
     using Services.Data.Contracts;
+    using Ninject;
 
     public enum EditProfileResultType
     {
@@ -27,17 +28,15 @@
 
         private ApplicationSignInManager signInManager;
         private ApplicationUserManager userManager;
-        private readonly IUsersService users;
 
         public ProfileController()
         {
         }
 
-        public ProfileController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUsersService users)
+        public ProfileController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             this.UserManager = userManager;
             this.SignInManager = signInManager;
-            this.users = users;
         }
 
         public ApplicationSignInManager SignInManager
@@ -79,37 +78,14 @@
                 this.ViewBag.StatusMessage = "Your profile has been updated.";
             }
 
-            var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
-            var userProfile = this.Mapper.Map<ProfileViewModel>(user);
+            var userProfile = this.Mapper.Map<ProfileViewModel>(this.UserProfile);
             return this.View(userProfile);
         }
 
+        [HttpGet]
         public ActionResult ChangePassword()
         {
             return this.View();
-        }
-
-        [HttpGet]
-        public ActionResult ChangeAvatar()
-        {
-            return View();
-        }
-
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ChangeAvatar(ChangeAvatarViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var newAvatar = this.users.CreateAvatar(
-                model.Contents.FileName,
-                StreamHelper.ReadFully(model.Contents.InputStream, model.Contents.ContentLength));
-
-            return this.RedirectToAction("Index", "Profile");
         }
 
         [HttpPost]
@@ -135,6 +111,29 @@
 
             this.AddErrors(result);
             return this.View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ChangeAvatar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeAvatar(ChangeAvatarViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var newAvatar = this.Users.CreateAvatar(
+                model.Contents.FileName,
+                StreamHelper.ReadFully(model.Contents.InputStream, model.Contents.ContentLength),
+                this.User.Identity.GetUserId());
+
+            return this.RedirectToAction("Index", "Profile");
         }
 
         protected override void Dispose(bool disposing)
