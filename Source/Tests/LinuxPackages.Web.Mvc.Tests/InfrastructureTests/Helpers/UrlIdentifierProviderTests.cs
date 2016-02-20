@@ -8,10 +8,28 @@
     using Infrastructure.Helpers;
     using LinuxPackages.Common.Constants;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Web;
+    using Moq;
+    using System.IO;
 
     [TestClass]
     public class UrlIdentifierProviderTests
     {
+        private const string HttpContextSalt = "foobar";
+
+        [TestInitialize]
+        public void InitializeContext()
+        {
+            HttpContext.Current = new HttpContext(new HttpRequest(null, "http://tempuri.org", null), new HttpResponse(null));
+            HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName] = HttpContextSalt;
+        }
+
+        [TestCleanup]
+        public void DisposeContext()
+        {
+            HttpContext.Current = null;
+        }
+
         [TestMethod]
         public void GenerateSaltShouldGenerateSaltCorrectly()
         {
@@ -26,22 +44,20 @@
         [TestMethod]
         public void GenerateUrlHashShouldGenerateCorrectHash()
         {
-            // TODO: Mock application context
+            var salt = (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName];
             int entityId = 1337;
-            string expectedHash = HashEntity(entityId, "");
+            string expectedHash = HashEntity(entityId, HttpContextSalt);
 
             string result = (new UrlIdentifierProvider()).EncodeEntityId(entityId);
 
-            Assert.AreEqual(GlobalConstants.UrlHashLength, result.Length);
             Assert.AreEqual(expectedHash, result);
         }
 
         [TestMethod]
         public void GetEntityIdFromHashShouldGetTheIdCorrectly()
         {
-            // TODO: Mock application context
             int entityId = 1337;
-            string urlHash = HashEntity(entityId, "");
+            string urlHash = HashEntity(entityId, HttpContextSalt);
 
             int decodedId = (new UrlIdentifierProvider()).DecodeEntityId(urlHash);
 
@@ -60,7 +76,7 @@
                     sb.Append(b.ToString("x2"));
                 }
 
-                return new string(sb.ToString().Take(GlobalConstants.UrlHashLength).ToArray());
+                return string.Concat(entityId.ToString(), new string(sb.ToString().Take(GlobalConstants.UrlHashLength).ToArray()));
             }
         }
     }
