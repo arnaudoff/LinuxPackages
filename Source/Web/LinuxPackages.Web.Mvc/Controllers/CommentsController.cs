@@ -2,20 +2,15 @@
 {
     using System.Linq;
     using System.Web.Mvc;
-
     using Infrastructure.ActionFilters;
-    using Infrastructure.Extensions;
-    using Infrastructure.Helpers;
+    using Infrastructure.Helpers.Contracts;
     using Infrastructure.Mappings;
-
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
     using Microsoft.AspNet.Identity;
-
     using Services.Data.Contracts;
     using ViewModels.Account;
     using ViewModels.Packages;
-    using Infrastructure.Helpers.Contracts;
 
     public class CommentsController : BaseController
     {
@@ -38,7 +33,7 @@
                 .To<PackageCommentViewModel>()
                 .ToDataSourceResult(request);
 
-            return Json(comments);
+            return this.Json(comments);
         }
 
         [Authorize]
@@ -48,13 +43,13 @@
         {
             int requestedPackageId = this.UrlIdentifierProvider.DecodeEntityId(packageId);
 
-            if (comment != null && ModelState.IsValid)
+            if (comment != null && this.ModelState.IsValid)
             {
                 this.packages.AddComment(this.sanitizer.Sanitize(comment.Content), requestedPackageId, this.User.Identity.GetUserId());
             }
 
             comment.Author = this.Mapper.Map<ListedUserViewModel>(this.UserProfile);
-            return Json(new[] { comment }.ToDataSourceResult(request, ModelState));
+            return this.Json(new[] { comment }.ToDataSourceResult(request, this.ModelState));
         }
     }
 }

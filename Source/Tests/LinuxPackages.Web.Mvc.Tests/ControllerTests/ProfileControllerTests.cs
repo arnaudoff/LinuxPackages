@@ -14,7 +14,7 @@
         {
             // TODO: Mock http://stackoverflow.com/questions/758066/how-to-mock-controller-user-using-moq
             var controller = new ProfileController();
-            var result = await controller.Index(null) as ViewResult;
+            var result = controller.Index(null) as ViewResult;
             var profileModel = (ProfileViewModel)result.ViewData.Model;
         }
     }

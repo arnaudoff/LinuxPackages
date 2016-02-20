@@ -4,13 +4,10 @@
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
-
+    using System.Web;
     using Infrastructure.Helpers;
     using LinuxPackages.Common.Constants;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System.Web;
-    using Moq;
-    using System.IO;
 
     [TestClass]
     public class UrlIdentifierProviderTests
@@ -35,7 +32,7 @@
         {
             int saltSize = 10;
 
-            string result = (new UrlIdentifierProvider()).GenerateIdentifierProviderSalt(saltSize);
+            string result = new UrlIdentifierProvider().GenerateIdentifierProviderSalt(saltSize);
             byte[] source = Convert.FromBase64String(result);
 
             Assert.AreEqual(saltSize, source.Length);
@@ -46,9 +43,9 @@
         {
             var salt = (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName];
             int entityId = 1337;
-            string expectedHash = HashEntity(entityId, HttpContextSalt);
+            string expectedHash = this.HashEntity(entityId, HttpContextSalt);
 
-            string result = (new UrlIdentifierProvider()).EncodeEntityId(entityId);
+            string result = new UrlIdentifierProvider().EncodeEntityId(entityId);
 
             Assert.AreEqual(expectedHash, result);
         }
@@ -57,9 +54,9 @@
         public void GetEntityIdFromHashShouldGetTheIdCorrectly()
         {
             int entityId = 1337;
-            string urlHash = HashEntity(entityId, HttpContextSalt);
+            string urlHash = this.HashEntity(entityId, HttpContextSalt);
 
-            int decodedId = (new UrlIdentifierProvider()).DecodeEntityId(urlHash);
+            int decodedId = new UrlIdentifierProvider().DecodeEntityId(urlHash);
 
             Assert.AreEqual(1337, decodedId);
         }
@@ -68,7 +65,7 @@
         {
             using (SHA1Managed sha1 = new SHA1Managed())
             {
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(entityId.ToString(), salt)));
+                byte[] hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(entityId.ToString(), salt)));
                 var sb = new StringBuilder(hash.Length * 2);
 
                 foreach (byte b in hash)

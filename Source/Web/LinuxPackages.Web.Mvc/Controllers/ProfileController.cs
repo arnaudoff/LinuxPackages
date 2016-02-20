@@ -4,12 +4,12 @@
     using System.Web;
     using System.Web.Mvc;
 
+    using Common.Utilities;
     using Data.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
-    using ViewModels.Profile;
-    using Common.Utilities;
     using Ninject;
+    using ViewModels.Profile;
 
     public enum EditProfileResultType
     {
@@ -61,7 +61,7 @@
             }
         }
 
-        public async Task<ActionResult> Index(EditProfileResultType? message)
+        public ActionResult Index(EditProfileResultType? message)
         {
             this.ViewBag.StatusMessage = string.Empty;
 
@@ -74,7 +74,7 @@
                 this.ViewBag.StatusMessage = "Your profile has been updated.";
             }
 
-            var userProfile = this.Mapper.Map<ProfileViewModel>(this.UserProfile);
+            ProfileViewModel userProfile = this.Mapper.Map<ProfileViewModel>(this.UserProfile);
             return this.View(userProfile);
         }
 
@@ -112,19 +112,19 @@
         [HttpGet]
         public ActionResult ChangeAvatar()
         {
-            return View();
+            return this.View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ChangeAvatar(ChangeAvatarViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
 
-            var newAvatar = this.Users.CreateAvatar(
+            Avatar newAvatar = this.Users.CreateAvatar(
                 model.Contents.FileName,
                 StreamHelper.ReadFully(model.Contents.InputStream, model.Contents.ContentLength),
                 this.UserProfile);

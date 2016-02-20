@@ -61,7 +61,7 @@
 
         public ActionResult All()
         {
-            return View();
+            return this.View();
         }
 
         [HashCheck("id")]
@@ -74,11 +74,11 @@
                 .To<PackageDetailsViewModel>()
                 .FirstOrDefault();
 
-            packageModel.Dependencies = dependencies.GetAllById(requestedPackageId)
+            packageModel.Dependencies = this.dependencies.GetAllById(requestedPackageId)
                 .To<ListedPackageViewModel>()
                 .ToList();
 
-            return View(packageModel);
+            return this.View(packageModel);
         }
 
         [Authorize]
@@ -94,7 +94,7 @@
                 Distributions = this.GetDistributions()
             };
 
-            return View(model);
+            return this.View(model);
         }
 
         [Authorize]
@@ -102,7 +102,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult Add(AddPackageViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 model.Repositories = this.GetRepositories();
                 model.Architectures = this.GetArchitectures();
@@ -111,16 +111,16 @@
                 model.Dependencies = this.GetDependencies();
                 model.Distributions = this.GetDistributions();
 
-                return View(model);
+                return this.View(model);
             }
 
-            var currentUserId = this.User.Identity.GetUserId();
+            string currentUserId = this.User.Identity.GetUserId();
             if (!model.MaintainerIds.Contains(currentUserId))
             {
                 model.MaintainerIds.Add(currentUserId);
             }
 
-            var newPackage = this.packages.Create(
+            Package newPackage = this.packages.Create(
                 model.Name,
                 model.Description,
                 model.DistributionId,
@@ -149,18 +149,18 @@
 
         public ActionResult GetPackages([DataSourceRequest]DataSourceRequest request)
         {
-            var result = this.packages
+            DataSourceResult result = this.packages
                 .GetAll()
                 .To<ListedPackageViewModel>()
                 .ToDataSourceResult(request);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return this.Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
         public ActionResult Rate(RatePackageViewModel model)
         {
-            if (!UrlIdentifierProvider.IsHashValid(model.PackageId))
+            if (!this.UrlIdentifierProvider.IsHashValid(model.PackageId))
             {
                 return new HttpNotFoundResult("The requested package was not found.");
             }
@@ -171,10 +171,10 @@
 
             if (rating != null)
             {
-                return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
+                return this.Json(new { Success = true }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
+            return this.Json(new { Success = false }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
@@ -190,7 +190,7 @@
 
         private IEnumerable<SelectListItem> GetRepositories()
         {
-            var repos = HttpRuntime
+            IEnumerable<SelectListItem> repos = HttpRuntime
                 .Cache
                 .GetOrStore<IEnumerable<SelectListItem>>(
                     "repositories",
@@ -208,7 +208,7 @@
 
         private IEnumerable<SelectListItem> GetArchitectures()
         {
-            var archs = HttpRuntime
+            IEnumerable<SelectListItem> archs = HttpRuntime
                 .Cache
                 .GetOrStore<IEnumerable<SelectListItem>>(
                     "architectures",
@@ -226,7 +226,7 @@
 
         private IEnumerable<SelectListItem> GetLicenses()
         {
-            var licenses = HttpRuntime
+            IEnumerable<SelectListItem> licenses = HttpRuntime
                 .Cache
                 .GetOrStore<IEnumerable<SelectListItem>>(
                     "licenses",
@@ -244,7 +244,7 @@
 
         private IEnumerable<SelectListItem> GetDependencies()
         {
-            var dependencies = HttpRuntime
+            IEnumerable<SelectListItem> dependencies = HttpRuntime
                 .Cache
                 .GetOrStore<IEnumerable<SelectListItem>>(
                     "dependencies",
@@ -262,7 +262,7 @@
 
         private IEnumerable<SelectListItem> GetMaintainers()
         {
-            var maintainers = HttpRuntime
+            IEnumerable<SelectListItem> maintainers = HttpRuntime
                 .Cache
                 .GetOrStore<IEnumerable<SelectListItem>>(
                     "maintainers",
@@ -280,7 +280,7 @@
 
         private IEnumerable<SelectListItem> GetDistributions()
         {
-            var distros = HttpRuntime
+            IEnumerable<SelectListItem> distros = HttpRuntime
                 .Cache
                 .GetOrStore<IEnumerable<SelectListItem>>(
                     "distros",

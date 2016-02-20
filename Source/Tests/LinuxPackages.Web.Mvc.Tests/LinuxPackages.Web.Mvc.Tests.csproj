@@ -112,9 +112,12 @@
     <Compile Include="ControllerTests\ProfileControllerTests.cs" />
     <Compile Include="InfrastructureTests\Helpers\UrlIdentifierProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RouteTests\CommentsControllerTests.cs" />
-    <Compile Include="RouteTests\FileControllerRouteTests.cs" />
+    <Compile Include="RouteTests\CommentsRouteTests.cs" />
+    <Compile Include="RouteTests\FilesRouteTests.cs" />
     <Compile Include="RouteTests\IssueRepliesRouteTests.cs" />
+    <Compile Include="RouteTests\IssuesRouteTests.cs" />
+    <Compile Include="RouteTests\PackagesRouteTests.cs" />
+    <Compile Include="RouteTests\ProfileRouteTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -129,6 +132,11 @@
       <Project>{954a1c58-4075-4b00-8c3f-1ed7e5dc6b75}</Project>
       <Name>LinuxPackages.Web.Mvc</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
