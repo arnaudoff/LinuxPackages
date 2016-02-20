@@ -19,7 +19,6 @@
     {
         private readonly IPackagesService packages;
         private readonly IScreenshotsService screenshots;
-        private readonly IUsersService users;
         private readonly IPackageSaver packageSaver;
         private readonly IScreenshotSaver screenshotSaver;
         private readonly IAvatarSaver avatarSaver;
@@ -34,7 +33,6 @@
         {
             this.packages = packages;
             this.screenshots = screenshots;
-            this.users = users;
             this.packageSaver = packageSaver;
             this.screenshotSaver = screenshotSaver;
             this.avatarSaver = avatarSaver;
@@ -71,6 +69,10 @@
         public ActionResult Avatars(string id, string resource, string size)
         {
             int requestedAvatarId = this.UrlIdentifierProvider.DecodeEntityId(resource);
+            if (!this.Users.GetAvatarById(requestedAvatarId).Any())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound, "The requested avatar ID was not found");
+            }
 
             byte[] contents = null;
             if (size == string.Empty)
@@ -90,7 +92,7 @@
                 }
             }
 
-            return new FileContentResult(contents, MimeMapping.GetMimeMapping(this.users.GetAvatarFileNameById(requestedAvatarId)));
+            return new FileContentResult(contents, MimeMapping.GetMimeMapping(this.Users.GetAvatarFileNameById(requestedAvatarId)));
         }
 
         [HashCheck("id")]

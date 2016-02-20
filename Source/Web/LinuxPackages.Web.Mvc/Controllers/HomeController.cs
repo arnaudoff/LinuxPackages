@@ -72,5 +72,11 @@
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetNavbarUserInfo()
+        {
+            var viewModel = this.Mapper.Map<NavbarUserInfoViewModel>(this.UserProfile);
+            return this.PartialView("_NavbarUserInfoPartial", viewModel);
+        }
     }
 }

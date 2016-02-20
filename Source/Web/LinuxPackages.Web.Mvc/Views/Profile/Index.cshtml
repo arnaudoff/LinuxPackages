@@ -1,4 +1,7 @@
 ﻿@model LinuxPackages.Web.Mvc.ViewModels.Profile.ProfileViewModel
+
+@using LinuxPackages.Common.Constants
+
 @{
     ViewBag.Title = "Profile";
 }
@@ -21,10 +24,10 @@
     <dl class="dl-horizontal">
         <dt>Packages maintained</dt>
         <dd>
-            @if (Model.PackagesMaintained != null && Model.PackagesMaintained.Count > 0)
+            @if (Model.Packages.Count > 0)
             {
                 <ul class="list-group">
-                    @foreach (var package in Model.PackagesMaintained)
+                    @foreach (var package in Model.Packages)
                     {
                         <li class="list-group-item"><a href="/Packages/Details/@package.Url">@package.Name</a></li>
                     }
@@ -40,12 +43,12 @@
     <dl class="dl-horizontal">
         <dt>Issues posted</dt>
         <dd>
-            @if (Model.IssuesCreated != null && Model.IssuesCreated.Count > 0)
+            @if (Model.Issues.Count > 0)
             {
                 <ul class="list-group">
-                    @foreach (var issue in Model.IssuesCreated)
+                    @foreach (var issue in Model.Issues)
                     {
-                        <li class="list-group-item"><a href="/Packages/Details/@issue.Url">@issue.Id</a> @issue.Title @issue.Package.Name</li>
+                        <li class="list-group-item"><a href="/Issues/Details/@issue.Url">#@issue.Id</a> @issue.Title [<a href="/Packages/Details/@issue.Package.Url">@issue.Package.Name</a>]</li>
                     }
                 </ul>
             }
@@ -66,6 +69,10 @@
     <dl class="dl-horizontal">
         <dt>Avatar:</dt>
         <dd>
+            @if (Model.AvatarId != null)
+            {
+                <img src="/Files/Avatars/@Model.Id/@Model.AvatarUrl/@(UserConstants.AvatarThumbnailWidth)x@(UserConstants.AvatarThumbnailHeight)" class="img-responsive" />
+            }
             [@Html.ActionLink("Change", "ChangeAvatar")]
         </dd>
     </dl>

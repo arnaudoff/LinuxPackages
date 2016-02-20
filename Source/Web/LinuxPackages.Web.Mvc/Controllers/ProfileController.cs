@@ -4,13 +4,12 @@
     using System.Web;
     using System.Web.Mvc;
 
-    using AutoMapper;
     using Data.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
-    using Microsoft.Owin.Security;
     using ViewModels.Profile;
-    using App_Start;
+    using Common.Utilities;
+    using Ninject;
 
     public enum EditProfileResultType
     {
@@ -75,11 +74,11 @@
                 this.ViewBag.StatusMessage = "Your profile has been updated.";
             }
 
-            var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
-            var userProfile = this.Mapper.Map<ProfileViewModel>(user);
+            var userProfile = this.Mapper.Map<ProfileViewModel>(this.UserProfile);
             return this.View(userProfile);
         }
 
+        [HttpGet]
         public ActionResult ChangePassword()
         {
             return this.View();
@@ -108,6 +107,29 @@
 
             this.AddErrors(result);
             return this.View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ChangeAvatar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeAvatar(ChangeAvatarViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var newAvatar = this.Users.CreateAvatar(
+                model.Contents.FileName,
+                StreamHelper.ReadFully(model.Contents.InputStream, model.Contents.ContentLength),
+                this.UserProfile);
+
+            return this.RedirectToAction("Index", "Profile");
         }
 
         protected override void Dispose(bool disposing)

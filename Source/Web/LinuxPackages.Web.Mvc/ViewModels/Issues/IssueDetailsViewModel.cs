@@ -7,6 +7,7 @@
     using LinuxPackages.Web.Mvc.Infrastructure.Helpers;
     using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
     using Packages;
+    using Account;
 
     public class IssueDetailsViewModel : IMapFrom<Issue>
     {
@@ -34,7 +35,7 @@
 
         public int NegativeVotes { get; set; }
 
-        public User Author { get; set; }
+        public ListedUserViewModel Author { get; set; }
 
         [Display(Name = "Package name")]
         public ListedPackageViewModel Package { get; set; }

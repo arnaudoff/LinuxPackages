@@ -41,5 +41,20 @@
         {
             return new LinuxPackagesDbContext();
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //modelBuilder
+            //    .Entity<Avatar>()
+            //    .HasRequired(a => a.User)
+            //    .WithOptional(u => u.Avatar);
+
+            //modelBuilder
+            //    .Entity<Avatar>()
+            //    .HasOptional(a => a.User)
+            //    .WithOptionalPrincipal();
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

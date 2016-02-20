@@ -1,5 +1,6 @@
 ﻿@model LinuxPackages.Web.Mvc.ViewModels.Issues.IssueDetailsViewModel
-@using LinuxPackages.Data.Models
+
+@using LinuxPackages.Common.Constants
 
 @{
     ViewBag.Title = "Issue details";
@@ -45,13 +46,20 @@
 <div class="row">
     <div class="col-sm-1">
         <div class="thumbnail">
-            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+            @if (Model.Author.AvatarId != null)
+            {
+                <img src="/Files/Avatars/@Model.Author.Id/@Model.Author.AvatarUrl/@(UserConstants.AvatarThumbnailWidth)x@(UserConstants.AvatarThumbnailHeight)" class="img-responsive user-photo" />
+            }
+            else
+            {
+                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+            }
         </div>
     </div>
     <div class="col-sm-11">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>@Model.Author.FirstName @Model.Author.LastName (@Model.Author.UserName)</strong>
+                <strong>@Model.Author.FirstName @Model.Author.LastName (@Model.Author.Username)</strong>
             </div>
             <div class="panel-body">
                 @Html.Raw(Model.Content)

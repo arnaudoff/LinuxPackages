@@ -7,18 +7,19 @@
 
     using Common.Constants;
     using Common.Utilities;
-    using Contracts;
     using LinuxPackages.Services.Data.Contracts.Savers;
+    using LinuxPackages.Data.Models;
+    using LinuxPackages.Data.Repositories;
 
     public class HardDriveAvatarSaver : IAvatarSaver
     {
         private readonly string rootPath;
-        private readonly IUsersService users;
+        private readonly IRepository<Avatar> avatars;
 
-        public HardDriveAvatarSaver(string rootPath, IUsersService users)
+        public HardDriveAvatarSaver(string rootPath, IRepository<Avatar> avatars)
         {
             this.rootPath = rootPath;
-            this.users = users;
+            this.avatars = avatars;
         }
 
         public byte[] Read(string userId, int avatarId, int? width = null, int? height = null)
@@ -63,13 +64,19 @@
 
         private string GetAvatarPath(string userId, int avatarId, int? width, int? height)
         {
+            string avatarFilename = this.avatars
+                .All()
+                .Where(a => a.Id == avatarId)
+                .Select(a => string.Concat(a.FileName, a.FileExtension))
+                .FirstOrDefault();
+
             if (width == null || height == null)
             {
-                return Path.Combine(this.rootPath, userId, this.users.GetAvatarFileNameById(avatarId));
+                return Path.Combine(this.rootPath, userId, avatarFilename);
             }
             else
             {
-                return Path.Combine(this.rootPath, userId, string.Format("{0}x{1}", width, height), this.users.GetAvatarFileNameById(avatarId));
+                return Path.Combine(this.rootPath, userId, string.Format("{0}x{1}", width, height), avatarFilename);
             }
         }
     }

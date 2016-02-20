@@ -1,4 +1,8 @@
 ﻿@using Microsoft.AspNet.Identity
+@using LinuxPackages.Common.Constants
+
+@model LinuxPackages.Web.Mvc.ViewModels.Home.NavbarUserInfoViewModel
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -7,7 +11,14 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink(User.Identity.GetUserName(), "Index", "Profile", routeValues: null, htmlAttributes: new { title = "Manage" })
+            <a href="/Profile">
+                @if (Model.AvatarId != null)
+                {
+                    <img src="/Files/Avatars/@Model.Id/@Model.AvatarUrl/@(UserConstants.AvatarThumbnailWidth)x@(UserConstants.AvatarThumbnailHeight)"
+                            class="img-responsive" height="20" width="20" style="display: inline-block;"/>
+                }
+                <span>&nbsp;@Model.FirstName @Model.LastName</span>
+            </a>
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>

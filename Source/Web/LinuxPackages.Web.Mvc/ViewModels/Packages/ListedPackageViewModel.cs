@@ -29,7 +29,7 @@
 
         public string Architecture { get; set; }
 
-        public string AverageRating { get; set; }
+        public double AverageRating { get; set; }
 
         public DateTime UploadedOn { get; set; }
 
@@ -42,7 +42,7 @@
                 .ForMember(p => p.Distribution, opts => opts.MapFrom(p => p.Distribution.Name + " " + p.Distribution.Version))
                 .ForMember(p => p.Repository, opts => opts.MapFrom(p => p.Repository.Name))
                 .ForMember(p => p.Architecture, opts => opts.MapFrom(p => p.Architecture.Name))
-                .ForMember(p => p.AverageRating, opts => opts.MapFrom(p => p.Ratings.Average(r => r.Value) == null ? "Not rated" : p.Ratings.Average(r => r.Value).ToString()));
+                .ForMember(p => p.AverageRating, opts => opts.MapFrom(p => p.Ratings.Select(r => r.Value).DefaultIfEmpty(0).Average()));
         }
     }
 }
