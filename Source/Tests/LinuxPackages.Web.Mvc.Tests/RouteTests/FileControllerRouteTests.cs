@@ -11,7 +11,7 @@
     public class FileControllerRouteTests
     {
         [TestMethod]
-        public void ScreenshotsShouldMapCorrectly()
+        public void ScreenshotsActionShouldMapCorrectly()
         {
             const string ScreenshotUrl = "/Files/Screenshots/2943urjf/248hdusaa/100x200";
             var routeCollection = new RouteCollection();
@@ -22,7 +22,7 @@
         }
 
         [TestMethod]
-        public void AvatarsShouldMapCorrectly()
+        public void AvatarsActionShouldMapCorrectly()
         {
             const string AvatarUrl = "/Files/Avatars/y332sd3467asda8sdh6865asuda/28h9s259a/100x100";
             var routeCollection = new RouteCollection();
@@ -33,7 +33,7 @@
         }
 
         [TestMethod]
-        public void PackagesShouldMapCorrectly()
+        public void PackagesActionShouldMapCorrectly()
         {
             const string AvatarUrl = "/Files/Packages/28h9s259a";
             var routeCollection = new RouteCollection();
