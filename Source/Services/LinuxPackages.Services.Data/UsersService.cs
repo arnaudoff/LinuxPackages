@@ -31,18 +31,21 @@
             return this.users.All().Where(u => u.Id == userId);
         }
 
-        public Avatar CreateAvatar(string fileName, byte[] contents, string userId)
+        public Avatar CreateAvatar(string fileName, byte[] contents, User user)
         {
             var newAvatar = new Avatar()
             {
                 FileName = Path.GetFileNameWithoutExtension(fileName),
                 FileExtension = Path.GetExtension(fileName),
-                Size = contents.Length
+                Size = contents.Length,
+                UserId = user.Id
             };
 
             this.avatars.Add(newAvatar);
+            user.AvatarId = newAvatar.Id;
+            this.users.SaveChanges();
             this.avatars.SaveChanges();
-            this.avatarSaver.Save(userId, fileName, contents);
+            this.avatarSaver.Save(user.Id, fileName, contents);
 
             return newAvatar;
         }

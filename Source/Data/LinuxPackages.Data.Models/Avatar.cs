@@ -2,6 +2,7 @@
 namespace LinuxPackages.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Avatar
     {
@@ -16,5 +17,8 @@ namespace LinuxPackages.Data.Models
 
         [Required]
         public int Size { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
     }
 }

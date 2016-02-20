@@ -15,7 +15,7 @@ namespace LinuxPackages.Services.Data.Contracts
 
         IQueryable<Avatar> GetAvatarById(int avatarId);
        
-        Avatar CreateAvatar(string fileName, byte[] contents, string userId);
+        Avatar CreateAvatar(string fileName, byte[] contents, User user);
 
         string GetAvatarFileNameById(int avatarId);
     }

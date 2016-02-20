@@ -1,10 +1,10 @@
-﻿namespace LinuxPackages.Web.Mvc.ViewModels.Account
+﻿namespace LinuxPackages.Web.Mvc.ViewModels.Home
 {
-    using Data.Models;
-    using Infrastructure.Helpers;
+    using LinuxPackages.Data.Models;
+    using LinuxPackages.Web.Mvc.Infrastructure.Helpers;
     using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
 
-    public class ListedUserViewModel : IMapFrom<User>
+    public class NavbarUserInfoViewModel : IMapFrom<User>
     {
         public string Id { get; set; }
 
@@ -12,9 +12,9 @@
 
         public string LastName { get; set; }
 
-        public string Username { get; set; }
-
         public int? AvatarId { get; set; }
+
+        public Avatar Avatar { get; set; }
 
         public string AvatarUrl
         {

@@ -23,7 +23,7 @@ namespace LinuxPackages.Web.Mvc.ViewModels.Profile
 
         public List<ListedIssueViewModel> Issues { get; set; }
 
-        public int AvatarId { get; set; }
+        public int? AvatarId { get; set; }
 
         public Avatar Avatar { get; set; }
 
@@ -31,7 +31,7 @@ namespace LinuxPackages.Web.Mvc.ViewModels.Profile
         {
             get
             {
-                return (new UrlIdentifierProvider()).EncodeEntityId(this.AvatarId);
+                return (new UrlIdentifierProvider()).EncodeEntityId(this.AvatarId.GetValueOrDefault());
             }
         }
     }

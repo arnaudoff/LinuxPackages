@@ -69,7 +69,7 @@
     <dl class="dl-horizontal">
         <dt>Avatar:</dt>
         <dd>
-            @if (Model.AvatarId > 0)
+            @if (Model.AvatarId != null)
             {
                 <img src="/Files/Avatars/@Model.Id/@Model.AvatarUrl/@(UserConstants.AvatarThumbnailWidth)x@(UserConstants.AvatarThumbnailHeight)" class="img-responsive" />
             }

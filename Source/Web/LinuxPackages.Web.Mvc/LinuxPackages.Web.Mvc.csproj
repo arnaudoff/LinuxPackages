@@ -245,6 +245,7 @@
     <Compile Include="ViewModels\Account\ListedUserViewModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\Home\IndexViewModel.cs" />
+    <Compile Include="ViewModels\Home\NavbarUserInfoViewModel.cs" />
     <Compile Include="ViewModels\IssueReplies\AddIssueReplyViewModel.cs" />
     <Compile Include="ViewModels\IssueReplies\ListedIssueRepliesViewModel.cs" />
     <Compile Include="ViewModels\Issues\AddIssueViewModel.cs" />
@@ -318,7 +319,7 @@
     <Content Include="Views\Profile\ChangePassword.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_NavbarUserInfoPartial.cshtml" />
     <Content Include="Views\Packages\Add.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MultiLineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SingleLineText.cshtml" />

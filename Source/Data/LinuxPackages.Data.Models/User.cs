@@ -9,6 +9,7 @@
 
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class User : IdentityUser
     {
@@ -35,6 +36,7 @@
 
         public int? AvatarId { get; set; }
 
+        [ForeignKey("AvatarId")]
         public virtual Avatar Avatar { get; set; }
 
         public virtual ICollection<Package> Packages

@@ -1,24 +1,19 @@
 ﻿namespace LinuxPackages.Web.Mvc.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
 
-    using AutoMapper.QueryableExtensions;
-    using Common.Constants;
     using Common.Utilities;
     using Data.Models;
     using Infrastructure.ActionFilters;
     using Infrastructure.Extensions;
-    using Infrastructure.Helpers;
     using Infrastructure.Mappings;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
-    using Ninject;
     using Services.Data.Contracts;
     using ViewModels.Packages;
 
