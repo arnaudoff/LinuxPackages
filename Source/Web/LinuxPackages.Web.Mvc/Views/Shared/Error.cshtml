@@ -4,6 +4,18 @@
     ViewBag.Title = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div class="error">
+    <div class="error-code m-b-10 m-t-20">500 <i class="fa fa-warning"></i></div>
+    <h3 class="font-bold">We couldn't process your request</h3>
 
+    <div class="error-desc">
+        Sorry, but there was a problem with processing your request. <br />
+        Please try again later. If you are still having issues, don't hesitate to contact us.
+        <div>
+            <a class=" login-detail-panel-button btn" href="/">
+                <i class="fa fa-arrow-left"></i>
+                Go back to the homepage
+            </a>
+        </div>
+    </div>
+</div>

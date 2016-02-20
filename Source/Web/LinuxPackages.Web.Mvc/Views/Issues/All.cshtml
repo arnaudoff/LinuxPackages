@@ -22,7 +22,7 @@
 
         columns
             .Bound(i => i.Package.Name)
-            .ClientTemplate("<a href='" + Url.Action("Details", "Packages") + "/#= Package.Id #" + "'>#= Package.Name #</a>")
+            .ClientTemplate("<a href='" + Url.Action("Details", "Packages") + "/#= Package.Id #" + "'>#: Package.Name #</a>")
             .Title("Package")
             .Groupable(true);
 

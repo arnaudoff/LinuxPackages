@@ -2,7 +2,7 @@
 {
     public interface IScreenshotSaver
     {
-        void Save(int packageId, string packageName, string fileName, byte[] contents);
+        void Save(int packageId, string fileName, byte[] contents);
 
         byte[] Read(int requestedPackageId, int requestedScreenshotId, int? width = null, int? height = null);
     }

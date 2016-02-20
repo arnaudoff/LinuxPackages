@@ -13,7 +13,7 @@
         columns.Bound(p => p.Id).ClientTemplate(
             "<a href='" +
                 Url.Action("Details", "Packages") + "/#= Url #" +
-            "'>#= Name #</a>"
+            "'>#: Name #</a>"
         ).Title("Name");
         columns.Bound(p => p.Distribution).Title("Distribution");
         columns.Bound(p => p.Repository);

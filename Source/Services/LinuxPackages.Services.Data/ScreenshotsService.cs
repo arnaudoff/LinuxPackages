@@ -3,10 +3,11 @@
     using System;
     using System.IO;
     using System.Linq;
+    using Common.Utilities;
+    using Contracts;
+    using Contracts.Savers;
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
-    using LinuxPackages.Services.Data.Contracts;
-    using Contracts.Savers;
 
     public class ScreenshotsService : IScreenshotsService
     {
@@ -24,8 +25,10 @@
             return this.screenshots.All().Where(s => s.Id == id);
         }
 
-        public Screenshot Create(string fileName, byte[] contents, int packageId, string packageName)
+        public Screenshot Create(string fileName, byte[] contents, int packageId)
         {
+            fileName = PathUtils.CleanFileName(fileName);
+
             var newScreenshot = new Screenshot
             {
                 FileName = Path.GetFileNameWithoutExtension(fileName),
@@ -36,7 +39,7 @@
 
             this.screenshots.Add(newScreenshot);
             this.screenshots.SaveChanges();
-            this.screenshotSaver.Save(packageId, packageName, fileName, contents);
+            this.screenshotSaver.Save(packageId, fileName, contents);
 
             return newScreenshot;
         }

@@ -7,7 +7,7 @@
     {
         columns
             .Bound(p => p.Id)
-            .ClientTemplate("<a href='" + Url.Action("Details", "Packages") + "/#= Url #" + "'>#= Name #</a>")
+            .ClientTemplate("<a href='" + Url.Action("Details", "Packages") + "/#= Url #" + "'>#: Name #</a>")
             .Title("Package")
             .HeaderHtmlAttributes(new { style = "text-align: center;" });
         columns

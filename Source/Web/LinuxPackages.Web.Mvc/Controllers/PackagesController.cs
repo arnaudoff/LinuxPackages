@@ -139,8 +139,7 @@
                     this.screenshots.Create(
                         modelScreenshot.FileName,
                         StreamHelper.ReadFully(modelScreenshot.InputStream, modelScreenshot.ContentLength),
-                        newPackage.Id,
-                        newPackage.Name);
+                        newPackage.Id);
                 }
             }
 

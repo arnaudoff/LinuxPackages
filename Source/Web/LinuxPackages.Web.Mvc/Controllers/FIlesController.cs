@@ -103,13 +103,13 @@
 
             var package = this.packages
                 .GetById(requestedPackageId)
-                .Select(p => new { Name = p.Name, FileName = p.FileName })
+                .Select(p => new { FileName = p.FileName })
                 .FirstOrDefault();
 
-            byte[] contents = this.packageSaver.Read(requestedPackageId, package.Name, package.FileName);
+            byte[] contents = this.packageSaver.Read(requestedPackageId, package.FileName);
 
-            Response.AppendHeader("Content-Disposition", new ContentDisposition { FileName = package.FileName, Inline = false }.ToString());
-            return File(contents, MimeMapping.GetMimeMapping(package.FileName));
+            this.Response.AppendHeader("Content-Disposition", new ContentDisposition { FileName = package.FileName, Inline = false }.ToString());
+            return this.File(contents, MimeMapping.GetMimeMapping(package.FileName));
         }
 
         private bool IsMatchingSizeConstaint(string size)

@@ -4,10 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Common.Utilities;
     using Contracts;
+    using Contracts.Savers;
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
-    using Contracts.Savers;
 
     public class PackagesService : IPackagesService
     {
@@ -38,6 +39,7 @@
         {
             return this.packages.All();
         }
+
         public IQueryable<Package> GetMostDownloaded(int n)
         {
             return this.packages
@@ -65,6 +67,8 @@
             IList<int> dependencyIds,
             IList<string> maintainerIds)
         {
+            fileName = PathUtils.CleanFileName(fileName);
+
             var newPackage = new Package
             {
                 Name = name,
@@ -77,7 +81,6 @@
                 Size = contents.Length,
                 UploadedOn = DateTime.UtcNow
             };
-
 
             var maintainers = this.users
                 .All()
@@ -94,7 +97,7 @@
 
             this.packages.Add(newPackage);
             this.packages.SaveChanges();
-            this.packageSaver.Save(newPackage.Id, newPackage.Name, fileName, contents);
+            this.packageSaver.Save(newPackage.Id, fileName, contents);
 
             if (dependencyIds != null && dependencyIds.Count > 0)
             {

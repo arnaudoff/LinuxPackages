@@ -12,7 +12,7 @@
     <ul class="nav navbar-nav navbar-right">
         <li>
             <a href="/Profile">
-                @if (Model.AvatarId != null)
+                @if (Model != null && Model.AvatarId != null)
                 {
                     <img src="/Files/Avatars/@Model.Id/@Model.AvatarUrl/@(UserConstants.AvatarThumbnailWidth)x@(UserConstants.AvatarThumbnailHeight)"
                             class="img-responsive" height="20" width="20" style="display: inline-block;"/>

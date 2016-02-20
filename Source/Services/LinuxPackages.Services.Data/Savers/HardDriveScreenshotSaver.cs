@@ -31,7 +31,7 @@
             return File.ReadAllBytes(filePath);
         }
 
-        public void Save(int packageId, string packageName, string screenshotFilename, byte[] contents)
+        public void Save(int packageId, string screenshotFilename, byte[] contents)
         {
             // Save original screenshot
             int directoryToSave = packageId % PackageConstants.PackagesPerDirectory;
@@ -41,8 +41,8 @@
             {
                 Directory.CreateDirectory(directoryToSavePath);
             }
-       
-            string packageDirectoryPath = Path.Combine(directoryToSavePath, Path.GetFileNameWithoutExtension(packageName));
+
+            string packageDirectoryPath = Path.Combine(directoryToSavePath, packageId.ToString());
             if (!Directory.Exists(packageDirectoryPath))
             {
                 Directory.CreateDirectory(packageDirectoryPath);
@@ -88,7 +88,6 @@
                 {
                     FileName = s.FileName,
                     FileExtension = s.FileExtension,
-                    PackageName = s.Package.Name
                 })
                 .FirstOrDefault();
 
@@ -98,7 +97,7 @@
                 filePath = Path.Combine(
                     this.rootPath,
                     (requestedPackageId % PackageConstants.PackagesPerDirectory).ToString(),
-                    screenshot.PackageName,
+                    requestedPackageId.ToString(),
                     this.screenshotsFolderName,
                     string.Format("{0}{1}", screenshot.FileName, screenshot.FileExtension));
             }
@@ -107,7 +106,7 @@
                 filePath = Path.Combine(
                     this.rootPath,
                     (requestedPackageId % PackageConstants.PackagesPerDirectory).ToString(),
-                    screenshot.PackageName,
+                    requestedPackageId.ToString(),
                     this.screenshotsFolderName,
                     string.Format("{0}x{1}", width, height),
                     string.Format("{0}{1}", screenshot.FileName, screenshot.FileExtension));

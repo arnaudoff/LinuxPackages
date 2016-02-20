@@ -10,16 +10,18 @@
     public class AddPackageViewModel
     {
         [Required]
+        [AllowHtml]
         [MinLength(PackageConstants.MinNameLength)]
         [MaxLength(PackageConstants.MaxNameLength)]
         [UIHint("SingleLineText")]
         public string Name { get; set; }
 
         [Required]
+        [AllowHtml]
         [MinLength(PackageConstants.MinDescriptionLength)]
         [MaxLength(PackageConstants.MaxDescriptionLength)]
         [UIHint("MultiLineText")]
-        public string Description { get; set; } 
+        public string Description { get; set; }
 
         [Required]
         [Display(Name = "Distribution")]

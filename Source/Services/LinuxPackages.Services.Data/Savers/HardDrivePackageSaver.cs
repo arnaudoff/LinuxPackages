@@ -15,7 +15,7 @@
             this.rootPath = rootPath;
         }
 
-        public void Save(int packageId, string packageName, string filename, byte[] contents)
+        public void Save(int packageId, string filename, byte[] contents)
         {
             var directoryToSave = packageId % PackageConstants.PackagesPerDirectory;
 
@@ -25,7 +25,7 @@
                 Directory.CreateDirectory(directoryToSavePath);
             }
 
-            var packageDirectoryPath = Path.Combine(directoryToSavePath, packageName);
+            var packageDirectoryPath = Path.Combine(directoryToSavePath, packageId.ToString());
             if (!Directory.Exists(packageDirectoryPath))
             {
                 Directory.CreateDirectory(packageDirectoryPath);
@@ -35,12 +35,12 @@
             File.WriteAllBytes(finalPath, contents);
         }
 
-        public byte[] Read(int packageId, string packageName, string fileName)
+        public byte[] Read(int packageId, string fileName)
         {
             var filePath = Path.Combine(
                 this.rootPath,
                 (packageId % PackageConstants.PackagesPerDirectory).ToString(),
-                packageName,
+                packageId.ToString(),
                 fileName);
 
             return File.ReadAllBytes(filePath);

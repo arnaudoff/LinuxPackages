@@ -13,18 +13,19 @@
     public class UrlIdentifierProviderTests
     {
         private const string HttpContextSalt = "foobar";
+        private HttpContext httpContext = null;
 
         [TestInitialize]
         public void InitializeContext()
         {
-            HttpContext.Current = new HttpContext(new HttpRequest(null, "http://tempuri.org", null), new HttpResponse(null));
-            HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName] = HttpContextSalt;
+            this.httpContext = new HttpContext(new HttpRequest(null, "http://tempuri.org", null), new HttpResponse(null));
+            this.httpContext.Application[GlobalConstants.UrlSaltKeyName] = HttpContextSalt;
         }
 
         [TestCleanup]
         public void DisposeContext()
         {
-            HttpContext.Current = null;
+            this.httpContext = null;
         }
 
         [TestMethod]
@@ -32,7 +33,7 @@
         {
             int saltSize = 10;
 
-            string result = new UrlIdentifierProvider().GenerateIdentifierProviderSalt(saltSize);
+            string result = new UrlIdentifierProvider(this.httpContext).GenerateIdentifierProviderSalt(saltSize);
             byte[] source = Convert.FromBase64String(result);
 
             Assert.AreEqual(saltSize, source.Length);
@@ -41,11 +42,10 @@
         [TestMethod]
         public void GenerateUrlHashShouldGenerateCorrectHash()
         {
-            var salt = (string)HttpContext.Current.Application[GlobalConstants.UrlSaltKeyName];
             int entityId = 1337;
             string expectedHash = this.HashEntity(entityId, HttpContextSalt);
 
-            string result = new UrlIdentifierProvider().EncodeEntityId(entityId);
+            string result = new UrlIdentifierProvider(this.httpContext).EncodeEntityId(entityId);
 
             Assert.AreEqual(expectedHash, result);
         }
@@ -56,7 +56,7 @@
             int entityId = 1337;
             string urlHash = this.HashEntity(entityId, HttpContextSalt);
 
-            int decodedId = new UrlIdentifierProvider().DecodeEntityId(urlHash);
+            int decodedId = new UrlIdentifierProvider(this.httpContext).DecodeEntityId(urlHash);
 
             Assert.AreEqual(1337, decodedId);
         }
