@@ -35,9 +35,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Kendo.Mvc, Version=2016.1.112.545, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Web\LinuxPackages.Web.Mvc\Libraries\Kendo.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -56,6 +72,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -94,6 +111,10 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="TestStack.FluentMVCTesting, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\TestStack.FluentMVCTesting.3.0.0\lib\NET45\TestStack.FluentMVCTesting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -118,6 +139,8 @@
     <Compile Include="RouteTests\IssuesRouteTests.cs" />
     <Compile Include="RouteTests\PackagesRouteTests.cs" />
     <Compile Include="RouteTests\ProfileRouteTests.cs" />
+    <Compile Include="Setups\Repositories.cs" />
+    <Compile Include="Setups\Services.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -127,6 +150,18 @@
     <ProjectReference Include="..\..\Common\LinuxPackages.Common\LinuxPackages.Common.csproj">
       <Project>{095d2656-66cb-41e1-a95a-745f41b2b8e3}</Project>
       <Name>LinuxPackages.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\LinuxPackages.Data.Models\LinuxPackages.Data.Models.csproj">
+      <Project>{f801ce53-a7f3-409e-aa15-352c81923850}</Project>
+      <Name>LinuxPackages.Data.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\LinuxPackages.Data\LinuxPackages.Data.csproj">
+      <Project>{55071c20-03c9-4acd-8c5d-749180eca31a}</Project>
+      <Name>LinuxPackages.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\LinuxPackages.Services.Data\LinuxPackages.Services.Data.csproj">
+      <Project>{39316a97-4403-408e-a563-c96a104ca264}</Project>
+      <Name>LinuxPackages.Services.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Web\LinuxPackages.Web.Mvc\LinuxPackages.Web.Mvc.csproj">
       <Project>{954a1c58-4075-4b00-8c3f-1ed7e5dc6b75}</Project>

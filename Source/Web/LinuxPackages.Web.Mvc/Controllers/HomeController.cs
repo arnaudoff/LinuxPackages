@@ -1,16 +1,16 @@
 ﻿namespace LinuxPackages.Web.Mvc.Controllers
 {
-    using Kendo.Mvc.UI;
-    using ViewModels.Issues;
-    using Services.Data.Contracts;
+    using System.Web;
     using System.Web.Mvc;
+    using Infrastructure.Extensions;
     using Infrastructure.Mappings;
     using Kendo.Mvc.Extensions;
-    using ViewModels.Packages;
+    using Kendo.Mvc.UI;
+    using Services.Data.Contracts;
     using ViewModels.Account;
     using ViewModels.Home;
-    using System.Web;
-    using Infrastructure.Extensions;
+    using ViewModels.Issues;
+    using ViewModels.Packages;
 
     public class HomeController : BaseController
     {
@@ -39,43 +39,43 @@
 
         public ActionResult GetRecentIssues([DataSourceRequest]DataSourceRequest request)
         {
-            var result = HttpRuntime.Cache.GetOrStore<DataSourceResult>(
+            DataSourceResult result = HttpRuntime.Cache.GetOrStore<DataSourceResult>(
                 "recentIssues",
                 () => this.issues
                     .GetAll()
                     .To<ListedRecentIssuesViewModel>()
                     .ToDataSourceResult(request), 5);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return this.Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetMostDownloadedPackages([DataSourceRequest]DataSourceRequest request)
         {
-            var result = HttpRuntime.Cache.GetOrStore<DataSourceResult>(
+            DataSourceResult result = HttpRuntime.Cache.GetOrStore<DataSourceResult>(
                 "mostDownloadedPackages",
                 () => this.packages
                     .GetAll()
                     .To<ListedMostDownloadedPackagesViewModel>()
                     .ToDataSourceResult(request), 30);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return this.Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetTopMaintainers([DataSourceRequest]DataSourceRequest request)
         {
-            var result = HttpRuntime.Cache.GetOrStore<DataSourceResult>(
+            DataSourceResult result = HttpRuntime.Cache.GetOrStore<DataSourceResult>(
                 "topMaintainers",
                 () => this.users
                     .GetAll()
                     .To<ListedTopMaintainersViewModel>()
                     .ToDataSourceResult(request), 30);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return this.Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetNavbarUserInfo()
         {
-            var viewModel = this.Mapper.Map<NavbarUserInfoViewModel>(this.UserProfile);
+            NavbarUserInfoViewModel viewModel = this.Mapper.Map<NavbarUserInfoViewModel>(this.UserProfile);
             return this.PartialView("_NavbarUserInfoPartial", viewModel);
         }
     }

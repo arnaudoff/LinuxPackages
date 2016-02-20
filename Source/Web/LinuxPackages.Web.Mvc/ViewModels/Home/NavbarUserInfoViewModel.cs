@@ -1,8 +1,8 @@
 ﻿namespace LinuxPackages.Web.Mvc.ViewModels.Home
 {
-    using LinuxPackages.Data.Models;
-    using LinuxPackages.Web.Mvc.Infrastructure.Helpers;
-    using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
+    using Data.Models;
+    using Infrastructure.Helpers;
+    using Infrastructure.Mappings;
 
     public class NavbarUserInfoViewModel : IMapFrom<User>
     {
@@ -20,7 +20,7 @@
         {
             get
             {
-                return (new UrlIdentifierProvider()).EncodeEntityId(this.AvatarId.GetValueOrDefault());
+                return new UrlIdentifierProvider().EncodeEntityId(this.AvatarId.GetValueOrDefault());
             }
         }
     }

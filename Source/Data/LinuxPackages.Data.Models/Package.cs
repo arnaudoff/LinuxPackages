@@ -39,7 +39,7 @@
 
         [Required]
         public int DistributionId { get; set; }
-        
+
         public virtual Distribution Distribution { get; set; }
 
         [Required]

@@ -1,12 +1,13 @@
 ﻿namespace LinuxPackages.Services.Data
 {
-    using System;
+    using System.IO;
     using System.Linq;
+
+    using Contracts;
+    using Contracts.Savers;
+
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
-    using LinuxPackages.Services.Data.Contracts;
-    using System.IO;
-    using Contracts.Savers;
 
     public class UsersService : IUsersService
     {
