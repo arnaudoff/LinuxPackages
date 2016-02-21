@@ -127,6 +127,24 @@
             return newPackage;
         }
 
+        public void Update(int packageId, string name, int distributionId, int repositoryId, int architectureId, int licenseId)
+        {
+            var package = this.packages.GetById(packageId);
+            package.Name = name;
+            package.DistributionId = distributionId;
+            package.RepositoryId = repositoryId;
+            package.ArchitectureId = architectureId;
+            package.LicenseId = licenseId;
+
+            this.packages.SaveChanges();
+        }
+
+        public void DeleteById(int packageId)
+        {
+            this.packages.Delete(packageId);
+            this.packages.SaveChanges();
+        }
+
         public PackageComment AddComment(string content, int packageId, string authorId)
         {
             var newComment = new PackageComment()

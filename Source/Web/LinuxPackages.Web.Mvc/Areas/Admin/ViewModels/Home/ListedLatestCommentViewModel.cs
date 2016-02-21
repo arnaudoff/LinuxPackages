@@ -3,8 +3,8 @@
     using System;
     using AutoMapper;
     using Data.Models;
-    using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
     using Infrastructure.Helpers;
+    using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
 
     public class ListedLatestCommentViewModel : IMapFrom<PackageComment>, IHaveCustomMappings
     {
