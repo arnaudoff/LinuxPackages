@@ -1,6 +1,7 @@
 ﻿namespace LinuxPackages.Web.Mvc.Tests.InfrastructureTests.Helpers
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
@@ -8,18 +9,23 @@
     using Infrastructure.Helpers;
     using LinuxPackages.Common.Constants;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Http.TestLibrary;
 
     [TestClass]
     public class UrlIdentifierProviderTests
     {
-        private const string HttpContextSalt = "foobar";
         private HttpContext httpContext = null;
+        private const string HttpContextSalt = "foobar";
 
         [TestInitialize]
         public void InitializeContext()
         {
-            this.httpContext = new HttpContext(new HttpRequest(null, "http://tempuri.org", null), new HttpResponse(null));
-            this.httpContext.Application[GlobalConstants.UrlSaltKeyName] = HttpContextSalt;
+            using (HttpSimulator simulator = new HttpSimulator())
+            {
+                simulator.SimulateRequest(new Uri("http://localhost/"));
+                HttpContext.Current.Application.Add(GlobalConstants.UrlSaltKeyName, HttpContextSalt);
+                this.httpContext = HttpContext.Current;
+            }
         }
 
         [TestCleanup]
