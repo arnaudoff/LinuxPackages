@@ -10,14 +10,13 @@
 
     public class ListedPackageViewModel : IMapFrom<Package>, IHaveCustomMappings
     {
-
         public int Id { get; set; }
 
         public string Url
         {
             get
             {
-                return (new UrlIdentifierProvider()).EncodeEntityId(this.Id);
+                return new UrlIdentifierProvider().EncodeEntityId(this.Id);
             }
         }
 

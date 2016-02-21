@@ -4,10 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Common.Utilities;
     using Contracts;
+    using Contracts.Savers;
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
-    using Contracts.Savers;
 
     public class PackagesService : IPackagesService
     {
@@ -38,11 +39,21 @@
         {
             return this.packages.All();
         }
+
         public IQueryable<Package> GetMostDownloaded(int n)
         {
             return this.packages
                 .All()
                 .OrderByDescending(p => p.Downloads)
+                .Take(n);
+        }
+
+        public IQueryable<Package> GetLatest(int n)
+        {
+            return this.packages
+                .All()
+                .OrderByDescending(p => p.UploadedOn)
+                .ThenBy(p => p.Id)
                 .Take(n);
         }
 
@@ -65,6 +76,8 @@
             IList<int> dependencyIds,
             IList<string> maintainerIds)
         {
+            fileName = PathUtils.CleanFileName(fileName);
+
             var newPackage = new Package
             {
                 Name = name,
@@ -77,7 +90,6 @@
                 Size = contents.Length,
                 UploadedOn = DateTime.UtcNow
             };
-
 
             var maintainers = this.users
                 .All()
@@ -94,7 +106,7 @@
 
             this.packages.Add(newPackage);
             this.packages.SaveChanges();
-            this.packageSaver.Save(newPackage.Id, newPackage.Name, fileName, contents);
+            this.packageSaver.Save(newPackage.Id, fileName, contents);
 
             if (dependencyIds != null && dependencyIds.Count > 0)
             {
@@ -136,6 +148,15 @@
             return this.comments
                 .All()
                 .Where(c => c.PackageId == packageId);
+        }
+
+        public IQueryable<PackageComment> GetLatestComments(int n)
+        {
+            return this.comments
+                .All()
+                .OrderByDescending(c => c.CreatedOn)
+                .ThenBy(c => c.Id)
+                .Take(n);
         }
 
         public Rating AddRating(int value, int packageId, string ratedById)

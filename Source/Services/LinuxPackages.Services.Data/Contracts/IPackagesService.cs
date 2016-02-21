@@ -14,6 +14,8 @@
 
         IQueryable<Package> GetMostDownloaded(int n);
 
+        IQueryable<Package> GetLatest(int n);
+
         Package Create(
             string name,
             string description,
@@ -27,6 +29,8 @@
             IList<string> maintainerIds);
 
         IQueryable<PackageComment> GetCommentsByPackageId(int packageId);
+
+        IQueryable<PackageComment> GetLatestComments(int n);
 
         PackageComment AddComment(string content, int packageId, string authorId);
 

@@ -3,7 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using Common.Constants;
+    using Common.Utilities;
     using LinuxPackages.Common.Contracts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -11,16 +12,23 @@
 
     public class DataSeeder
     {
-        private readonly IRandomGenerator randomGenerator;
         private readonly LinuxPackagesDbContext context;
+        private readonly IRandomGenerator randomGenerator;
 
         public DataSeeder(LinuxPackagesDbContext context)
+            : this(context, new RandomGenerator())
+        {
+        }
+
+        public DataSeeder(LinuxPackagesDbContext context, IRandomGenerator randomGenerator)
         {
             this.context = context;
+            this.randomGenerator = randomGenerator;
         }
 
         public void Seed()
         {
+            this.SeedUsers();
             this.SeedDistributions();
             this.SeedRepositories();
             this.SeedArchitectures();
@@ -31,7 +39,7 @@
         {
             if (!this.context.Users.Any())
             {
-                var adminRole = new IdentityRole { Name = "Administrator", Id = Guid.NewGuid().ToString() };
+                var adminRole = new IdentityRole { Name = GlobalConstants.AdminRoleName, Id = Guid.NewGuid().ToString() };
                 this.context.Roles.Add(adminRole);
 
                 var hasher = new PasswordHasher();
@@ -155,7 +163,7 @@
                     },
                     new License
                     {
-                        Name = "BSD 2 FreeBSD/Simplified)",
+                        Name = "BSD 2 FreeBSD/Simplified",
                         Description = "The BSD 2-clause license allows you almost unlimited freedom with the software so long as you include the BSD copyright notice in it (found in Fulltext). Many other licenses are influenced by this one.",
                         Url = "https://tldrlegal.com/license/bsd-2-clause-license-(freebsd)#fulltext"
                     },

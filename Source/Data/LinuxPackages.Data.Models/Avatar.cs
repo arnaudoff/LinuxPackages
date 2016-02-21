@@ -1,8 +1,6 @@
-﻿
-namespace LinuxPackages.Data.Models
+﻿namespace LinuxPackages.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Avatar
     {

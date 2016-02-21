@@ -14,7 +14,7 @@
         {
             get
             {
-                return (new UrlIdentifierProvider()).EncodeEntityId(this.Id);
+                return new UrlIdentifierProvider().EncodeEntityId(this.Id);
             }
         }
 

@@ -3,9 +3,8 @@
     using System;
     using System.Linq;
     using System.Linq.Expressions;
-
-    using AutoMapper.QueryableExtensions;
     using App_Start;
+    using AutoMapper.QueryableExtensions;
 
     public static class QueryableExtensions
     {

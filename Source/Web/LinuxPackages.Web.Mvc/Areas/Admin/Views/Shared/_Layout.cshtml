@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewBag.Title - LinuxPackages</title>
+    @Styles.Render("~/Content/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/kendo")
+    @Styles.Render("~/Content/metisMenu")
+    @Styles.Render("~/Content/sbadmin")
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">LinuxPackages Admin</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                @{Html.RenderAction("GetNavbarUserInfo", "Home", new { area = string.Empty });}
+            </div>
+            <div class="navbar-default sidebar" style="margin-top: 0px;" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "Admin" }, null)</li>
+                        <li>
+                            <a href="#"><i class="fa fa-archive fa-fw"></i> Packages<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>@Html.ActionLink("Manage", "Manage", "Packages", new { area = "Admin" }, null)</li>
+                                <li>@Html.ActionLink("Statistics", "Statistics", "Packages", new { area = "Admin" }, null)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-exclamation-triangle fa-fw"></i> Issues<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>@Html.ActionLink("Manage", "Manage", "Issues", new { area = "Admin" }, null)</li>
+                                <li>@Html.ActionLink("Statistics", "Statistics", "Issues", new { area = "Admin" }, null)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-building-o fa-fw"></i> Architectures<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>@Html.ActionLink("Manage", "Manage", "Architectures", new { area = "Admin" }, null)</li>
+                                <li>@Html.ActionLink("Statistics", "Statistics", "Architectures", new { area = "Admin" }, null)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-dot-circle-o fa-fw"></i> Distributions<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>@Html.ActionLink("Manage", "Manage", "Distributions", new { area = "Admin" }, null)</li>
+                                <li>@Html.ActionLink("Statistics", "Statistics", "Distributions", new { area = "Admin" }, null)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-file-text-o fa-fw"></i> Licenses<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>@Html.ActionLink("Manage", "Manage", "Licenses", new { area = "Admin" }, null)</li>
+                                <li>@Html.ActionLink("Statistics", "Statistics", "Licenses", new { area = "Admin" }, null)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="page-wrapper">
+            <br />
+            @RenderBody()
+            <hr />
+            <footer class="text-center">
+                <p>@DateTime.Now.Year &copy; LinuxPackages by Ivaylo Arnaudov</p>
+                <p>Open source on <a href="http://github.com/arnaudoff/LinuxPackages">GitHub</a></p>
+            </footer>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/metisMenu")
+    @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/sbadmin")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
