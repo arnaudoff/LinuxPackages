@@ -48,6 +48,15 @@
                 .Take(n);
         }
 
+        public IQueryable<Package> GetLatest(int n)
+        {
+            return this.packages
+                .All()
+                .OrderByDescending(p => p.UploadedOn)
+                .ThenBy(p => p.Id)
+                .Take(n);
+        }
+
         public IQueryable<Package> GetById(int id)
         {
             return this.packages
@@ -139,6 +148,15 @@
             return this.comments
                 .All()
                 .Where(c => c.PackageId == packageId);
+        }
+
+        public IQueryable<PackageComment> GetLatestComments(int n)
+        {
+            return this.comments
+                .All()
+                .OrderByDescending(c => c.CreatedOn)
+                .ThenBy(c => c.Id)
+                .Take(n);
         }
 
         public Rating AddRating(int value, int packageId, string ratedById)

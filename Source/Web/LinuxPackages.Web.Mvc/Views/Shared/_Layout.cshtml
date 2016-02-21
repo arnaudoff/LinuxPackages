@@ -27,15 +27,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Packages", "All", "Packages")</li>
-                    <li>@Html.ActionLink("Issues", "All", "Issues")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = string.Empty }, null)</li>
+                    <li>@Html.ActionLink("Packages", "All", "Packages", new { area = string.Empty }, null)</li>
+                    <li>@Html.ActionLink("Issues", "All", "Issues", new { area = string.Empty }, null)</li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Add a package", "Add", "Packages")</li>
+                        <li>@Html.ActionLink("Add a package", "Add", "Packages", new { area = string.Empty }, null)</li>
                     }
                 </ul>
-                @{Html.RenderAction("GetNavbarUserInfo", "Home");}
+                @{Html.RenderAction("GetNavbarUserInfo", "Home", new { area = string.Empty });}
             </div>
         </div>
     </div>

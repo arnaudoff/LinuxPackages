@@ -9,11 +9,13 @@
 
         IQueryable<Issue> GetById(int id);
 
-        IQueryable<Issue> GetRecent(int n);
+        IQueryable<Issue> GetLatest(int n);
 
         Issue Create(string title, string content, IssueSeverityType severity, int packageId, string authorId);
 
         IQueryable<IssueReply> GetRepliesByIssueId(int issueId);
+
+        IQueryable<IssueReply> GetLatestReplies(int n);
 
         IssueReply CreateReply(string content, int issueId, string authorId);
     }

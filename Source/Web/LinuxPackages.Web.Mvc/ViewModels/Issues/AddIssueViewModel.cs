@@ -3,14 +3,14 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
-
-    using LinuxPackages.Common.Constants;
     using Data.Models;
     using Infrastructure.Mappings;
+    using LinuxPackages.Common.Constants;
 
     public class AddIssueViewModel : IMapFrom<Issue>
     {
         [Required]
+        [AllowHtml]
         [MinLength(IssueConstants.MinTitleLength)]
         [MaxLength(IssueConstants.MaxTitleLength)]
         [UIHint("SingleLineText")]

@@ -1,0 +1,187 @@
+﻿@model LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.HomeViewModel
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<div class="row">
+    @Html.DisplayFor(m => m.Packages, new { iconName = "fa-archive" })
+    @Html.DisplayFor(m => m.Issues, new { iconName = "fa-exclamation-triangle" })
+    @Html.DisplayFor(m => m.Users, new { iconName = "fa-user" })
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-archive fa-fw"></i> Latest packages
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>@Html.ActionLink("Manage", "Manage", "Packages", new { area = "Admin" }, null)</li>
+                            <li>@Html.ActionLink("See statistics", "Statistics", "Packages", new { area = "Admin" }, null)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Distribution</th>
+                                        <th>Uploaded on</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var package in Model.LatestPackages)
+                                    {
+                                        <tr>
+                                            <td>@package.Id</td>
+                                            <td>@package.Name</td>
+                                            <td>@package.Distribution</td>
+                                            <td>@package.UploadedOn</td>
+                                            <td>@Html.ActionLink("Details", "Details", "Packages", new { area = string.Empty, id = @package.Url }, null)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-exclamation-triangle fa-fw"></i> Latest issues
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>@Html.ActionLink("Manage", "Manage", "Packages", new { area = "Admin" }, null)</li>
+                            <li>@Html.ActionLink("See statistics", "Statistics", "Packages", new { area = "Admin" }, null)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                        <th>Severity</th>
+                                        <th>Opened on</th>
+                                        <th>Package</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var issue in Model.LatestIssues)
+                                    {
+                                        <tr>
+                                            <td>@issue.Id</td>
+                                            <td>@issue.ShortenedTitle</td>
+                                            <td>@issue.Severity</td>
+                                            <td>@issue.OpenedOn</td>
+                                            <td>@Html.ActionLink(issue.PackageName, "Details", "Packages", new { area = string.Empty, id = issue.PackageUrl }, null)</td>
+                                            <td>@Html.ActionLink("Details", "Details", "Issues", new { area = string.Empty, id = issue.Url }, null)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-comments fa-fw"></i> Latest package comments
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Package</th>
+                                        <th>Comment content</th>
+                                        <th>Commented on</th>
+                                        <th>Author</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var comment in Model.LatestComments)
+                                    {
+                                        <tr>
+                                            <td>@comment.Id</td>
+                                            <td>@Html.ActionLink(comment.PackageName, "Details", "Packages", new { area = string.Empty, id = comment.PackageUrl }, null)</td>
+                                            <td>@Html.Raw(comment.ShortenedContent)</td>
+                                            <td>@comment.CreatedOn</td>
+                                            <td>@comment.AuthorUsername</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-default btn-block">View all</a>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-reply-all fa-fw"></i> Latest issue replies
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Issue</th>
+                                        <th>Content</th>
+                                        <th>Replied on</th>
+                                        <th>Author</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var reply in Model.LatestIssueReplies)
+                                {
+                                    <tr>
+                                        <td>@reply.Id</td>
+                                        <td>@Html.ActionLink("#" + reply.IssueId, "Details", "Issues", new { area = string.Empty, id = reply.IssueUrl }, null)</td>
+                                        <td>@Html.Raw(reply.ShortenedContent)</td>
+                                        <td>@reply.CreatedOn</td>
+                                        <td>@reply.AuthorUsername</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-default btn-block">View all</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -30,11 +30,12 @@
                 .Where(i => i.Id == id);
         }
 
-        public IQueryable<Issue> GetRecent(int n)
+        public IQueryable<Issue> GetLatest(int n)
         {
             return this.issues
                 .All()
                 .OrderByDescending(i => i.OpenedOn)
+                .ThenBy(i => i.Id)
                 .Take(n);
         }
 
@@ -78,6 +79,15 @@
         public IQueryable<IssueReply> GetRepliesByIssueId(int issueId)
         {
             return this.replies.All().Where(r => r.IssueId == issueId);
+        }
+
+        public IQueryable<IssueReply> GetLatestReplies(int n)
+        {
+            return this.replies
+                .All()
+                .OrderByDescending(r => r.CreatedOn)
+                .ThenBy(r => r.Id)
+                .Take(n);
         }
     }
 }
