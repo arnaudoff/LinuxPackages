@@ -15,6 +15,8 @@
 
         IQueryable<Package> GetLatest(int n);
 
+        IDictionary<int, int> GetLastMonthUploadDayDistribution();
+
         Package Create(
             string name,
             string description,

@@ -216,5 +216,25 @@
             this.packages.Update(package);
             this.packages.SaveChanges();
         }
+
+        public IDictionary<int, int> GetLastMonthUploadDayDistribution()
+        {
+            DateTime distributionSince = DateTime.Now.AddMonths(-1);
+            var result = this.packages
+                .All()
+                .Where(p => p.UploadedOn > distributionSince)
+                .GroupBy(p => p.UploadedOn.Day)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            for (int i = 1; i < DateTime.UtcNow.Day; i++)
+            {
+                if (!result.Keys.Contains(i))
+                {
+                    result.Add(i, 0);
+                }
+            }
+
+            return result;
+        }
     }
 }

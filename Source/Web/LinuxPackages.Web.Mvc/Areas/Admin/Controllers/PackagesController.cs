@@ -85,6 +85,16 @@
             return this.File(fileContents, contentType, fileName);
         }
 
+        public ActionResult Statistics()
+        {
+            var distributionModel = this.packages
+                .GetLastMonthUploadDayDistribution()
+                .OrderBy(r => r.Key)
+                .Select(x => new PackagesUploadDayStatsViewModel { Day = x.Key, Value = x.Value });
+
+            return this.View(distributionModel);
+        }
+
         // TODO: Extract these to a common method
         private IEnumerable<SelectListItem> GetDistributions()
         {

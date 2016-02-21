@@ -1,1 +1,29 @@
-﻿
+﻿@model IEnumerable<LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Packages.PackagesUploadDayStatsViewModel>
+
+@(Html.Kendo().Chart(Model)
+        .Name("UploadingDaysChart")
+        .Title(title => title
+            .Text("Packages uploading distribution (past month)")
+            .Align(ChartTextAlignment.Center)
+        )
+        .Legend(legend => legend
+            .Visible(false)
+        )
+        .Series(series =>
+        {
+            series.Column(
+                model => model.Value
+            )
+            .Labels(labels => labels.Background("transparent").Visible(true));
+        })
+        .CategoryAxis(axis => axis
+            .Categories(model => model.Day)
+            .MajorGridLines(lines => lines.Visible(false))
+            .Line(line => line.Visible(false))
+        )
+        .ValueAxis(axis => axis.Numeric()
+            .Max((double)Model.Count())
+            .MajorGridLines(lines => lines.Visible(false))
+            .Visible(false)
+        )
+)
