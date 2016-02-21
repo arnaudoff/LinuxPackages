@@ -18,6 +18,12 @@
             bundles.Add(new ScriptBundle("~/bundles/rateit")
                 .Include("~/Scripts/jquery.rateit.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/metisMenu")
+                .Include("~/Scripts/metisMenu/metisMenu.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/sbadmin")
+                .Include("~/Scripts/sb-admin/sb-admin-2.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery")
                 .Include("~/Scripts/kendo/jquery.min.js"));
 
@@ -44,6 +50,12 @@
         {
             bundles.Add(new StyleBundle("~/Content/rateit")
                 .Include("~/Content/rateit.css"));
+
+            bundles.Add(new StyleBundle("~/Content/sbadmin")
+                .Include("~/Content/sb-admin/sb-admin-2.css"));
+
+            bundles.Add(new StyleBundle("~/Content/metisMenu")
+                .Include("~/Content/metisMenu/metisMenu.css"));
 
             bundles.Add(new StyleBundle("~/Content/bootstrap")
                 .Include("~/Content/bootstrap.css"));
