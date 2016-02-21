@@ -222,11 +222,15 @@
     <Compile Include="App_Start\ViewEnginesConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PackagesController.cs" />
     <Compile Include="Areas\Admin\ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Home\ListedLatestCommentViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Home\ListedLatestIssueReplyViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Home\ListedLatestIssueViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Home\ListedLatestPackageViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Packages\AdminListedPackageViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Packages\PackagesUploadDayStatsViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Packages\UpdatePackageViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
@@ -351,7 +355,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Content\kendo\fonts\DejaVu\DejaVuSans-Bold.ttf" />
@@ -378,6 +384,9 @@
     <Content Include="Content\kendo\kendo.office365.mobile.min.css.map" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\DisplayTemplates\StatsCountPanel.cshtml" />
+    <Content Include="Areas\Admin\Views\Packages\Manage.cshtml" />
+    <Content Include="Areas\Admin\Views\Packages\Statistics.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\AdminListedPackageViewModel.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

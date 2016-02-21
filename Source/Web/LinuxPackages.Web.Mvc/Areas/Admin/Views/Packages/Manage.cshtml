@@ -1,0 +1,60 @@
+﻿@using LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Packages;
+
+@{
+    ViewBag.Title = "Manage packages";
+}
+
+@(Html.Kendo()
+    .Grid<AdminListedPackageViewModel>()
+    .Name("ManagePackagesGrid")
+    .Columns(columns =>
+    {
+        columns
+            .Bound(p => p.Id)
+            .ClientTemplate("<a href='" + Url.Action("Details", "Packages", new { area = string.Empty }) + "/#= Url #" + "'>#: Name #</a>")
+            .Title("Name");
+
+        columns
+            .Bound(p => p.Distribution)
+            .ClientTemplate("<a href='" + Url.Action("Manage", "Distributions", new { area = "Admin" }) + "'>#: Distribution #</a>")
+            .Title("Dist");
+
+        columns
+            .Bound(p => p.Repository)
+            .ClientTemplate("<a href='" + Url.Action("Manage", "Repositories", new { area = "Admin" }) + "'>#: Repository #</a>")
+            .Title("Repo");
+
+        columns
+            .Bound(p => p.Distribution)
+            .ClientTemplate("<a href='" + Url.Action("Manage", "Architectures", new { area = "Admin" }) + "'>#: Architecture #</a>")
+            .Title("Arch");
+
+        columns
+            .Bound(p => p.License)
+            .ClientTemplate("<a href='" + Url.Action("Manage", "Licenses", new { area = "Admin" }) + "'>#: License #</a>")
+            .Title("License");
+
+        columns.Bound(p => p.AverageRating).Title("Rating").Width(10);
+        columns.Bound(p => p.Downloads).Width(2);
+        columns.Bound(p => p.FileName);
+        columns.Bound(p => p.Size);
+        columns.Bound(p => p.UploadedOn).Format("{0:dd/MM/yyyy}");
+        columns.Command(command => { command.Edit(); command.Destroy(); });
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Excel();
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp))
+    .Filterable()
+    .Sortable()
+    .Pageable()
+    .Groupable()
+    .DataSource(data => data
+        .Ajax()
+        .Model(model => model.Id(p => p.Id))
+        .Read(r => r.Action("GetPackages", "Packages", new { area = "Admin"}))
+        .Update(update => update.Action("UpdatePackages", "Packages", new { area = "Admin" }))
+        .Destroy(destroy => destroy.Action("DeletePackage", "Packages", new { area = "Admin" }))
+    )
+)

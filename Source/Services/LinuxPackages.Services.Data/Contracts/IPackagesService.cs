@@ -1,7 +1,6 @@
 ﻿namespace LinuxPackages.Services.Data.Contracts
 {
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
 
     using LinuxPackages.Data.Models;
@@ -16,6 +15,8 @@
 
         IQueryable<Package> GetLatest(int n);
 
+        IDictionary<int, int> GetLastMonthUploadDayDistribution();
+
         Package Create(
             string name,
             string description,
@@ -28,6 +29,8 @@
             IList<int> dependencyIds,
             IList<string> maintainerIds);
 
+        void Update(int packageId, string name, int distributionId, int repositoryId, int architectureId, int licenseId);
+
         IQueryable<PackageComment> GetCommentsByPackageId(int packageId);
 
         IQueryable<PackageComment> GetLatestComments(int n);
@@ -37,5 +40,7 @@
         Rating AddRating(int value, int packageId, string ratedById);
 
         void IncrementDownloads(int packageId);
+
+        void DeleteById(int packageId);
     }
 }

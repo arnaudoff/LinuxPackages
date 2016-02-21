@@ -1,0 +1,8 @@
+﻿@model LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Packages.AdminListedPackageViewModel
+
+@Html.EditorFor(m => m.Name)
+@Html.EditorFor(m => m.Description, new { rows = "3", @class = "k-textarea", style = "width: 300px;" })
+@Html.EditorFor(m => m.DistributionId, new { List = ViewData["distros"] })
+@Html.EditorFor(m => m.RepositoryId, new { List = ViewData["repositories"] })
+@Html.EditorFor(m => m.ArchitectureId, new { List = ViewData["architectures"] })
+@Html.EditorFor(m => m.LicenseId, new { List = ViewData["licenses"] })
