@@ -18,6 +18,9 @@
             bundles.Add(new ScriptBundle("~/bundles/rateit")
                 .Include("~/Scripts/jquery.rateit.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jszip")
+                .Include("~/Scripts/jszip.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/metisMenu")
                 .Include("~/Scripts/metisMenu/metisMenu.js"));
 
