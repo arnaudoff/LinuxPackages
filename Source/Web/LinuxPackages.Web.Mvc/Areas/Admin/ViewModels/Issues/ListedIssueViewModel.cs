@@ -10,7 +10,7 @@
     using Infrastructure.Helpers;
     using Infrastructure.Mappings;
 
-    public class AdminListedIssueViewModel : IMapFrom<Issue>, IHaveCustomMappings
+    public class ListedIssueViewModel : IMapFrom<Issue>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -79,7 +79,7 @@
 
         public void CreateMappings(IMapperConfiguration configuration)
         {
-            configuration.CreateMap<Issue, AdminListedIssueViewModel>()
+            configuration.CreateMap<Issue, ListedIssueViewModel>()
                 .ForMember(i => i.PackageName, opts => opts.MapFrom(i => i.Package.Name))
                 .ForMember(i => i.AuthorUsername, opts => opts.MapFrom(i => i.Author.UserName))
                 .ForMember(i => i.SeverityId, opts => opts.MapFrom(i => (int)i.Severity))

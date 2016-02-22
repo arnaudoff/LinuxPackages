@@ -6,7 +6,7 @@
     using Data.Models;
     using Infrastructure.Mappings;
 
-    public class AdminListedDistributionViewModel : IMapFrom<Distribution>
+    public class ListedDistributionViewModel : IMapFrom<Distribution>
     {
         public int Id { get; set; }
 
