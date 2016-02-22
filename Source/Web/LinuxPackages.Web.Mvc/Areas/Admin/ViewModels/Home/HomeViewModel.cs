@@ -1,4 +1,4 @@
-﻿namespace LinuxPackages.Web.Mvc.Areas.Admin.ViewModels
+﻿namespace LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Home
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

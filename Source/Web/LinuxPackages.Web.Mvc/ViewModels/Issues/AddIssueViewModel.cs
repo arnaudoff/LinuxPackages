@@ -35,6 +35,5 @@
         [Display(Name = "Package")]
         [UIHint("SingleLineText")]
         public string PackageName { get; set; }
-
     }
 }

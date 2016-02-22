@@ -1,9 +1,9 @@
 ﻿namespace LinuxPackages.Web.Mvc.ViewModels.Issues
 {
     using System;
-    using LinuxPackages.Data.Models;
-    using LinuxPackages.Web.Mvc.Infrastructure.Helpers;
-    using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
+    using Data.Models;
+    using Infrastructure.Helpers;
+    using Infrastructure.Mappings;
     using Packages;
 
     public class ListedIssueViewModel : IMapFrom<Issue>

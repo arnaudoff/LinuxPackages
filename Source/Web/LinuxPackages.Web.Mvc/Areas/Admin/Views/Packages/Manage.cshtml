@@ -44,7 +44,18 @@
     .ToolBar(toolbar =>
     {
         toolbar.Excel();
+        toolbar.Pdf();
     })
+    .Excel(excel => excel
+        .FileName("Packages.xlsx")
+        .Filterable(true)
+        .ProxyURL(Url.Action("Export", "Packages"))
+    )
+    .Pdf(pdf => pdf
+        .AllPages()
+        .FileName("Packages.pdf")
+        .ProxyURL(Url.Action("Export", "Packages"))
+    )
     .Editable(editable => editable.Mode(GridEditMode.PopUp))
     .Filterable()
     .Sortable()

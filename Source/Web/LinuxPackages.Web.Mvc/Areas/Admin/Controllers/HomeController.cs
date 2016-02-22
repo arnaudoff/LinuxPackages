@@ -1,13 +1,13 @@
 ﻿namespace LinuxPackages.Web.Mvc.Areas.Admin.Controllers
 {
     using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
+
     using Common.Constants;
     using Infrastructure.Mappings;
     using Mvc.Controllers;
     using Services.Data.Contracts;
-    using ViewModels;
+    using ViewModels.Home;
 
     [Authorize(Roles = GlobalConstants.AdminRoleName)]
     public class HomeController : BaseController

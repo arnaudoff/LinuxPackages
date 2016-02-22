@@ -1,0 +1,6 @@
+﻿@model LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Issues.AdminListedIssueViewModel
+
+@Html.EditorFor(m => m.Title)
+@Html.EditorFor(m => m.Content)
+@Html.EditorFor(m => m.SeverityId, new { List = ViewData["severityTypes"] })
+@Html.EditorFor(m => m.StateId, new { List = ViewData["states"] })

@@ -1,4 +1,4 @@
-﻿@model LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.HomeViewModel
+﻿@model LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Home.HomeViewModel
 
 @{
     ViewBag.Title = "Home";
@@ -69,8 +69,8 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
-                            <li>@Html.ActionLink("Manage", "Manage", "Packages", new { area = "Admin" }, null)</li>
-                            <li>@Html.ActionLink("See statistics", "Statistics", "Packages", new { area = "Admin" }, null)</li>
+                            <li>@Html.ActionLink("Manage", "Manage", "Issues", new { area = "Admin" }, null)</li>
+                            <li>@Html.ActionLink("See statistics", "Statistics", "Issues", new { area = "Admin" }, null)</li>
                         </ul>
                     </div>
                 </div>

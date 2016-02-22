@@ -10,10 +10,11 @@
     using Infrastructure.Mappings;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
+    using Mvc.Controllers;
     using Services.Data.Contracts;
     using ViewModels.Packages;
 
-    public class PackagesController : Controller
+    public class PackagesController : BaseController
     {
         private readonly IPackagesService packages;
         private readonly IDistributionsService distros;
@@ -37,6 +38,11 @@
 
         public ActionResult Manage()
         {
+            if (this.packages.GetAll().Count() == 0)
+            {
+                return this.PartialView("_NoEntriesToManagePartial");
+            }
+
             this.ViewData["distros"] = this.GetDistributions();
             this.ViewData["repositories"] = this.GetRepositories();
             this.ViewData["architectures"] = this.GetArchitectures();
@@ -79,7 +85,7 @@
         }
 
         [HttpPost]
-        public ActionResult Excel_Export_Save(string contentType, string base64, string fileName)
+        public ActionResult Export(string contentType, string base64, string fileName)
         {
             var fileContents = Convert.FromBase64String(base64);
             return this.File(fileContents, contentType, fileName);

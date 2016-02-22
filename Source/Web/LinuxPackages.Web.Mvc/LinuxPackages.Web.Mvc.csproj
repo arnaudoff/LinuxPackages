@@ -222,12 +222,15 @@
     <Compile Include="App_Start\ViewEnginesConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\IssuesController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackagesController.cs" />
     <Compile Include="Areas\Admin\ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Home\ListedLatestCommentViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Home\ListedLatestIssueReplyViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Home\ListedLatestIssueViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Home\ListedLatestPackageViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Issues\AdminListedIssueViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Issues\UpdateIssueViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Packages\AdminListedPackageViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Packages\PackagesUploadDayStatsViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Packages\UpdatePackageViewModel.cs" />
@@ -387,6 +390,9 @@
     <Content Include="Areas\Admin\Views\Packages\Manage.cshtml" />
     <Content Include="Areas\Admin\Views\Packages\Statistics.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\AdminListedPackageViewModel.cshtml" />
+    <Content Include="Areas\Admin\Views\Issues\Manage.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\AdminListedIssueViewModel.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_NoEntriesToManagePartial.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

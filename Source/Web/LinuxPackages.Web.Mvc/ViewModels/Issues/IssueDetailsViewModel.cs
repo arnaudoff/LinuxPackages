@@ -3,11 +3,11 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    using LinuxPackages.Data.Models;
-    using LinuxPackages.Web.Mvc.Infrastructure.Helpers;
-    using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
-    using Packages;
     using Account;
+    using Data.Models;
+    using Infrastructure.Helpers;
+    using Infrastructure.Mappings;
+    using Packages;
 
     public class IssueDetailsViewModel : IMapFrom<Issue>
     {
@@ -17,7 +17,7 @@
         {
             get
             {
-                return (new UrlIdentifierProvider()).EncodeEntityId(this.Id);
+                return new UrlIdentifierProvider().EncodeEntityId(this.Id);
             }
         }
 

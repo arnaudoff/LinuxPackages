@@ -13,6 +13,10 @@
 
         Issue Create(string title, string content, IssueSeverityType severity, int packageId, string authorId);
 
+        void Update(int issueId, string title, string content, IssueSeverityType severity, IssueStateType state);
+
+        void DeleteById(int id);
+
         IQueryable<IssueReply> GetRepliesByIssueId(int issueId);
 
         IQueryable<IssueReply> GetLatestReplies(int n);

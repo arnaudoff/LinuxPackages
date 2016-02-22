@@ -1,11 +1,10 @@
-﻿namespace LinuxPackages.Web.Mvc.Areas.Admin.ViewModels
+﻿namespace LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Home
 {
     using System;
     using AutoMapper;
+    using Data.Models;
     using Infrastructure.Helpers;
-    using LinuxPackages.Data.Models;
-    using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
-    using Mvc.ViewModels.Packages;
+    using Infrastructure.Mappings;
 
     public class ListedLatestIssueViewModel : IMapFrom<Issue>, IHaveCustomMappings
     {
