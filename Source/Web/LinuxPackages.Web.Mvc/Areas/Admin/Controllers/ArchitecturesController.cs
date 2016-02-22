@@ -6,9 +6,9 @@
     using Infrastructure.Mappings;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
-    using Microsoft.AspNet.Identity;
     using Mvc.Controllers;
     using Services.Data.Contracts;
+    using ViewModels.Architectures;
 
     public class ArchitecturesController : BaseController
     {
@@ -24,53 +24,53 @@
             return this.View();
         }
 
-        public ActionResult GetArchitectures([DataSourceRequest]DataSourceRequest request)
+        public ActionResult All([DataSourceRequest]DataSourceRequest request)
         {
             DataSourceResult result = this.architectures
                 .GetAll()
-                .To<AdminListedArchitectureViewModel>()
+                .To<ListedArchitectureViewModel>()
                 .ToDataSourceResult(request);
 
             return this.Json(result);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult CreateArchitecture([DataSourceRequest]DataSourceRequest request, ArchitectureInputModel arch)
+        public ActionResult Create([DataSourceRequest]DataSourceRequest request, ArchitectureInputModel arch)
         {
             var newId = 0;
 
             if (this.ModelState.IsValid)
             {
-                var newLicense = this.architectures.Create(arch.Name);
-                newId = newLicense.Id;
+                var newArchitecutre = this.architectures.Create(arch.Name);
+                newId = newArchitecutre.Id;
             }
 
             var archToDisplay = this.architectures
                 .GetAll()
-                .To<AdminListedArchitectureViewModel>()
+                .To<ListedArchitectureViewModel>()
                 .FirstOrDefault(x => x.Id == newId);
 
             return this.Json(new[] { archToDisplay }.ToDataSourceResult(request, this.ModelState));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult UpdateArchitecture([DataSourceRequest]DataSourceRequest request, ArchitectureInputModel arch)
+        public ActionResult Update([DataSourceRequest]DataSourceRequest request, ArchitectureInputModel arch)
         {
             if (this.ModelState.IsValid)
             {
-                this.architectures.Update(arch);
+                this.architectures.Update(arch.Id, arch.Name);
             }
 
             var archToDisplay = this.architectures
                             .GetAll()
-                            .To<AdminListedArchitectureViewModel>()
+                            .To<ListedArchitectureViewModel>()
                             .FirstOrDefault(x => x.Id == arch.Id);
 
             return this.Json(new[] { archToDisplay }.ToDataSourceResult(request, this.ModelState));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult DeleteArchitecture([DataSourceRequest]DataSourceRequest request, ArchitectureInputModel arch)
+        public ActionResult Delete([DataSourceRequest]DataSourceRequest request, ArchitectureInputModel arch)
         {
             this.architectures.DeleteById(arch.Id);
             return this.Json(new[] { arch }.ToDataSourceResult(request, this.ModelState));
