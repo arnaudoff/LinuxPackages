@@ -4,8 +4,10 @@
     using System.Web.Mvc;
 
     using Common.Constants;
+    using Data.Models;
+    using Infrastructure.Mappings;
 
-    public class ListedLicenseViewModel
+    public class ListedLicenseViewModel : IMapFrom<License>
     {
         public int Id { get; set; }
 
@@ -18,8 +20,21 @@
         [Required]
         [AllowHtml]
         [StringLength(LicenseConstants.MaxLicenseDescriptionLength, MinimumLength = LicenseConstants.MinLicenseDescriptionLength)]
-        [UIHint("SingleLineText")]
+        [UIHint("MultiLineText")]
         public string Description { get; set; }
+
+        public string ShortenedDescription
+        {
+            get
+            {
+                if (this.Description != null)
+                {
+                    return this.Description.Length > 100 ? this.Description.Substring(0, 100) + "..." : this.Description;
+                }
+
+                return null;
+            }
+        }
 
         [Required]
         [AllowHtml]

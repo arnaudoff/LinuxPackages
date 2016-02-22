@@ -1,5 +1,5 @@
 ﻿@model LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Licenses.ListedLicenseViewModel
 
 @Html.EditorFor(m => m.Name)
-@Html.EditorFor(m => m.Description)
+@Html.EditorFor(m => m.Description, new { rows = "4", @class = "k-textarea", style = "width: 300px;" })
 @Html.EditorFor(m => m.Url)

@@ -11,14 +11,14 @@
     {
         columns.Bound(l => l.Id);
         columns.Bound(l => l.Name);
-        columns.Bound(l => l.Description);
-        columns.Bound(l => l.Url);
+        columns.Bound(l => l.ShortenedDescription);
+        columns.Bound(l => l.Url).ClientTemplate("<a href='#= Url #" + "'>#: Url #</a>");
 
         columns.Command(command => { command.Edit(); command.Destroy(); });
     })
     .ToolBar(toolbar =>
     {
-        toolbar.Create();
+        toolbar.Create().Text("New license");
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp))
     .Filterable()

@@ -12,12 +12,14 @@
         columns.Bound(d => d.Id);
         columns.Bound(d => d.Name);
         columns.Bound(d => d.Version);
-        columns.Bound(d => d.Url);
+        columns.Bound(d => d.Maintainer);
+        columns.Bound(d => d.Url).ClientTemplate("<a href='#= Url #" + "'>#: Url #</a>");
+
         columns.Command(command => { command.Edit(); command.Destroy(); });
     })
     .ToolBar(toolbar =>
     {
-        toolbar.Create();
+        toolbar.Create().Text("New distribution");
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp))
     .Filterable()
