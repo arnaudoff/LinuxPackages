@@ -1,0 +1,37 @@
+﻿@using LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Distributions;
+
+@{
+    ViewBag.Title = "Manage distributions";
+}
+
+@(Html.Kendo()
+    .Grid<ListedDistributionViewModel>()
+    .Name("ManageDistributionsGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(d => d.Id);
+        columns.Bound(d => d.Name);
+        columns.Bound(d => d.Version);
+        columns.Bound(d => d.Maintainer);
+        columns.Bound(d => d.Url).ClientTemplate("<a href='#= Url #" + "'>#: Url #</a>");
+
+        columns.Command(command => { command.Edit(); command.Destroy(); });
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Create().Text("New distribution");
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp))
+    .Filterable()
+    .Sortable()
+    .Pageable()
+    .Groupable()
+    .DataSource(data => data
+        .Ajax()
+        .Model(model => model.Id(d => d.Id))
+        .Read(read => read.Action("All", "Distributions", new { area = "Admin" }))
+        .Create(create => create.Action("Create", "Distributions", new {area = "Admin" }))
+        .Update(update => update.Action("Update", "Distributions", new { area = "Admin" }))
+        .Destroy(destroy => destroy.Action("Delete", "Distributions", new { area = "Admin" }))
+    )
+)

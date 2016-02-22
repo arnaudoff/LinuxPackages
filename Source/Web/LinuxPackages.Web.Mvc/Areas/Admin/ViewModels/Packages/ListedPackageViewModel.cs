@@ -4,14 +4,14 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Web.Mvc;
+
     using AutoMapper;
     using Common.Constants;
     using Data.Models;
     using Infrastructure.Helpers;
     using Infrastructure.Mappings;
-    using LinuxPackages.Web.Mvc.ViewModels.Packages;
 
-    public class AdminListedPackageViewModel : IMapFrom<Package>, IHaveCustomMappings
+    public class ListedPackageViewModel : IMapFrom<Package>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -75,7 +75,7 @@
 
         public void CreateMappings(IMapperConfiguration configuration)
         {
-            configuration.CreateMap<Package, AdminListedPackageViewModel>()
+            configuration.CreateMap<Package, ListedPackageViewModel>()
                 .ForMember(p => p.Id, opts => opts.MapFrom(p => p.Id))
                 .ForMember(p => p.Distribution, opts => opts.MapFrom(p => p.Distribution.Name + " " + p.Distribution.Version))
                 .ForMember(p => p.Repository, opts => opts.MapFrom(p => p.Repository.Name))

@@ -60,6 +60,23 @@
             return newIssue;
         }
 
+        public void Update(int issueId, string title, string content, IssueSeverityType severity, IssueStateType state)
+        {
+            var issue = this.issues.GetById(issueId);
+            issue.Title = title;
+            issue.Content = content;
+            issue.Severity = severity;
+            issue.State = state;
+
+            this.issues.SaveChanges();
+        }
+
+        public void DeleteById(int issueId)
+        {
+            this.issues.Delete(issueId);
+            this.issues.SaveChanges();
+        }
+
         public IssueReply CreateReply(string content, int issueId, string authorId)
         {
             var newReply = new IssueReply()

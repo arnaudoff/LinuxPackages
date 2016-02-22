@@ -1,0 +1,62 @@
+﻿@using LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Issues;
+
+@{
+    ViewBag.Title = "Manage issues";
+}
+
+@(Html.Kendo()
+    .Grid<ListedIssueViewModel>()
+    .Name("ManageIssuesGrid")
+    .Columns(columns =>
+    {
+        columns
+            .Bound(i => i.Id)
+            .ClientTemplate("<a href='" + Url.Action("Details", "Issues", new { area = string.Empty }) + "/#= Url #" + "'>#: Id #</a>")
+            .Title("ID");
+
+        columns
+            .Bound(i => i.ShortenedTitle)
+            .ClientTemplate("<a href='" + Url.Action("Details", "Issues", new { area = string.Empty }) + "/#= Url #" + "'>#: ShortenedTitle #</a>")
+            .Title("Title");
+
+        columns.Bound(i => i.Severity);
+        columns.Bound(i => i.State);
+        columns.Bound(i => i.OpenedOn);
+
+        columns.Bound(i => i.AuthorUsername).Title("Author");
+
+        columns
+            .Bound(i => i.PackageName)
+            .ClientTemplate("<a href='" + Url.Action("Details", "Packages", new { area = string.Empty }) + "'>#: PackageName #</a>")
+            .Title("Package");
+
+        columns.Command(command => { command.Edit(); command.Destroy(); });
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Excel();
+        toolbar.Pdf();
+    })
+    .Excel(excel => excel
+        .FileName("Issues.xlsx")
+        .Filterable(true)
+        .ProxyURL(Url.Action("Export", "Issues"))
+    )
+    .Pdf(pdf => pdf
+        .AllPages()
+        .FileName("Issues.pdf")
+        .ProxyURL(Url.Action("Export", "Issues"))
+    )
+    .Editable(editable => editable.Mode(GridEditMode.PopUp))
+    .Filterable()
+    .Sortable()
+    .Pageable()
+    .Groupable()
+    .DataSource(data => data
+        .Ajax()
+        .Model(model => model.Id(i => i.Id))
+        .Read(r => r.Action("All", "Issues", new { area = "Admin" }))
+        .Update(update => update.Action("Update", "Issues", new { area = "Admin" }))
+        .Destroy(destroy => destroy.Action("Delete", "Issues", new { area = "Admin" }))
+    )
+)

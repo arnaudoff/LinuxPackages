@@ -9,6 +9,10 @@
 
         IQueryable<Distribution> GetById(int id);
 
-        Distribution Create(string name, string maintainer, string url);
+        Distribution Create(string name, string version, string maintainer, string url);
+
+        void Update(int distroId, string name, string version, string maintainer, string url);
+
+        void DeleteById(int distroId);
     }
 }

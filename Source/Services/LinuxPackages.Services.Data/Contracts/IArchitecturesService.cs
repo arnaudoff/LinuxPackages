@@ -10,5 +10,9 @@
         IQueryable<Architecture> GetById(int id);
 
         Architecture Create(string name);
+
+        void Update(int archId, string name);
+
+        void DeleteById(int archId);
     }
 }

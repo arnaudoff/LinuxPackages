@@ -5,7 +5,7 @@
 }
 
 @(Html.Kendo()
-    .Grid<AdminListedPackageViewModel>()
+    .Grid<ListedPackageViewModel>()
     .Name("ManagePackagesGrid")
     .Columns(columns =>
     {
@@ -44,7 +44,18 @@
     .ToolBar(toolbar =>
     {
         toolbar.Excel();
+        toolbar.Pdf();
     })
+    .Excel(excel => excel
+        .FileName("Packages.xlsx")
+        .Filterable(true)
+        .ProxyURL(Url.Action("Export", "Packages"))
+    )
+    .Pdf(pdf => pdf
+        .AllPages()
+        .FileName("Packages.pdf")
+        .ProxyURL(Url.Action("Export", "Packages"))
+    )
     .Editable(editable => editable.Mode(GridEditMode.PopUp))
     .Filterable()
     .Sortable()
@@ -53,8 +64,8 @@
     .DataSource(data => data
         .Ajax()
         .Model(model => model.Id(p => p.Id))
-        .Read(r => r.Action("GetPackages", "Packages", new { area = "Admin"}))
-        .Update(update => update.Action("UpdatePackages", "Packages", new { area = "Admin" }))
-        .Destroy(destroy => destroy.Action("DeletePackage", "Packages", new { area = "Admin" }))
+        .Read(r => r.Action("All", "Packages", new { area = "Admin"}))
+        .Update(update => update.Action("Update", "Packages", new { area = "Admin" }))
+        .Destroy(destroy => destroy.Action("Delete", "Packages", new { area = "Admin" }))
     )
 )

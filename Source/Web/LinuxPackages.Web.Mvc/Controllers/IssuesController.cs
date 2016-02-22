@@ -3,8 +3,6 @@ namespace LinuxPackages.Web.Mvc.Controllers
 {
     using System.Linq;
     using System.Web.Mvc;
-
-    using AutoMapper.QueryableExtensions;
     using Data.Models;
     using Infrastructure.ActionFilters;
     using Infrastructure.Helpers;
@@ -31,7 +29,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
 
         public ActionResult All()
         {
-            return View();
+            return this.View();
         }
 
         [Authorize]
@@ -48,7 +46,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
                 SeverityLevels = Conversions.EnumToSelectList<IssueSeverityType>()
             };
 
-            return View(model);
+            return this.View(model);
         }
 
         [Authorize]
@@ -59,13 +57,13 @@ namespace LinuxPackages.Web.Mvc.Controllers
         {
             int requestedPackageId = this.UrlIdentifierProvider.DecodeEntityId(id);
 
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 model.PackageId = id;
                 model.PackageName = this.packages.GetById(requestedPackageId).Select(p => p.Name).FirstOrDefault();
                 model.SeverityLevels = Conversions.EnumToSelectList<IssueSeverityType>();
 
-                return View(model);
+                return this.View(model);
             }
 
             var newIssue = this.issues.Create(
@@ -88,7 +86,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
                 .To<IssueDetailsViewModel>()
                 .FirstOrDefault();
 
-            return View(issueModel);
+            return this.View(issueModel);
         }
 
         public ActionResult GetIssues([DataSourceRequest]DataSourceRequest request)
@@ -98,7 +96,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
                 .To<ListedIssueViewModel>()
                 .ToDataSourceResult(request);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return this.Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

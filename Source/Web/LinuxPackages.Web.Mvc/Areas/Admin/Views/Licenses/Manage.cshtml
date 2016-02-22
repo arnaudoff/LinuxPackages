@@ -1,0 +1,35 @@
+﻿@using LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Licenses;
+
+@{
+    ViewBag.Title = "Manage licenses";
+}
+
+@(Html.Kendo()
+    .Grid<ListedLicenseViewModel>()
+    .Name("ManageLicensesViewModel")
+    .Columns(columns =>
+    {
+        columns.Bound(l => l.Id);
+        columns.Bound(l => l.Name);
+        columns.Bound(l => l.ShortenedDescription);
+        columns.Bound(l => l.Url).ClientTemplate("<a href='#= Url #" + "'>#: Url #</a>");
+
+        columns.Command(command => { command.Edit(); command.Destroy(); });
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Create().Text("New license");
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp))
+    .Filterable()
+    .Sortable()
+    .Pageable()
+    .DataSource(data => data
+        .Ajax()
+        .Model(model => model.Id(a => a.Id))
+        .Read(read => read.Action("All", "Licenses", new { area = "Admin" }))
+        .Create(create => create.Action("Create", "Licenses", new { area = "Admin" }))
+        .Update(update => update.Action("Update", "Licenses", new { area = "Admin" }))
+        .Destroy(destroy => destroy.Action("Delete", "Licenses", new { area = "Admin" }))
+    )
+)

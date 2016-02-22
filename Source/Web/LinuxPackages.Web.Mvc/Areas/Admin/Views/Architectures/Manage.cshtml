@@ -1,0 +1,32 @@
+﻿@using LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Architectures;
+
+@{
+    ViewBag.Title = "Manage architectures";
+}
+
+@(Html.Kendo()
+    .Grid<ListedArchitectureViewModel>()
+    .Name("ManageArchitecturesGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(a => a.Id);
+        columns.Bound(a => a.Name);
+        columns.Command(command => { command.Edit(); command.Destroy(); });
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Create().Text("New architecture");
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp))
+    .Filterable()
+    .Sortable()
+    .Pageable()
+    .DataSource(data => data
+        .Ajax()
+        .Model(model => model.Id(a => a.Id))
+        .Read(read => read.Action("All", "Architectures", new { area = "Admin" }))
+        .Create(create => create.Action("Create", "Architectures", new { area = "Admin" }))
+        .Update(update => update.Action("Update", "Architectures", new { area = "Admin" }))
+        .Destroy(destroy => destroy.Action("Delete", "Architectures", new { area = "Admin" }))
+    )
+)

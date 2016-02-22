@@ -10,5 +10,9 @@
         IQueryable<Repository> GetById(int id);
 
         Repository Create(string name, string url);
+
+        void Update(int repoId, string name, string url);
+
+        void DeleteById(int repoId);
     }
 }

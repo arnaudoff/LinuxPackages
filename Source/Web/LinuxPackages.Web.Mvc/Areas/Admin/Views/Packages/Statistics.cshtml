@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<LinuxPackages.Web.Mvc.Areas.Admin.ViewModels.Packages.PackagesUploadDayStatsViewModel>
 
+@{ 
+    ViewBag.Title = "Packages statistics";
+}
+
 @(Html.Kendo().Chart(Model)
         .Name("UploadingDaysChart")
         .Title(title => title
