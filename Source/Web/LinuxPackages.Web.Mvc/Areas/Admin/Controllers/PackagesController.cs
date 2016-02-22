@@ -51,18 +51,18 @@
             return this.View();
         }
 
-        public ActionResult GetPackages([DataSourceRequest]DataSourceRequest request)
+        public ActionResult All([DataSourceRequest]DataSourceRequest request)
         {
             DataSourceResult result = this.packages
                 .GetAll()
-                .To<AdminListedPackageViewModel>()
+                .To<ListedPackageViewModel>()
                 .ToDataSourceResult(request);
 
             return this.Json(result);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult UpdatePackages([DataSourceRequest]DataSourceRequest request, UpdatePackageViewModel package)
+        public ActionResult Update([DataSourceRequest]DataSourceRequest request, UpdatePackageInputModel package)
         {
             if (this.ModelState.IsValid)
             {
@@ -71,14 +71,14 @@
 
             var packageToDisplay = this.packages
                            .GetAll()
-                           .To<AdminListedPackageViewModel>()
+                           .To<ListedPackageViewModel>()
                            .FirstOrDefault(p => p.Id == package.Id);
 
             return this.Json(new[] { packageToDisplay }.ToDataSourceResult(request, this.ModelState));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult DeletePackage([DataSourceRequest]DataSourceRequest request, AdminListedPackageViewModel package)
+        public ActionResult Delete([DataSourceRequest]DataSourceRequest request, ListedPackageViewModel package)
         {
             this.packages.DeleteById(package.Id);
             return this.Json(new[] { package }.ToDataSourceResult(request, this.ModelState));

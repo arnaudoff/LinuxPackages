@@ -39,5 +39,21 @@
 
             return newLicense;
         }
+
+        public void Update(int licenseId, string name, string description, string url)
+        {
+            var license = this.licenses.GetById(licenseId);
+            license.Name = name;
+            license.Description = description;
+            license.Url = url;
+
+            this.licenses.SaveChanges();
+        }
+
+        public void DeleteById(int licenseId)
+        {
+            this.licenses.Delete(licenseId);
+            this.licenses.SaveChanges();
+        }
     }
 }

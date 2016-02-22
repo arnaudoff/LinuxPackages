@@ -38,5 +38,20 @@
 
             return newRepository;
         }
+
+        public void Update(int repoId, string name, string url)
+        {
+            var repo = this.repositories.GetById(repoId);
+            repo.Name = name;
+            repo.Url = url;
+
+            this.repositories.SaveChanges();
+        }
+
+        public void DeleteById(int repoId)
+        {
+            this.repositories.Delete(repoId);
+            this.repositories.SaveChanges();
+        }
     }
 }

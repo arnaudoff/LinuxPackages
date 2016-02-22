@@ -3,7 +3,8 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
-
+    using Data.Models;
+    using Infrastructure.Helpers;
     using Infrastructure.Helpers.Contracts;
     using Infrastructure.Mappings;
     using Kendo.Mvc.Extensions;
@@ -11,8 +12,6 @@
     using Mvc.Controllers;
     using Services.Data.Contracts;
     using ViewModels.Issues;
-    using Infrastructure.Helpers;
-    using Data.Models;
 
     public class IssuesController : BaseController
     {
@@ -38,18 +37,18 @@
             return this.View();
         }
 
-        public ActionResult GetIssues([DataSourceRequest]DataSourceRequest request)
+        public ActionResult All([DataSourceRequest]DataSourceRequest request)
         {
             DataSourceResult result = this.issues
                 .GetAll()
-                .To<AdminListedIssueViewModel>()
+                .To<ListedIssueViewModel>()
                 .ToDataSourceResult(request);
 
             return this.Json(result);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult UpdateIssues([DataSourceRequest]DataSourceRequest request, UpdateIssueViewModel issue)
+        public ActionResult Update([DataSourceRequest]DataSourceRequest request, UpdateIssueInputModel issue)
         {
             if (this.ModelState.IsValid)
             {
@@ -63,14 +62,14 @@
 
             var issueToDisplay = this.issues
                            .GetAll()
-                           .To<AdminListedIssueViewModel>()
+                           .To<ListedIssueViewModel>()
                            .FirstOrDefault(i => i.Id == issue.Id);
 
             return this.Json(new[] { issueToDisplay }.ToDataSourceResult(request, this.ModelState));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult DeleteIssue([DataSourceRequest]DataSourceRequest request, AdminListedIssueViewModel issue)
+        public ActionResult Delete([DataSourceRequest]DataSourceRequest request, ListedIssueViewModel issue)
         {
             this.issues.DeleteById(issue.Id);
             return this.Json(new[] { issue }.ToDataSourceResult(request, this.ModelState));

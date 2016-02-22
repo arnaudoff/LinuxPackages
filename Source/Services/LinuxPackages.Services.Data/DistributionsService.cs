@@ -25,11 +25,12 @@
             return this.distros.All().Where(d => d.Id == id);
         }
 
-        public Distribution Create(string name, string maintainer, string url)
+        public Distribution Create(string name, string version, string maintainer, string url)
         {
             var newDistro = new Distribution
             {
                 Name = name,
+                Version = version,
                 Maintainer = maintainer,
                 Url = url
             };
@@ -38,6 +39,23 @@
             this.distros.SaveChanges();
 
             return newDistro;
+        }
+
+        public void Update(int distroId, string name, string version, string maintainer, string url)
+        {
+            var distro = this.distros.GetById(distroId);
+            distro.Name = name;
+            distro.Version = version;
+            distro.Maintainer = maintainer;
+            distro.Url = url;
+
+            this.distros.SaveChanges();
+        }
+
+        public void DeleteById(int distroId)
+        {
+            this.distros.Delete(distroId);
+            this.distros.SaveChanges();
         }
     }
 }

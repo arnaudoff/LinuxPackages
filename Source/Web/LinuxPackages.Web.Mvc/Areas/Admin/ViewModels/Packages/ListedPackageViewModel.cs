@@ -4,12 +4,12 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Web.Mvc;
+
     using AutoMapper;
     using Common.Constants;
     using Data.Models;
     using Infrastructure.Helpers;
     using Infrastructure.Mappings;
-    using LinuxPackages.Web.Mvc.ViewModels.Packages;
 
     public class AdminListedPackageViewModel : IMapFrom<Package>, IHaveCustomMappings
     {

@@ -4,7 +4,7 @@
     using System.Web.Mvc;
     using Common.Constants;
 
-    public class UpdateIssueViewModel
+    public class UpdateIssueInputModel
     {
         [Required]
         public int Id { get; set; }

@@ -5,7 +5,7 @@
 }
 
 @(Html.Kendo()
-    .Grid<AdminListedIssueViewModel>()
+    .Grid<ListedIssueViewModel>()
     .Name("ManageIssuesGrid")
     .Columns(columns =>
     {
@@ -26,7 +26,7 @@
         columns.Bound(i => i.AuthorUsername).Title("Author");
 
         columns
-            .Bound(p => p.PackageName)
+            .Bound(i => i.PackageName)
             .ClientTemplate("<a href='" + Url.Action("Details", "Packages", new { area = string.Empty }) + "'>#: PackageName #</a>")
             .Title("Package");
 
@@ -54,9 +54,9 @@
     .Groupable()
     .DataSource(data => data
         .Ajax()
-        .Model(model => model.Id(p => p.Id))
-        .Read(r => r.Action("GetIssues", "Issues", new { area = "Admin" }))
-        .Update(update => update.Action("UpdateIssues", "Issues", new { area = "Admin" }))
-        .Destroy(destroy => destroy.Action("DeleteIssue", "Issues", new { area = "Admin" }))
+        .Model(model => model.Id(i => i.Id))
+        .Read(r => r.Action("All", "Issues", new { area = "Admin" }))
+        .Update(update => update.Action("Update", "Issues", new { area = "Admin" }))
+        .Destroy(destroy => destroy.Action("Delete", "Issues", new { area = "Admin" }))
     )
 )

@@ -37,5 +37,19 @@
 
             return newArchitecture;
         }
+
+        public void Update(int archId, string name)
+        {
+            var arch = this.architectures.GetById(archId);
+            arch.Name = name;
+
+            this.architectures.SaveChanges();
+        }
+
+        public void DeleteById(int archId)
+        {
+            this.architectures.Delete(archId);
+            this.architectures.SaveChanges();
+        }
     }
 }
