@@ -1,6 +1,5 @@
 ﻿namespace LinuxPackages.Data
 {
-    using System;
     using System.Data.Entity;
 
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -37,6 +36,8 @@
 
         public virtual IDbSet<Avatar> Avatars { get; set; }
 
+        public virtual IDbSet<Category> Categories { get; set; }
+
         public static LinuxPackagesDbContext Create()
         {
             return new LinuxPackagesDbContext();
@@ -44,16 +45,6 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder
-            //    .Entity<Avatar>()
-            //    .HasRequired(a => a.User)
-            //    .WithOptional(u => u.Avatar);
-
-            //modelBuilder
-            //    .Entity<Avatar>()
-            //    .HasOptional(a => a.User)
-            //    .WithOptionalPrincipal();
-
             base.OnModelCreating(modelBuilder);
         }
     }

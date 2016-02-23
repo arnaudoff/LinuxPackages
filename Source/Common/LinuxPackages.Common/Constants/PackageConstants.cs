@@ -11,6 +11,12 @@
         public const int MinCommentContentLength = 20;
         public const int MaxCommentContentLength = 10000;
 
+        public const int MinCategoryLength = 5;
+        public const int MaxCategoryLength = 100;
+
+        public const int MinCategoryDescriptionLength = 5;
+        public const int MaxCategoryDescriptionLength = 500;
+
         public const int MinRating = 0;
         public const int MaxRating = 5;
 

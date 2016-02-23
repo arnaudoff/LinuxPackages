@@ -31,9 +31,13 @@
 
         IDbSet<Avatar> Avatars { get; set; }
 
-        DbSet<TEntity> Set<TEntity>() where TEntity : class;
+        IDbSet<Category> Categories { get; set; }
 
-        DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
+        DbSet<TEntity> Set<TEntity>()
+            where TEntity : class;
+
+        DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity)
+            where TEntity : class;
 
         int SaveChanges();
 

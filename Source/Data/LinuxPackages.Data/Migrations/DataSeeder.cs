@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
     using Common.Constants;
+    using Common.Contracts;
     using Common.Utilities;
-    using LinuxPackages.Common.Contracts;
+
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
@@ -33,6 +35,7 @@
             this.SeedRepositories();
             this.SeedArchitectures();
             this.SeedLicenses();
+            this.SeedCategories();
         }
 
         private void SeedUsers()
@@ -176,6 +179,72 @@
                 };
 
                 licenses.ForEach(l => this.context.Licenses.Add(l));
+            }
+
+            this.context.SaveChanges();
+        }
+
+        private void SeedCategories()
+        {
+            if (!this.context.Categories.Any())
+            {
+                var categories = new List<Category>()
+                {
+                    new Category() { Name = "Administration Utilities", Description = "Utilities to administer system resources, manage user accounts, etc." },
+                    new Category() { Name = "Mono/CLI", Description = "Everything about Mono and the Common Language Infrastructure." },
+                    new Category() { Name = "Communication Programs", Description = "Software to use your modem in the old fashioned style." },
+                    new Category() { Name = "Databases", Description = "Database Servers and Clients." },
+                    new Category() { Name = "Debug packages", Description = "Packages providing debugging information for executables and shared libraries." },
+                    new Category() { Name = "Development", Description = "Development utilities, compilers, development environments, libraries, etc." },
+                    new Category() { Name = "Documentation", Description = "FAQs, HOWTOs and other documents trying to explain everything related to Debian, and software needed to browse documentation (man, info, etc)." },
+                    new Category() { Name = "Editors", Description = "Software to edit files. Programming environments." },
+                    new Category() { Name = "Electronics", Description = "Electronics utilities." },
+                    new Category() { Name = "Embedded software", Description = "Software suitable for use in embedded applications." },
+                    new Category() { Name = "Fonts", Description = "Font packages." },
+                    new Category() { Name = "Games", Description = "Programs to spend a nice time with after all this setting up." },
+                    new Category() { Name = "GNOME", Description = "The GNOME desktop environment, a powerful, easy to use set of integrated applications." },
+                    new Category() { Name = "GNU R", Description = "Everything about GNU R, a statistical computation and graphics system." },
+                    new Category() { Name = "GNUstep", Description = "The GNUstep environment." },
+                    new Category() { Name = "Graphics", Description = "Editors, viewers, converters... Everything to become an artist." },
+                    new Category() { Name = "Ham Radio", Description = "Software for ham radio." },
+                    new Category() { Name = "Haskell", Description = "Everything about Haskell." },
+                    new Category() { Name = "Web Servers", Description = "Web servers and their modules." },
+                    new Category() { Name = "Interpreters", Description = "All kind of interpreters for interpreted languages. Macro processors." },
+                    new Category() { Name = "Java", Description = "Everything about Java." },
+                    new Category() { Name = "KDE", Description = "The K Desktop Environment, a powerful, easy to use set of integrated applications." },
+                    new Category() { Name = "Kernels", Description = "Operating System Kernels and related modules." },
+                    new Category() { Name = "Library development", Description = "Libraries necessary for developers to write programs that use them." },
+                    new Category() { Name = "Libraries", Description = "Libraries to make other programs work. They provide special features to developers." },
+                    new Category() { Name = "Lisp", Description = "Everything about Lisp." },
+                    new Category() { Name = "Language packs", Description = "Localization support for big software packages." },
+                    new Category() { Name = "Mail", Description = "Programs to route, read, and compose E-mail messages." },
+                    new Category() { Name = "Mathematics", Description = "Math software." },
+                    new Category() { Name = "Miscellaneous", Description = "Miscellaneous utilities that didn't fit well anywhere else." },
+                    new Category() { Name = "Network", Description = "Daemons and clients to connect your system to the world." },
+                    new Category() { Name = "Newsgroups", Description = "Software to access Usenet, to set up news servers, etc." },
+                    new Category() { Name = "OCaml", Description = "Everything about OCaml, an ML language implementation." },
+                    new Category() { Name = "Old Libraries", Description = "Old versions of libraries, kept for backward compatibility with old applications." },
+                    new Category() { Name = "Other OS's and file systems", Description = "Software to run programs compiled for other operating systems, and to use their filesystems." },
+                    new Category() { Name = "Perl", Description = "Everything about Perl, an interpreted scripting language." },
+                    new Category() { Name = "PHP", Description = "Everything about PHP." },
+                    new Category() { Name = "Python", Description = "Everything about Python, an interpreted, interactive object oriented language." },
+                    new Category() { Name = "Ruby", Description = "Everything about Ruby, an interpreted object oriented language." },
+                    new Category() { Name = "Science", Description = "Basic tools for scientific work" },
+                    new Category() { Name = "Shells", Description = "Command shells. Friendly user interfaces for beginners." },
+                    new Category() { Name = "Sound", Description = "Utilities to deal with sound: mixers, players, recorders, CD players, etc." },
+                    new Category() { Name = "TeX", Description = "The famous typesetting software and related programs." },
+                    new Category() { Name = "Text Processing", Description = "Utilities to format and print text documents." },
+                    new Category() { Name = "Utilities", Description = "Utilities for file/disk manipulation, backup and archive tools, system monitoring, input systems, etc." },
+                    new Category() { Name = "Version Control Systems", Description = "Version control systems and related utilities." },
+                    new Category() { Name = "Video", Description = "Video viewers, editors, recording, streaming." },
+                    new Category() { Name = "Virtual packages", Description = "Virtual packages." },
+                    new Category() { Name = "Web Software", Description = "Web servers, browsers, proxies, download tools etc." },
+                    new Category() { Name = "X Window System software", Description = "X servers, libraries, fonts, window managers, terminal emulators and many related applications." },
+                    new Category() { Name = "Xfce", Description = "Xfce, a fast and lightweight Desktop Environment." },
+                    new Category() { Name = "Zope/Plone Framework", Description = "Zope Application Server and Plone Content Managment System." },
+                };
+
+                categories.ForEach(c => this.context.Categories.Add(c));
             }
 
             this.context.SaveChanges();
