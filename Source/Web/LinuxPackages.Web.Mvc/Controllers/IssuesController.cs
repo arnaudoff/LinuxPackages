@@ -86,6 +86,10 @@ namespace LinuxPackages.Web.Mvc.Controllers
                 .To<IssueDetailsViewModel>()
                 .FirstOrDefault();
 
+            var votes = this.issues.GetVotesById(requestedIssueId);
+            issueModel.PositiveVotes = votes.Key;
+            issueModel.NegativeVotes = votes.Value;
+
             return this.View(issueModel);
         }
 
@@ -97,6 +101,14 @@ namespace LinuxPackages.Web.Mvc.Controllers
                 .ToDataSourceResult(request);
 
             return this.Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Vote(int issueId, int voteType)
+        {
+            var votesResult = this.issues.Vote(issueId, voteType, this.User.Identity.GetUserId());
+            return this.Json(new { PositiveCount = votesResult.Key, NegativeCount = votesResult.Value });
         }
     }
 }

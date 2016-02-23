@@ -1,5 +1,6 @@
 ﻿namespace LinuxPackages.Services.Data.Contracts
 {
+    using System.Collections.Generic;
     using System.Linq;
     using LinuxPackages.Data.Models;
 
@@ -22,5 +23,11 @@
         IQueryable<IssueReply> GetLatestReplies(int n);
 
         IssueReply CreateReply(string content, int issueId, string authorId);
+
+        KeyValuePair<int, int> GetVotesById(int issueId);
+
+        KeyValuePair<int, int> Vote(int issueId, int voteType, string userId);
+
+        void Close(int issueId);
     }
 }

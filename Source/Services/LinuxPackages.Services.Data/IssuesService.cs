@@ -6,16 +6,19 @@
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
     using LinuxPackages.Services.Data.Contracts;
+    using System.Collections.Generic;
 
     public class IssuesService : IIssuesService
     {
         private readonly IRepository<Issue> issues;
         private readonly IRepository<IssueReply> replies;
+        private readonly IRepository<IssueVote> votes;
 
-        public IssuesService(IRepository<Issue> issues, IRepository<IssueReply> replies)
+        public IssuesService(IRepository<Issue> issues, IRepository<IssueReply> replies, IRepository<IssueVote> votes)
         {
             this.issues = issues;
             this.replies = replies;
+            this.votes = votes;
         }
 
         public IQueryable<Issue> GetAll()
@@ -48,8 +51,6 @@
                 Severity = severity,
                 State = IssueStateType.Opened,
                 OpenedOn = DateTime.UtcNow,
-                PositiveVotes = 0,
-                NegativeVotes = 0,
                 AuthorId = authorId,
                 PackageId = packageId
             };
@@ -105,6 +106,85 @@
                 .OrderByDescending(r => r.CreatedOn)
                 .ThenBy(r => r.Id)
                 .Take(n);
+        }
+
+        public KeyValuePair<int, int> GetVotesById(int issueId)
+        {
+            var votesCount = this.votes
+                .All()
+                .Where(v => v.IssueId == issueId)
+                .GroupBy(v => v.Type)
+                .Select(g => new
+                {
+                    PositiveCount = g.Count(v => v.Type == IssueVoteType.Positive),
+                    NegativeCount = g.Count(v => v.Type == IssueVoteType.Negative)
+                })
+                .FirstOrDefault();
+
+            if (votesCount == null)
+            {
+                return new KeyValuePair<int, int>(0, 0);
+            }
+            else
+            {
+                return new KeyValuePair<int, int>(votesCount.PositiveCount, votesCount.NegativeCount);
+            }
+        }
+
+        public KeyValuePair<int, int> Vote(int issueId, int voteType, string userId)
+        {
+            if (voteType > 1)
+            {
+                voteType = 1;
+            }
+
+            if (voteType < -1)
+            {
+                voteType = -1;
+            }
+
+            var newVoteType = (IssueVoteType)voteType;
+            var vote = this.votes
+                .All()
+                .FirstOrDefault(v => v.VoterId == userId && v.IssueId == issueId);
+
+            if (vote == null)
+            {
+                vote = new IssueVote
+                {
+                    VoterId = userId,
+                    IssueId = issueId,
+                    Type = newVoteType
+                };
+
+                this.votes.Add(vote);
+            }
+            else
+            {
+                if (vote.Type == IssueVoteType.Neutral)
+                {
+                    vote.Type = newVoteType;
+                }
+                else
+                {
+                    if ((vote.Type == IssueVoteType.Positive && newVoteType == IssueVoteType.Negative) ||
+                        (vote.Type == IssueVoteType.Negative && newVoteType == IssueVoteType.Positive))
+                    {
+                        vote.Type = IssueVoteType.Neutral;
+                    }
+                }
+            }
+
+            this.votes.SaveChanges();
+
+            return this.GetVotesById(issueId);
+        }
+
+        public void Close(int issueId)
+        {
+            var issue = this.issues.GetById(issueId);
+            issue.State = IssueStateType.Closed;
+            this.issues.SaveChanges();
         }
     }
 }
