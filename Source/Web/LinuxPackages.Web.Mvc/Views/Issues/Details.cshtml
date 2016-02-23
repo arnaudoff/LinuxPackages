@@ -2,6 +2,7 @@
 
 @using Microsoft.AspNet.Identity;
 @using LinuxPackages.Common.Constants
+@using LinuxPackages.Data.Models;
 
 @{
     ViewBag.Title = "Issue details";
@@ -36,7 +37,7 @@
         <h4>@Html.DisplayFor(m => m.OpenedOn)</h4>
     </div>
     <div class="col-md-2 text-center">
-        <h5>@Html.DisplayFor(m => m.State)</h5>
+        <h5 id="state-text">@Html.DisplayFor(m => m.State)</h5>
     </div>
     <div class="col-md-2 text-center">
         @if (User.Identity.IsAuthenticated)
@@ -78,16 +79,22 @@
         </div>
     </div>
 </div>
-@if (this.User.Identity.IsAuthenticated)
+@if (Model.State != IssueStateType.Closed)
 {
-    <a href="/IssueReplies/Add/@Model.Url" class="k-button pull-right">New reply</a><br />
-}
+    <div class="row">
+        @if (this.User.Identity.IsAuthenticated)
+        {
+            <a  href="/IssueReplies/Add/@Model.Url" class="k-button pull-right" id="new-reply">New reply</a>
+        }
 
-@if (this.User.Identity.GetUserId() == Model.Author.Id || Model.PackageMaintainers.Contains(this.User.Identity.GetUserId()))
-{
-    <a href="/Issues/Details/@Model.Url" class="k-button pull-right" id="close" data-issueid="@Model.Id" data-packageid="@Model.Package.Id">Close</a><br />
+        @if (this.User.Identity.GetUserId() == Model.Author.Id || Model.Maintainers.Contains(this.User.Identity.GetUserId()))
+        {
+            <a href="#" class="k-button pull-right" id="close" data-issueid="@Model.Id" data-packageid="@Model.Package.Id">Close</a>
+        }
+        <br />
+    </div>
 }
-<br />
+<hr />
 @{Html.RenderAction("ByIssueId", "IssueReplies", new { id = Model.Url });}
 
 @section Scripts {
@@ -120,7 +127,13 @@
         }
 
         function closeClick(iId, pId) {
-            $.post("/Issues/Close", { issueId: iId, packageId: pId}, function () {});
+            $.post("/Issues/Close", { issueId: iId, packageId: pId }, function (data) {
+                if (data.Success) {
+                    $("#close").hide();
+                    $("#new-reply").hide();
+                    $("#state-text").html("<span class='label label-danger'>Closed</span>");
+                }
+            });
         }
     </script>
 }

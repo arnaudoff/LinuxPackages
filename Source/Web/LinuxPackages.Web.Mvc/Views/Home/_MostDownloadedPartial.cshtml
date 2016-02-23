@@ -16,4 +16,9 @@
             .HeaderHtmlAttributes(new { style = "text-align: center;" });
     })
     .DataSource(data =>
-        data.Ajax().Read(r => r.Action("GetMostDownloadedPackages", "Home"))))
+        data
+            .Ajax()
+            .Read(r => r.Action("GetMostDownloadedPackages", "Home"))
+            .Sort(c => c.Add("Downloads").Descending())
+    )
+)

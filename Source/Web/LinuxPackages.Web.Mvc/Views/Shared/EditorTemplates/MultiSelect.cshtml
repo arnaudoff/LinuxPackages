@@ -1,20 +1,30 @@
 ﻿@model List<int>
 
 @{
-    var list = (IEnumerable<SelectListItem>)ViewData["List"];
     var defaultValues = (IEnumerable<SelectListItem>)ViewData["Defaults"];
+    var actionName = (string)ViewData["action"];
+    var controllerName = (string)ViewData["controller"];
 }
 
 <div class="form-group">
     @Html.LabelForModel(new { @class = "col-md-2 control-label" })
     <div class="col-md-10">
         @(Html.Kendo().MultiSelectFor(m => m)
-                      .Name(ViewData.ModelMetadata.PropertyName)
-                      .Placeholder(string.Format("Click to select {0}", ViewData.ModelMetadata.GetDisplayName().ToLower()))
-                      .DataTextField("Text")
-                      .DataValueField("Value")
-                      .BindTo(list)
-                      .HtmlAttributes(new { style = "width: 20%" })
-                      .Value(defaultValues))
+                    .Name(ViewData.ModelMetadata.PropertyName)
+                    .Placeholder(string.Format("Type to select {0}", ViewData.ModelMetadata.GetDisplayName().ToLower()))
+                    .DataTextField("Text")
+                    .DataValueField("Value")
+                    .HtmlAttributes(new { style = "width: 20%" })
+                    .MinLength(2)
+                    .DataSource(source => source
+                        .Custom()
+                        .Transport(transport => transport.Read(read => 
+                            {
+                                read.Action(actionName, controllerName)
+                                    .Data("on" + ViewData.ModelMetadata.PropertyName + "Change");
+                            }))
+                        .ServerFiltering(true)
+                    )
+        )
     </div>
 </div>

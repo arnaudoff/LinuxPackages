@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Architecture.cs" />
     <Compile Include="Avatar.cs" />
+    <Compile Include="Category.cs" />
     <Compile Include="Dependency.cs" />
     <Compile Include="Distribution.cs" />
     <Compile Include="Issue.cs" />

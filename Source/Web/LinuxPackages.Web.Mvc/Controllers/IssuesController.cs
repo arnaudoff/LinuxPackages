@@ -91,7 +91,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
             var votes = this.issues.GetVotesById(requestedIssueId);
             issueModel.PositiveVotes = votes.Key;
             issueModel.NegativeVotes = votes.Value;
-            issueModel.PackageMaintainers = this.packages
+            issueModel.Maintainers = this.packages
                 .GetById(issueModel.Package.Id)
                 .SelectMany(p => p.Maintainers)
                 .Select(u => u.Id)
@@ -132,11 +132,11 @@ namespace LinuxPackages.Web.Mvc.Controllers
 
             if (result)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                return this.Json(new { Success = true });
             }
             else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return this.Json(new { Success = false });
             }
         }
     }

@@ -2,15 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
     using System.Threading;
 
     using AngleSharp;
     using AngleSharp.Dom.Html;
-
-    using Models;
     using Contracts;
+    using Models;
 
     public class PackagesCrawler : ICrawler
     {
@@ -29,7 +26,7 @@
         public PackagesCrawler(IPackagesExporter exporter)
         {
             this.configuration = Configuration.Default.WithDefaultLoader();
-            this.browsingContext = BrowsingContext.New(configuration);
+            this.browsingContext = BrowsingContext.New(this.configuration);
             this.exporter = exporter;
         }
 
@@ -37,7 +34,7 @@
         {
             IEnumerable<Category> categories = this.ParseCategories();
             IEnumerable<Package> packages = this.ParsePackages(categories);
-            exporter.Export(packages);
+            this.exporter.Export(packages);
         }
 
         private IList<Package> ParsePackages(IEnumerable<Category> categories)
@@ -55,7 +52,7 @@
                     var currentPackage = new Package()
                     {
                         Name = packageElements[i].TextContent,
-                        Description = packageDescription[i].TextContent,
+                        Description = packageDescription[i].TextContent.Replace("\"", "'"),
                         CategoryName = category.Name
                     };
 

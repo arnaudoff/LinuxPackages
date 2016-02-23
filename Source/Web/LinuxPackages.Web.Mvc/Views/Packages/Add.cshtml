@@ -12,14 +12,15 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
     @Html.EditorFor(m => m.Name)
     @Html.EditorFor(m => m.Description, new { rows = "3", @class = "k-textarea full-width" })
+    @Html.EditorFor(m => m.CategoryId, new { List = Model.Categories })
     @Html.EditorFor(m => m.DistributionId, new { List = Model.Distributions })
     @Html.EditorFor(m => m.RepositoryId, new { List = Model.Repositories })
     @Html.EditorFor(m => m.ArchitectureId, new { List = Model.Architectures })
     @Html.EditorFor(m => m.LicenseId, new { List = Model.Licenses })
     @Html.EditorFor(m => m.Contents)
     @Html.EditorFor(m => m.Screenshots)
-    @Html.EditorFor(m => m.DependencyIds, new { List = Model.Dependencies })
-    @Html.EditorFor(m => m.MaintainerIds, new { List = Model.Maintainers })
+    @Html.EditorFor(m => m.DependencyIds, new { action = "Filter", controller = "Packages" })
+    @Html.EditorFor(m => m.MaintainerIds, new { action = "Filter", controller = "Users" })
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -29,6 +30,20 @@
 }
 
 @section Scripts {
+    <script>
+        function onMaintainerIdsChange() {
+            return {
+                text: $("#MaintainerIds").prev().find('input').val()
+            };
+        }
+
+        function onDependencyIdsChange() {
+            return {
+                text: $("#DependencyIds").prev().find('input').val()
+            };
+        }
+    </script>
+
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/validation")
 }

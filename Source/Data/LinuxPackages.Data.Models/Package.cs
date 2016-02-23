@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     using Common.Constants;
 
@@ -36,6 +35,11 @@
         [MinLength(PackageConstants.MinDescriptionLength)]
         [MaxLength(PackageConstants.MaxDescriptionLength)]
         public string Description { get; set; }
+
+        [Required]
+        public int CategoryId { get; set; }
+
+        public virtual Category Category { get; set; }
 
         [Required]
         public int DistributionId { get; set; }

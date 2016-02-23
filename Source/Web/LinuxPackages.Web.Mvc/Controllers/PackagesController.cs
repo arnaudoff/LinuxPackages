@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Web;
     using System.Web.Mvc;
 
@@ -13,7 +14,6 @@
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
     using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.Owin;
     using Services.Data.Contracts;
     using ViewModels.Packages;
 
@@ -26,7 +26,6 @@
         private readonly IDistributionsService distros;
         private readonly IScreenshotsService screenshots;
         private readonly IDependenciesService dependencies;
-        private ApplicationUserManager userManager;
 
         public PackagesController(
             IPackagesService packages,
@@ -44,19 +43,6 @@
             this.distros = distros;
             this.screenshots = screenshots;
             this.dependencies = dependencies;
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return this.userManager ?? this.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-
-            private set
-            {
-                this.userManager = value;
-            }
         }
 
         public ActionResult All()
@@ -86,11 +72,10 @@
         {
             var model = new AddPackageViewModel
             {
+                Categories = this.GetCategories(),
                 Repositories = this.GetRepositories(),
                 Architectures = this.GetArchitectures(),
                 Licenses = this.GetLicenses(),
-                Maintainers = this.GetMaintainers(),
-                Dependencies = this.GetDependencies(),
                 Distributions = this.GetDistributions()
             };
 
@@ -104,11 +89,10 @@
         {
             if (!this.ModelState.IsValid)
             {
+                model.Categories = this.GetCategories();
                 model.Repositories = this.GetRepositories();
                 model.Architectures = this.GetArchitectures();
                 model.Licenses = this.GetLicenses();
-                model.Maintainers = this.GetMaintainers();
-                model.Dependencies = this.GetDependencies();
                 model.Distributions = this.GetDistributions();
 
                 return this.View(model);
@@ -123,6 +107,7 @@
             Package newPackage = this.packages.Create(
                 model.Name,
                 model.Description,
+                model.CategoryId,
                 model.DistributionId,
                 model.RepositoryId,
                 model.ArchitectureId,
@@ -156,6 +141,26 @@
             return this.Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Filter(string text)
+        {
+            if (text == null || text.Length < 2)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "The text length should be equal to or more than 2 characters.");
+            }
+
+            var result = this.packages
+                .GetAll()
+                .Where(p => p.Name.Contains(text))
+                .Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                })
+                .ToList();
+
+            return this.Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [Authorize]
         public ActionResult Rate(RatePackageViewModel model)
         {
@@ -176,15 +181,22 @@
             return this.Json(new { Success = false }, JsonRequestBehavior.AllowGet);
         }
 
-        protected override void Dispose(bool disposing)
+        private IEnumerable<SelectListItem> GetCategories()
         {
-            if (disposing && this.userManager != null)
-            {
-                this.userManager.Dispose();
-                this.userManager = null;
-            }
+            IEnumerable<SelectListItem> categories = HttpRuntime
+                .Cache
+                .GetOrStore<IEnumerable<SelectListItem>>(
+                    "categories",
+                    () => this.packages
+                        .GetAllCategories()
+                        .Select(c => new SelectListItem
+                        {
+                            Value = c.Id.ToString(),
+                            Text = c.Name
+                        })
+                        .ToList());
 
-            base.Dispose(disposing);
+            return categories;
         }
 
         private IEnumerable<SelectListItem> GetRepositories()
@@ -239,42 +251,6 @@
                         .ToList());
 
             return licenses;
-        }
-
-        private IEnumerable<SelectListItem> GetDependencies()
-        {
-            IEnumerable<SelectListItem> dependencies = HttpRuntime
-                .Cache
-                .GetOrStore<IEnumerable<SelectListItem>>(
-                    "dependencies",
-                    () => this.packages
-                        .GetAll()
-                        .Select(p => new SelectListItem
-                        {
-                            Value = p.Id.ToString(),
-                            Text = p.Name
-                        })
-                        .ToList());
-
-            return dependencies;
-        }
-
-        private IEnumerable<SelectListItem> GetMaintainers()
-        {
-            IEnumerable<SelectListItem> maintainers = HttpRuntime
-                .Cache
-                .GetOrStore<IEnumerable<SelectListItem>>(
-                    "maintainers",
-                    () => this.UserManager
-                        .Users
-                        .Select(u => new SelectListItem
-                        {
-                            Value = u.Id,
-                            Text = u.UserName
-                        })
-                        .ToList());
-
-            return maintainers;
         }
 
         private IEnumerable<SelectListItem> GetDistributions()

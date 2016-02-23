@@ -24,6 +24,13 @@
         public string Description { get; set; }
 
         [Required]
+        [Display(Name = "Category")]
+        [UIHint("DropDownList")]
+        public int CategoryId { get; set; }
+
+        public IEnumerable<SelectListItem> Categories { get; set; }
+
+        [Required]
         [Display(Name = "Distribution")]
         [UIHint("DropDownList")]
         public int DistributionId { get; set; }
@@ -60,14 +67,10 @@
         [UIHint("MultiSelect")]
         public List<int> DependencyIds { get; set; }
 
-        public IEnumerable<SelectListItem> Dependencies { get; set; }
-
         [Required]
         [Display(Name = "Maintainers")]
         [UIHint("StringMultiSelect")]
         public List<string> MaintainerIds { get; set; }
-
-        public IEnumerable<SelectListItem> Maintainers { get; set; }
 
         [UIHint("MultiFileUpload")]
         public IEnumerable<HttpPostedFileBase> Screenshots { get; set; }

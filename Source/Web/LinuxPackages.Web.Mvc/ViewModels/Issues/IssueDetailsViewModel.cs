@@ -38,7 +38,7 @@
 
         public ListedUserViewModel Author { get; set; }
 
-        public IEnumerable<string> PackageMaintainers { get; set; }
+        public IEnumerable<string> Maintainers { get; set; }
 
         [Display(Name = "Package name")]
         public ListedPackageViewModel Package { get; set; }
