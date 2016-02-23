@@ -28,6 +28,6 @@
 
         KeyValuePair<int, int> Vote(int issueId, int voteType, string userId);
 
-        void Close(int issueId);
+        bool Close(int issueId, IEnumerable<string> maintainers, string userId);
     }
 }

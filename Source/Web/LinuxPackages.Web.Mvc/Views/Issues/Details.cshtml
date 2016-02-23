@@ -1,5 +1,6 @@
 ﻿@model LinuxPackages.Web.Mvc.ViewModels.Issues.IssueDetailsViewModel
 
+@using Microsoft.AspNet.Identity;
 @using LinuxPackages.Common.Constants
 
 @{
@@ -81,6 +82,11 @@
 {
     <a href="/IssueReplies/Add/@Model.Url" class="k-button pull-right">New reply</a><br />
 }
+
+@if (this.User.Identity.GetUserId() == Model.Author.Id || Model.PackageMaintainers.Contains(this.User.Identity.GetUserId()))
+{
+    <a href="/Issues/Details/@Model.Url" class="k-button pull-right" id="close" data-issueid="@Model.Id" data-packageid="@Model.Package.Id">Close</a><br />
+}
 <br />
 @{Html.RenderAction("ByIssueId", "IssueReplies", new { id = Model.Url });}
 
@@ -96,18 +102,25 @@
             voteClick(id, -1);
         });
 
+        $("#close").click(function () {
+            var iId = $(this).attr("data-issueid");
+            var pId = $(this).attr("data-packageid");
+            closeClick(iId, pId);
+        });
+
         function voteClick(id, voteType) {
             $.post("/Issues/Vote", { issueId: id, voteType: voteType },
                 function (data) {
                     var positiveVotes = data.PositiveCount;
                     var negativeVotes = data.NegativeCount;
 
-                    //$("span[data-action='positiveVotes'][data-id='" + id + "']").html(positiveVotes)
-                    //$("span[data-action='negativeVotes'][data-id='" + id + "']").html(negativeVotes)
-
                     $("span[data-action='positiveVotes']").html(positiveVotes)
                     $("span[data-action='negativeVotes']").html(negativeVotes)
                 });
+        }
+
+        function closeClick(iId, pId) {
+            $.post("/Issues/Close", { issueId: iId, packageId: pId}, function () {});
         }
     </script>
 }

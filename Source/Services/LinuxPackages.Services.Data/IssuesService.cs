@@ -1,12 +1,11 @@
 ﻿namespace LinuxPackages.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
-
     using LinuxPackages.Data.Models;
     using LinuxPackages.Data.Repositories;
     using LinuxPackages.Services.Data.Contracts;
-    using System.Collections.Generic;
 
     public class IssuesService : IIssuesService
     {
@@ -180,11 +179,20 @@
             return this.GetVotesById(issueId);
         }
 
-        public void Close(int issueId)
+        public bool Close(int issueId, IEnumerable<string> maintainers, string userId)
         {
             var issue = this.issues.GetById(issueId);
-            issue.State = IssueStateType.Closed;
-            this.issues.SaveChanges();
+
+            if (userId == issue.Author.Id || maintainers.Contains(userId))
+            {
+                issue.State = IssueStateType.Closed;
+                this.issues.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
