@@ -2,7 +2,7 @@
 {
     using Data.Models;
     using Infrastructure.Helpers;
-    using LinuxPackages.Web.Mvc.Infrastructure.Mappings;
+    using Infrastructure.Mappings;
 
     public class ListedUserViewModel : IMapFrom<User>
     {
@@ -20,7 +20,7 @@
         {
             get
             {
-                return (new UrlIdentifierProvider()).EncodeEntityId(this.AvatarId.GetValueOrDefault());
+                return new UrlIdentifierProvider().EncodeEntityId(this.AvatarId.GetValueOrDefault());
             }
         }
     }

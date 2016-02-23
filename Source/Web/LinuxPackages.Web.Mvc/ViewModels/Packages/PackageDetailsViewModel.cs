@@ -26,6 +26,8 @@
 
         public string Description { get; set; }
 
+        public string CategoryName { get; set; }
+
         public DistributionViewModel Distribution { get; set; }
 
         public RepositoryViewModel Repository { get; set; }

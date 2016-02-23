@@ -18,6 +18,7 @@
         private readonly IRepository<Dependency> dependencies;
         private readonly IRepository<PackageComment> comments;
         private readonly IRepository<Rating> ratings;
+        private readonly IRepository<Category> categories;
 
         public PackagesService(
             IRepository<Package> packages,
@@ -25,14 +26,16 @@
             IRepository<Dependency> dependencies,
             IRepository<PackageComment> comments,
             IRepository<Rating> ratings,
+            IRepository<Category> categories,
             IPackageSaver packageSaver)
         {
             this.packages = packages;
             this.users = users;
             this.dependencies = dependencies;
-            this.packageSaver = packageSaver;
             this.comments = comments;
             this.ratings = ratings;
+            this.categories = categories;
+            this.packageSaver = packageSaver;
         }
 
         public IQueryable<Package> GetAll()
@@ -67,6 +70,7 @@
         public Package Create(
             string name,
             string description,
+            int categoryId,
             int distributionId,
             int repositoryId,
             int architectureId,
@@ -82,6 +86,7 @@
             {
                 Name = name,
                 Description = description,
+                CategoryId = categoryId,
                 DistributionId = distributionId,
                 RepositoryId = repositoryId,
                 ArchitectureId = architectureId,
@@ -159,6 +164,11 @@
             this.comments.SaveChanges();
 
             return newComment;
+        }
+
+        public IQueryable<Category> GetAllCategories()
+        {
+            return this.categories.All();
         }
 
         public IQueryable<PackageComment> GetCommentsByPackageId(int packageId)

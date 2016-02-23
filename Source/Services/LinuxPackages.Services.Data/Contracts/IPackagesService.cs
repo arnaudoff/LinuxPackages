@@ -20,6 +20,7 @@
         Package Create(
             string name,
             string description,
+            int categoryId,
             int distributionId,
             int repositoryId,
             int architectureId,
@@ -30,6 +31,8 @@
             IList<string> maintainerIds);
 
         void Update(int packageId, string name, int distributionId, int repositoryId, int architectureId, int licenseId);
+
+        IQueryable<Category> GetAllCategories();
 
         IQueryable<PackageComment> GetCommentsByPackageId(int packageId);
 

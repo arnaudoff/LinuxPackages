@@ -13,6 +13,7 @@
                 Repositories.GetDependenciesRepository(),
                 Repositories.GetPackageCommentsRepository(),
                 Repositories.GetPackageRatingsRepository(),
+                null,
                 null);
         }
 
