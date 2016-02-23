@@ -8,11 +8,17 @@
         columns
             .Bound(m => m.Username)
             .Title("Username")
-            .HeaderHtmlAttributes(new { style = "text-align: center;" }); ;
+            .HeaderHtmlAttributes(new { style = "text-align: center;" });
+
         columns
             .Bound(m => m.MaintainedPackagesCount)
             .Title("Packages")
-            .HeaderHtmlAttributes(new { style = "text-align: center;" }); ;
+            .HeaderHtmlAttributes(new { style = "text-align: center;" });
     })
     .DataSource(data =>
-        data.Ajax().Read(r => r.Action("GetTopMaintainers", "Home"))))
+        data
+            .Ajax()
+            .Read(r => r.Action("GetTopMaintainers", "Home"))
+            .Sort(c => c.Add("MaintainedPackagesCount").Descending())
+    )
+)
