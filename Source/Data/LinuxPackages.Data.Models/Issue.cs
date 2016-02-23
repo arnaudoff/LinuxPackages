@@ -9,10 +9,12 @@
     public class Issue
     {
         private ICollection<IssueReply> replies;
+        private ICollection<IssueVote> votes;
 
         public Issue()
         {
             this.replies = new HashSet<IssueReply>();
+            this.votes = new HashSet<IssueVote>();
         }
 
         [Key]
@@ -36,10 +38,6 @@
         [Required]
         public DateTime OpenedOn { get; set; }
 
-        public int PositiveVotes { get; set; }
-
-        public int NegativeVotes { get; set; }
-
         public int PackageId { get; set; }
 
         public virtual Package Package { get; set; }
@@ -58,6 +56,19 @@
             set
             {
                 this.replies = value;
+            }
+        }
+
+        public virtual ICollection<IssueVote> Votes
+        {
+            get
+            {
+                return this.votes;
+            }
+
+            set
+            {
+                this.votes = value;
             }
         }
     }

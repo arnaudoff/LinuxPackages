@@ -22,7 +22,7 @@
                 <div class="panel-heading">
                     <strong>@reply.Author.FirstName @reply.Author.LastName (@reply.Author.Username)</strong> <span class="text-muted">replied on @reply.CreatedOn</span>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" style="word-break: break-word;">
                     @Html.Raw(reply.Content)
                 </div>
             </div>

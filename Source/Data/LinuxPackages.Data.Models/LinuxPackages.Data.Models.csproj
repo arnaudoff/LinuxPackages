@@ -64,6 +64,8 @@
     <Compile Include="Issue.cs" />
     <Compile Include="IssueReply.cs" />
     <Compile Include="IssueStateType.cs" />
+    <Compile Include="IssueVote.cs" />
+    <Compile Include="IssueVoteType.cs" />
     <Compile Include="License.cs" />
     <Compile Include="Package.cs" />
     <Compile Include="PackageComment.cs" />

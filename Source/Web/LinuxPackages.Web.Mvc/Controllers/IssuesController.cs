@@ -2,6 +2,7 @@
 namespace LinuxPackages.Web.Mvc.Controllers
 {
     using System.Linq;
+    using System.Net;
     using System.Web.Mvc;
     using Data.Models;
     using Infrastructure.ActionFilters;
@@ -12,6 +13,7 @@ namespace LinuxPackages.Web.Mvc.Controllers
     using Kendo.Mvc.UI;
     using Microsoft.AspNet.Identity;
     using Services.Data.Contracts;
+    using ViewModels.Account;
     using ViewModels.Issues;
 
     public class IssuesController : BaseController
@@ -86,6 +88,15 @@ namespace LinuxPackages.Web.Mvc.Controllers
                 .To<IssueDetailsViewModel>()
                 .FirstOrDefault();
 
+            var votes = this.issues.GetVotesById(requestedIssueId);
+            issueModel.PositiveVotes = votes.Key;
+            issueModel.NegativeVotes = votes.Value;
+            issueModel.PackageMaintainers = this.packages
+                .GetById(issueModel.Package.Id)
+                .SelectMany(p => p.Maintainers)
+                .Select(u => u.Id)
+                .ToList();
+
             return this.View(issueModel);
         }
 
@@ -97,6 +108,36 @@ namespace LinuxPackages.Web.Mvc.Controllers
                 .ToDataSourceResult(request);
 
             return this.Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Vote(int issueId, int voteType)
+        {
+            var votesResult = this.issues.Vote(issueId, voteType, this.User.Identity.GetUserId());
+            return this.Json(new { PositiveCount = votesResult.Key, NegativeCount = votesResult.Value });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Close(int issueId, int packageId)
+        {
+            var maintainers = this.packages
+                .GetById(packageId)
+                .SelectMany(p => p.Maintainers)
+                .Select(u => u.Id)
+                .ToList();
+
+            bool result = this.issues.Close(issueId, maintainers, this.User.Identity.GetUserId());
+
+            if (result)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
         }
     }
 }

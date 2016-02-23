@@ -1,5 +1,6 @@
 ﻿@model LinuxPackages.Web.Mvc.ViewModels.Issues.IssueDetailsViewModel
 
+@using Microsoft.AspNet.Identity;
 @using LinuxPackages.Common.Constants
 
 @{
@@ -38,8 +39,16 @@
         <h5>@Html.DisplayFor(m => m.State)</h5>
     </div>
     <div class="col-md-2 text-center">
-        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <span class="issue-rating">@Model.PositiveVotes</span>
-        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> <span class="issue-rating">@Model.NegativeVotes</span>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <span data-id="@Model.Id" data-action="up" style="cursor: pointer;" class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <span data-action="positiveVotes" class="issue-rating">@Model.PositiveVotes</span>
+            <span data-id="@Model.Id" data-action="down" style="cursor: pointer;" class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> <span data-action="negativeVotes" class="issue-rating">@Model.NegativeVotes</span>
+        }
+        else
+        {
+            <span class="glyphicon glyphicon-thumbs-up" onclick="location.href = '/Account/Login';" aria-hidden="true"></span> <span data-action="positiveVotes" class="issue-rating">@Model.PositiveVotes</span>
+            <span class="glyphicon glyphicon-thumbs-down" onclick="location.href = '/Account/Login';" aria-hidden="true"></span> <span data-action="negativeVotes" class="issue-rating">@Model.NegativeVotes</span>
+        }
     </div>
 </div>
 <hr />
@@ -63,7 +72,7 @@
             <div class="panel-heading">
                 <strong>@Model.Author.FirstName @Model.Author.LastName (@Model.Author.Username)</strong>
             </div>
-            <div class="panel-body">
+            <div class="panel-body" style="word-break: break-word;">
                 @Html.Raw(Model.Content)
             </div>
         </div>
@@ -73,5 +82,45 @@
 {
     <a href="/IssueReplies/Add/@Model.Url" class="k-button pull-right">New reply</a><br />
 }
+
+@if (this.User.Identity.GetUserId() == Model.Author.Id || Model.PackageMaintainers.Contains(this.User.Identity.GetUserId()))
+{
+    <a href="/Issues/Details/@Model.Url" class="k-button pull-right" id="close" data-issueid="@Model.Id" data-packageid="@Model.Package.Id">Close</a><br />
+}
 <br />
 @{Html.RenderAction("ByIssueId", "IssueReplies", new { id = Model.Url });}
+
+@section Scripts {
+    <script>
+        $("span[data-action='up']").click(function () {
+            var id = $(this).attr("data-id");
+            voteClick(id, 1);
+        });
+
+        $("span[data-action='down']").click(function () {
+            var id = $(this).attr("data-id");
+            voteClick(id, -1);
+        });
+
+        $("#close").click(function () {
+            var iId = $(this).attr("data-issueid");
+            var pId = $(this).attr("data-packageid");
+            closeClick(iId, pId);
+        });
+
+        function voteClick(id, voteType) {
+            $.post("/Issues/Vote", { issueId: id, voteType: voteType },
+                function (data) {
+                    var positiveVotes = data.PositiveCount;
+                    var negativeVotes = data.NegativeCount;
+
+                    $("span[data-action='positiveVotes']").html(positiveVotes)
+                    $("span[data-action='negativeVotes']").html(negativeVotes)
+                });
+        }
+
+        function closeClick(iId, pId) {
+            $.post("/Issues/Close", { issueId: iId, packageId: pId}, function () {});
+        }
+    </script>
+}

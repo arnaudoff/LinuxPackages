@@ -20,7 +20,7 @@
         {
             return new IssuesService(
                 Repositories.GetIssuesRepository(),
-                Repositories.GetIssueRepliesRepository());
+                Repositories.GetIssueRepliesRepository(), null);
         }
 
         internal static IUsersService GetUsersService()

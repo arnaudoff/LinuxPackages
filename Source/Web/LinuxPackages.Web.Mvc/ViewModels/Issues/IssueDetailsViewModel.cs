@@ -1,6 +1,7 @@
 ﻿namespace LinuxPackages.Web.Mvc.ViewModels.Issues
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using Account;
@@ -36,6 +37,8 @@
         public int NegativeVotes { get; set; }
 
         public ListedUserViewModel Author { get; set; }
+
+        public IEnumerable<string> PackageMaintainers { get; set; }
 
         [Display(Name = "Package name")]
         public ListedPackageViewModel Package { get; set; }
