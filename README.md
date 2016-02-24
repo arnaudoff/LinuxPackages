@@ -70,3 +70,10 @@ LinuxPackages is a web application whose main idea is to serve as a unified plac
 ## Disclaimer
 
 The purpose of this project is entirely educational. It relies heavily on the KendoUI ASP.NET MVC wrappers such as Kendo Grid, Kendo Editor, Kendo TabStrip etc. that are available only in the professional edition of the library. However, the project includes the *30-day trial* version of KendoUI, which can be downloaded [here](http://www.telerik.com/aspnet-mvc).
+
+## Screenshots
+
+<img src="http://i.imgur.com/932Uft4.png" />
+<img src="http://i.imgur.com/pHoIWma.png" />
+<img src="http://i.imgur.com/3ECWbHN.png" />
+<img src="http://i.imgur.com/3Mz6Ui3.png" />
