@@ -9,7 +9,7 @@ build:
   verbosity: minimal
   publish_wap: true
 
-configuration: Debug
+configuration: Release
 
 environment:
     COVERALLS_REPO_TOKEN:  
@@ -32,5 +32,5 @@ deploy:
     skip_files: ^((?!Views).)*web\.config$
     on:
       branch: master
-      platform: x86
-      configuration: release
+      DefaultConnection-Web.config Connection String:
+        secure: MJZ/JgYNbCFcF1PmHw5Xd7tHhlFsLfqExrEKEjzqwiNv+ci01qKihLv/datPisPzCjQwvOwEVCJ2JQ39iZbqS2Ql9RqVMnI+eKKgTSzoJuV4OuRShfWaiUdRMQm2Wu4CClZb6zD4VAScuf5zTf5/pmHg6snlqR6aLjDwfkmOksy8OdSXrCh6zv53KPx9sWXb
