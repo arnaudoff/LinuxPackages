@@ -32,6 +32,5 @@ deploy:
     remove_files: false
     app_offline: false
     skip_dirs: \\App_Data
-    skip_files: ^((?!Views).)*web\.config$
     on:
       branch: master
